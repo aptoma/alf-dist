@@ -1,0 +1,207 @@
+/* line 1, ../src/sass/layout/_base.scss */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 6, ../src/sass/layout/_base.scss */
+.no-margin {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* line 11, ../src/sass/layout/_base.scss */
+.alf-chrome {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* line 19, ../src/sass/layout/_base.scss */
+.alf-is-moving {
+  z-index: 2147483647 !important;
+}
+
+/* line 23, ../src/sass/layout/_base.scss */
+.alf-container {
+  box-sizing: border-box;
+}
+
+/* line 28, ../src/sass/layout/_base.scss */
+.alf-container:before,
+.alf-container:after {
+  content: " ";
+  display: table;
+}
+
+/* line 33, ../src/sass/layout/_base.scss */
+.alf-is-responsive .alf-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* line 38, ../src/sass/layout/_base.scss */
+.alf-container-fullscreen:not(.alf-is-visible) {
+  display: none;
+}
+
+/* line 42, ../src/sass/layout/_base.scss */
+.alf-container-is-unloaded {
+  visibility: hidden !important;
+}
+
+/* line 47, ../src/sass/layout/_base.scss */
+.alf-is-scrollable-x,
+.alf-is-scrollable-y {
+  -webkit-overflow-scrolling: touch;
+  -moz-overflow-scrolling: touch;
+  -ms-overflow-scrolling: touch;
+  -o-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+/* line 55, ../src/sass/layout/_base.scss */
+.alf-is-scrollable-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* line 60, ../src/sass/layout/_base.scss */
+.alf-is-scrollable-y {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* line 65, ../src/sass/layout/_base.scss */
+.alf-is-scrollable-x.alf-is-scrollable-y {
+  overflow-y: auto;
+  overflow-x: auto;
+  overflow: auto;
+}
+
+/* line 71, ../src/sass/layout/_base.scss */
+.alf-snippet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+}
+
+/* line 1, ../src/sass/modules/_layer.scss */
+.alf-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 1;
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+}
+
+/* line 12, ../src/sass/modules/_layer.scss */
+.alf-layer-1 {
+  z-index: 1;
+}
+
+/* line 16, ../src/sass/modules/_layer.scss */
+.alf-layer-2 {
+  z-index: 2;
+}
+
+/* line 20, ../src/sass/modules/_layer.scss */
+.alf-layer-2 .alf-pages {
+  top: 0;
+}
+
+/* line 24, ../src/sass/modules/_layer.scss */
+.alf-layer-3 {
+  z-index: 3;
+}
+
+/* line 28, ../src/sass/modules/_layer.scss */
+.alf-layer-fullscreen {
+  display: -moz-box;
+  display: -webkit-box;
+  display: box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-box-align: center;
+}
+
+/* line 38, ../src/sass/modules/_layer.scss */
+.alf-fullscreen-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* line 46, ../src/sass/modules/_layer.scss */
+.alf-fullscreen-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 40px;
+  z-index: 1;
+  text-align: right;
+  padding: 10px;
+  box-sizing: border-box;
+}
+/* line 58, ../src/sass/modules/_layer.scss */
+.alf-fullscreen-toolbar a,
+.alf-fullscreen-toolbar button {
+  display: inline-block;
+  line-height: normal;
+  font-size: 100%;
+  vertical-align: middle;
+  margin: 0;
+  -webkit-appearance: button;
+}
+
+/* line 68, ../src/sass/modules/_layer.scss */
+.alf-fullscreen-exit:before {
+  content: 'Lukk';
+  padding: 10px;
+}
+
+/* line 1, ../src/sass/modules/_slideshow.scss */
+.alf-slideshow .alf-page-content {
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  box-pack: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  box-align: center;
+}
+
+/* line 3, ../src/sass/partials/_state.scss */
+.alf-is-disabled,
+.alf-is-removed,
+.alf-is-not-displayed {
+  display: none !important;
+}
+
+/* line 7, ../src/sass/partials/_state.scss */
+.alf-is-hidden {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+/* line 11, ../src/sass/partials/_state.scss */
+.alf-is-hidden .alf-is-visible {
+  pointer-events: none;
+}
+
+/* line 16, ../src/sass/partials/_state.scss */
+.alf-is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
