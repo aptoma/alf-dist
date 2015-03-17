@@ -1,3 +1,9 @@
+### 1.3.2
+ * FIXED: SizeDetector not always reattaching to the resize event
+
+### 1.3.1
+ * ADDED: Distribution to separate public repository
+
 ### 1.3
  * ADDED: Size detection. Responsive layout will now detect it's own width and add appropriate class names based on it
 
