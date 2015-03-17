@@ -1,0 +1,29 @@
+{
+  "name": "ALF",
+  "version": "1.2.0",
+  "description": "Aptoma Layout Framework",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "scripts": {
+    "test": "",
+    "release": "./node_modules/.bin/release-it -n -i patch",
+    "release:minor": "./node_modules/.bin/release-it -n -i minor",
+    "release:major": "./node_modules/.bin/release-it -n -i major"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aptoma/alf-dist.git"
+  },
+  "author": "Peter Rudolfsen <peter@aptoma.com>",
+  "license": "Proprietary",
+  "bugs": {
+    "url": "https://github.com/aptoma/alf-dist/issues"
+  },
+  "homepage": "https://github.com/aptoma/alf-dist",
+  "devDependencies": {
+    "release-it": "0.0.15"
+  },
+  "dependencies": {}
+}
