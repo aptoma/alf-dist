@@ -1,3 +1,6 @@
+### 1.3.3
+ * FIXED: Issue with uglifying when.js library
+
 ### 1.3.2
  * FIXED: SizeDetector not always reattaching to the resize event
 
