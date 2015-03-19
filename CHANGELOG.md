@@ -1,3 +1,6 @@
+### 1.3.4
+ * FIXED: Stop using ./ when loading local dependencies with requirejs
+
 ### 1.3.3
  * FIXED: Issue with uglifying when.js library
 
