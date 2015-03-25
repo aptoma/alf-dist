@@ -1,3 +1,6 @@
+### 1.3.5 - 2015-03-25
+ * FIXED: Issues with touch events when using jQuery instead of Zepto
+
 ### 1.3.4
  * FIXED: Stop using ./ when loading local dependencies with requirejs
 
