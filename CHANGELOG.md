@@ -1,3 +1,6 @@
+### 1.4 - 2015-04-08
+ * NEW: Use the `data-select` attribute in containers to select only parts of the content from a figure element
+
 ### 1.3.5 - 2015-03-25
  * FIXED: Issues with touch events when using jQuery instead of Zepto
 
