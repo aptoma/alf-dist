@@ -1,3 +1,6 @@
+### 1.5.1 - 2015-04-09
+ * FIXED: Bug causing fullscreen to fire unintentionally in some cases
+
 ### 1.5 - 2015-04-09
  * NEW: Use the `data-ref` attribute in containers to use the same content multiple places in the same template. Can be combined with `data-select` to create more advanced layouts.
 
