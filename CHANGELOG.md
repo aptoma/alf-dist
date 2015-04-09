@@ -1,3 +1,6 @@
+### 1.5 - 2015-04-09
+ * NEW: Use the `data-ref` attribute in containers to use the same content multiple places in the same template. Can be combined with `data-select` to create more advanced layouts.
+
 ### 1.4 - 2015-04-08
  * NEW: Use the `data-select` attribute in containers to select only parts of the content from a figure element
 
