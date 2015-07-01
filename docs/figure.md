@@ -1,4 +1,4 @@
-## Description
+## Figures
 
 A **figure** is a way to group variations of the same element. E.g. the same image, but in large, medium and small sizes. Only **one** of these are ever in use at the same time.
 
@@ -54,6 +54,7 @@ You are free to give images the mapping you want, but we recommend including som
 A good way of doing this is using `{orientation}-{size}`.
 
 Examples:
+
  * `4x3-large`, `4x3-small`
  * `16x9-large`, `16x9-small`
  * `1x1-large`, `1x1-small`

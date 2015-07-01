@@ -1,3 +1,9 @@
+### 1.5.3 - 2015-07-01
+ * NEW: Add alf-block-is-first class name on the first block in the layout
+
+### 1.5.2 - 2015-04-20
+  * IMPROVED: Documentation for containers and figures
+
 ### 1.5.1 - 2015-04-09
  * FIXED: Bug causing fullscreen to fire unintentionally in some cases
 
