@@ -74,3 +74,23 @@ You can put multiple elements with selects inside your container:
   </div>
 </div>
 ```
+
+### Select inner HTML
+
+Use `data-select-inner` to select the inner HTML, instead of outer HTML of the matching node (notice the difference on the caption):
+
+```html
+// Template
+<div class="alf-container" data-map="*-large">
+  <caption data-select=".caption"></caption>
+  <div data-select="img:first"></div>
+</div>
+
+// Output
+<div class="alf-container" data-map="*-large">
+  <caption data-select-inner=".caption">My caption</caption>
+  <div data-select="img:first">
+    <img src="foo.png"/>
+  </div>
+</div>
+```

@@ -1,3 +1,6 @@
+### 1.5.4 - 2015-07-02
+ * NEW: Add support for `data-select-inner` to use innerHTML instead of outerHTML on the matching node. It otherwise behaves just like `data-select`
+
 ### 1.5.3 - 2015-07-01
  * NEW: Add alf-block-is-first class name on the first block in the layout
 
