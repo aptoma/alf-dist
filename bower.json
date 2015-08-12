@@ -1,5 +1,5 @@
 {
-  "name": "aptoma-alf",
+  "name": "alf",
   "version": "1.5.4",
   "homepage": "https://github.com/aptoma/alf-dist",
   "authors": [
@@ -14,5 +14,10 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "backbone": "^1.2.1",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1"
+  }
 }

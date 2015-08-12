@@ -6,11 +6,16 @@
     "type": "git",
     "url": "git://github.com/aptoma/alf-dist.git"
   },
+  "main": "alf.js",
   "author": "Peter Rudolfsen <peter@aptoma.com>",
   "license": "Proprietary",
   "bugs": {
     "url": "https://github.com/aptoma/alf-dist/issues"
   },
   "homepage": "https://github.com/aptoma/alf-dist",
-  "dependencies": {}
+  "dependencies": {
+    "backbone": "^1.2.1",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1"
+  }
 }
