@@ -1,3 +1,8 @@
+### 2.0.0 - 2015-08-26
+ * NEW: Use ES6 modules internally.
+ * NEW: UMD bundles (see installation docs for more information).
+ * CHANGED: `require('alf')` can no longer be used without using a module loader (RequireJS, Webpack, Browserify or similar).
+
 ### 1.5.4 - 2015-07-02
  * NEW: Add support for `data-select-inner` to use innerHTML instead of outerHTML on the matching node. It otherwise behaves just like `data-select`
 

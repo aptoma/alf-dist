@@ -49,9 +49,9 @@ var Grid = function (options) {
  * @private
  */
 Grid.prototype._position = function () {
-    var that = this,
-        columns = [],
-        numCols = this.el.className.match(/cols\-([0-9]+)/);
+    var that = this;
+    var columns = [];
+    var numCols = this.el.className.match(/cols\-([0-9]+)/);
 
     if (!numCols) {
         throw new Error('Failed to find number of columns');
@@ -67,9 +67,9 @@ Grid.prototype._position = function () {
     }
 
     $(this.el).find('[class*="col-"]').each(function () {
-        var col = parseInt(this.className.match(/col\-([0-9]+)/)[1], 10) - 1,
-            span = this.className.match(/colspan\-([0-9]+)/),
-            cell = that._createCellFromEl(this);
+        var col = parseInt(this.className.match(/col\-([0-9]+)/)[1], 10) - 1;
+        var span = this.className.match(/colspan\-([0-9]+)/);
+        var cell = that._createCellFromEl(this);
 
         span = span ? parseInt(span[1], 10) : 1;
 
@@ -103,16 +103,18 @@ Grid.prototype._createCellFromEl = function (el) {
     var flex = $(el).hasClass(this._class('flex'));
 
     return {
-        el: el,
+        el,
+        flex,
         height: 0,
         innerHeight: 0,
-        top: 0,
-        flex: flex
+        top: 0
     };
 };
 
+// jshint maxcomplexity:false
+// jshint maxstatements:32
 Grid.prototype._calcMetrics = function (columns) {
-    var colTop, colBottom, numColumns, numCells, cell, $cell, i, j, styles, marginBottom
+    var colTop, colBottom, numColumns, numCells, cell, $cell, i, j, styles, marginBottom;
 
     colTop = this._class('col-top');
     colBottom = this._class('col-bottom');
@@ -182,10 +184,13 @@ Grid.prototype._calcMetrics = function (columns) {
  * @private
  */
 Grid.prototype._positionColumn = function (index, column) {
-    var that = this, top = this.paddingTop;
+    var that = this;
+    var top = this.paddingTop;
 
     $.each(column.cells, function (index, cell) {
-        var $cell = $(cell.el), css = {}, rest = 0;
+        var $cell = $(cell.el);
+        var css = {};
+        var rest = 0;
 
         // only snap to the vertical grid if it's not the top cell
         // AND if it's a flexing cell
@@ -228,11 +233,13 @@ Grid.prototype._class = function (string) {
     return this.options.prefix + string;
 };
 
-$.fn.grid = function (options) {
-    options = options || {};
+if (typeof window !== 'undefined') {
+    $.fn.grid = function (options) {
+        options = options || {};
 
-    options.el = this[0];
-    return new Grid(options);
-};
+        options.el = this[0];
+        return new Grid(options);
+    };
+}
 
 export default Grid;
