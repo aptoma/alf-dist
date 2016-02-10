@@ -1,3 +1,6 @@
+### 2.1.0 - 2016-02-10
+* NEW: Support converting to background-images using `data-type="image"`
+
 ### 2.0.0 - 2015-08-26
  * NEW: Use ES6 modules internally.
  * NEW: UMD bundles (see installation docs for more information).
