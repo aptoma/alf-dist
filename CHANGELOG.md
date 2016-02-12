@@ -1,3 +1,6 @@
+### 2.1.1 - 2016-02-12
+* FIXED: Issue with restoring content when the figure element had no inner HTML
+
 ### 2.1.0 - 2016-02-10
 * NEW: Support converting to background-images using `data-type="image"`
 
