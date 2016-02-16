@@ -1,3 +1,6 @@
+### 2.1.2 - 2016-02-16
+* FIXED: Issue with `loadComplete` event when using `data-type` image
+
 ### 2.1.1 - 2016-02-12
 * FIXED: Issue with restoring content when the figure element had no inner HTML
 
