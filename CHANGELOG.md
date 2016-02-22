@@ -1,3 +1,6 @@
+### 2.2.0 - 2016-02-22
+* NEW: `<figure>` will be treated as a regular block element if no `data-map` is present
+
 ### 2.1.2 - 2016-02-16
 * FIXED: Issue with `loadComplete` event when using `data-type` image
 
