@@ -1,3 +1,6 @@
+### 2.3.0 - 2016-03-17
+* NEW: Support using a specific figure element, and not just the first match
+
 ### 2.2.0 - 2016-02-22
 * NEW: `<figure>` will be treated as a regular block element if no `data-map` is present
 
