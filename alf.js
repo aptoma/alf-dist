@@ -1,9 +1,9377 @@
-!function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t(require("lodash"),require("jquery"),require("backbone")):"function"==typeof define&&define.amd?define(["lodash","jquery","backbone"],t):"object"==typeof exports?exports.ALF=t(require("lodash"),require("jquery"),require("backbone")):e.ALF=t(e._,e.$,e.Backbone)}(this,function(e,t,i){return function(e){function t(n){if(i[n])return i[n].exports;var s=i[n]={exports:{},id:n,loaded:!1};return e[n].call(s.exports,s,s.exports,t),s.loaded=!0,s.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(2),a=i(r),o=t(8),l=i(o),u=t(10),d=i(u),h=t(11),f=i(h),c=t(9),p=t(14),g=i(p),m=t(20),v=i(m),_=t(26),E=i(_),w=t(56),y=i(w),T=t(59),b=i(T),M=t(60),C=i(M),S=t(25),P=i(S);exports["default"]={dom:a["default"],_:s["default"],hub:l["default"],Base:d["default"],View:f["default"],Events:c.Events,transition:g["default"],layer:v["default"],layout:E["default"],serialize:y["default"],compile:b["default"],nav:C["default"],util:P["default"]}},function(t,exports){t.exports=e},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0}),t(3),t(6),t(7);var n=t(4),s=i(n);exports["default"]=s["default"]},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}function n(e){return"tagName"in e?e:e.parentNode}function s(e,t,i,n){var s=Math.abs(e-t),r=Math.abs(i-n);return s>=r?e-t>0?"Left":"Right":i-n>0?"Up":"Down"}function r(e){e=m[e],e.timeout&&clearTimeout(e.timeout),e.timeout=null}function a(){m.longTap.timeout=null,g.last&&(g.el.trigger("longTap"),g={})}function o(){m.active.timeout=null,g.last&&g.el.trigger("active")}function l(){r("longTap")}function u(){r("active")}function d(){var e,t,i,r,d,c=!1,v="ontouchstart"in window,_="touchstart",E="touchmove",w="touchend";v||(_="mousedown",E="mousemove",w="mouseup"),(0,p["default"])(document.body).bind(_,function(i){i=i.originalEvent||i,c=!0,d=v?i.touches[0]:i,e=Date.now(),t=e-(g.last||e),g.el=(0,p["default"])(n(d.target)),h&&clearTimeout(h),g.x1=d.pageX,g.y1=d.pageY,g.x2=d.pageX,g.y2=d.pageY,t>0&&250>=t&&(g.isDoubleTap=!0),g.last=e,m.longTap.timeout=setTimeout(a,m.longTap.delay),m.active.timeout=setTimeout(o,m.active.delay)}).bind(E,function(e){c&&(e=e.originalEvent||e,u(),l(),d=v?e.touches[0]:e,g.x2=d.pageX,g.y2=d.pageY,document.webkitPointerLockElement&&(c=!1))}).bind(w,function(e){c&&(c=!1,l(),u(),i=Math.abs(g.x1-g.x2),r=Math.abs(g.y1-g.y2),g.isDoubleTap?(g.el.trigger("doubleTap",g.el),g={}):i>30||r>30?(g.el.trigger("swipe")&&g.el.trigger("swipe"+s(g.x1,g.x2,g.y1,g.y2)),g={}):"last"in g&&7>i&&7>r&&(g.el.trigger("tap"),h=setTimeout(function(){h=null,g.el.trigger("singleTap"),g={}},250)))}).bind("touchcancel",function(){h&&clearTimeout(h),f&&clearTimeout(f),f=h=null,g={}})}var h,f,c=t(4),p=i(c),g={},m={longTap:{delay:750},active:{delay:0}};"undefined"!=typeof window&&(0,p["default"])(document).ready(d)},function(e,exports,t){"use strict";var $=t(5);e.exports=$},function(e,exports){e.exports=t},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}function n(){var e=this[0],t=s.call(this);return e.offsetHeight+t}function s(){var e=r.call(this);return e.top+e.bottom}function r(){var e,t=this[0],i=window.getComputedStyle(t,null);return e={top:l(i,"margin-top"),right:l(i,"margin-right"),bottom:l(i,"margin-bottom"),left:l(i,"margin-left")},e.height=e.top+e.bottom,e.width=e.left+e.right,e}function a(){var e=this[0],t=window.getComputedStyle(e,null);return{top:l(t,"padding-top"),right:l(t,"padding-right"),bottom:l(t,"padding-bottom"),left:l(t,"padding-left")}}function o(){var e=this[0],t=e.getBoundingClientRect(),i=r.call(this),n=a.call(this);return{height:e.clientHeight,width:e.clientWidth,top:t.top,right:t.right,bottom:t.bottom,left:t.left,outerHeight:t.height+i.height,outerWidth:t.width+i.width,marginTop:i.top,marginRight:i.right,marginBottom:i.bottom,marginLeft:i.left,marginHeight:i.height,marginWidth:i.width,paddingTop:n.top,paddingRight:n.right,paddingBottom:n.bottom,paddingLeft:n.left,lineHeight:parseInt(d["default"].fn.css.call(this,"line-height"),10)}}function l(e,t){return parseInt(e.getPropertyValue(t),10)}var u=t(4),d=i(u);"undefined"!=typeof window&&(d["default"].fn.outerHeight=n,d["default"].fn.marginHeight=s,d["default"].fn.margin=r,d["default"].fn.padding=a,d["default"].fn.metrics=o)},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}/*!
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("lodash"), require("jquery"), require("backbone"));
+	else if(typeof define === 'function' && define.amd)
+		define(["lodash", "jquery", "backbone"], factory);
+	else if(typeof exports === 'object')
+		exports["ALF"] = factory(require("lodash"), require("jquery"), require("backbone"));
+	else
+		root["ALF"] = factory(root["_"], root["$"], root["Backbone"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_5__, __WEBPACK_EXTERNAL_MODULE_9__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _hub = __webpack_require__(8);
+
+	var _hub2 = _interopRequireDefault(_hub);
+
+	var _Base = __webpack_require__(10);
+
+	var _Base2 = _interopRequireDefault(_Base);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _backbone = __webpack_require__(9);
+
+	var _transition = __webpack_require__(14);
+
+	var _transition2 = _interopRequireDefault(_transition);
+
+	var _layer = __webpack_require__(20);
+
+	var _layer2 = _interopRequireDefault(_layer);
+
+	var _layout = __webpack_require__(26);
+
+	var _layout2 = _interopRequireDefault(_layout);
+
+	var _serialize = __webpack_require__(56);
+
+	var _serialize2 = _interopRequireDefault(_serialize);
+
+	var _compile = __webpack_require__(59);
+
+	var _compile2 = _interopRequireDefault(_compile);
+
+	var _nav = __webpack_require__(60);
+
+	var _nav2 = _interopRequireDefault(_nav);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    dom: _dom2.default,
+	    _: _lodash2.default,
+	    hub: _hub2.default,
+	    Base: _Base2.default,
+	    View: _BaseView2.default,
+	    Events: _backbone.Events,
+	    transition: _transition2.default,
+	    layer: _layer2.default,
+	    layout: _layout2.default,
+	    serialize: _serialize2.default,
+	    compile: _compile2.default,
+	    nav: _nav2.default,
+	    util: _util2.default
+	}; /**
+	    * Alf - Aptoma Layout Framework
+	    *
+	    * @copyright 2012-2015 Aptoma AS aptoma.com
+	    * @author Peter Rudolfsen <peter@aptoma.com>
+	    */
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	__webpack_require__(3);
+
+	__webpack_require__(6);
+
+	__webpack_require__(7);
+
+	var _domlib = __webpack_require__(4);
+
+	var _domlib2 = _interopRequireDefault(_domlib);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _domlib2.default;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _domlib = __webpack_require__(4);
+
+	var _domlib2 = _interopRequireDefault(_domlib);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var touch = {};
+	var touchTimeout, longTapTimeout;
+
+	function parentIfText(node) {
+	    return 'tagName' in node ? node : node.parentNode;
+	}
+
+	function swipeDirection(x1, x2, y1, y2) {
+	    var xDelta = Math.abs(x1 - x2);
+	    var yDelta = Math.abs(y1 - y2);
+
+	    return xDelta >= yDelta ? x1 - x2 > 0 ? 'Left' : 'Right' : y1 - y2 > 0 ? 'Up' : 'Down';
+	}
+
+	var timedEvents = {
+	    longTap: {
+	        delay: 750
+	    },
+	    active: {
+	        delay: 0
+	    }
+	};
+
+	function cancelTimedEvent(event) {
+	    event = timedEvents[event];
+	    if (event.timeout) {
+	        clearTimeout(event.timeout);
+	    }
+	    event.timeout = null;
+	}
+
+	// Shortcut methods for the timed events
+	function longTap() {
+	    timedEvents.longTap.timeout = null;
+
+	    if (touch.last) {
+	        touch.el.trigger('longTap');
+	        touch = {};
+	    }
+	}
+
+	function active() {
+	    timedEvents.active.timeout = null;
+	    if (touch.last) {
+	        touch.el.trigger('active');
+	    }
+	}
+
+	function cancelLongTap() {
+	    cancelTimedEvent('longTap');
+	}
+
+	function cancelActive() {
+	    cancelTimedEvent('active');
+	}
+
+	if (typeof window !== 'undefined') {
+	    (0, _domlib2.default)(document).ready(load);
+	}
+
+	function load() {
+	    var now, delta, touchXDelta, touchYDelta, point;
+	    var touching = false;
+	    var hasTouch = 'ontouchstart' in window;
+	    var startEv = 'touchstart';
+	    var moveEv = 'touchmove';
+	    var endEv = 'touchend';
+
+	    if (!hasTouch) {
+	        startEv = 'mousedown';
+	        moveEv = 'mousemove';
+	        endEv = 'mouseup';
+	    }
+
+	    (0, _domlib2.default)(document.body).bind(startEv, function (e) {
+	        e = e.originalEvent || e;
+	        touching = true;
+	        point = hasTouch ? e.touches[0] : e;
+	        now = Date.now();
+	        delta = now - (touch.last || now);
+	        touch.el = (0, _domlib2.default)(parentIfText(point.target));
+	        touchTimeout && clearTimeout(touchTimeout);
+
+	        touch.x1 = point.pageX;
+	        touch.y1 = point.pageY;
+	        touch.x2 = point.pageX;
+	        touch.y2 = point.pageY;
+
+	        if (delta > 0 && delta <= 250) {
+	            touch.isDoubleTap = true;
+	        }
+
+	        touch.last = now;
+	        timedEvents.longTap.timeout = setTimeout(longTap, timedEvents.longTap.delay);
+	        timedEvents.active.timeout = setTimeout(active, timedEvents.active.delay);
+	    }).bind(moveEv, function (e) {
+	        if (!touching) {
+	            return;
+	        }
+
+	        e = e.originalEvent || e;
+	        cancelActive();
+	        cancelLongTap();
+	        point = hasTouch ? e.touches[0] : e;
+	        touch.x2 = point.pageX;
+	        touch.y2 = point.pageY;
+
+	        if (document.webkitPointerLockElement) {
+	            touching = false;
+	        }
+	    }).bind(endEv, function (e) {
+	        if (!touching) {
+	            return;
+	        }
+
+	        touching = false;
+	        cancelLongTap();
+	        cancelActive();
+
+	        touchXDelta = Math.abs(touch.x1 - touch.x2);
+	        touchYDelta = Math.abs(touch.y1 - touch.y2);
+
+	        // double tap (tapped twice within 250ms)
+	        if (touch.isDoubleTap) {
+	            touch.el.trigger('doubleTap', touch.el);
+	            touch = {};
+
+	            // swipe
+	        } else if (touchXDelta > 30 || touchYDelta > 30) {
+	                touch.el.trigger('swipe') && touch.el.trigger('swipe' + swipeDirection(touch.x1, touch.x2, touch.y1, touch.y2));
+	                touch = {};
+
+	                // normal tap
+	            } else if ('last' in touch && touchXDelta < 7 && touchYDelta < 7) {
+	                    touch.el.trigger('tap');
+
+	                    touchTimeout = setTimeout(function () {
+	                        touchTimeout = null;
+	                        touch.el.trigger('singleTap');
+	                        touch = {};
+	                    }, 250);
+	                }
+	    }).bind('touchcancel', function () {
+	        if (touchTimeout) {
+	            clearTimeout(touchTimeout);
+	        }
+
+	        if (longTapTimeout) {
+	            clearTimeout(longTapTimeout);
+	        }
+
+	        longTapTimeout = touchTimeout = null;
+	        touch = {};
+	    });
+	}
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	/**
+	 * MODERN is injected by the module builder.
+	 * ES6/Babel doesn't like using conditionals around imports, so we have to use require here
+	 */
+	var $ = __webpack_require__(5);
+
+	module.exports = $;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_5__;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _domlib = __webpack_require__(4);
+
+	var _domlib2 = _interopRequireDefault(_domlib);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	if (typeof window !== 'undefined') {
+	    _domlib2.default.fn.outerHeight = getOuterHeight;
+	    _domlib2.default.fn.marginHeight = getMarginHeight;
+	    _domlib2.default.fn.margin = getMargin;
+	    _domlib2.default.fn.padding = getPadding;
+	    _domlib2.default.fn.metrics = getMetrics;
+	}
+
+	function getOuterHeight() {
+	    var el = this[0];
+	    var marginHeight = getMarginHeight.call(this);
+
+	    return el.offsetHeight + marginHeight;
+	}
+
+	function getMarginHeight() {
+	    var margin = getMargin.call(this);
+
+	    return margin.top + margin.bottom;
+	}
+
+	function getMargin() {
+	    var el = this[0];
+	    var styles = window.getComputedStyle(el, null);
+	    var margin;
+
+	    margin = {
+	        top: intProp(styles, 'margin-top'),
+	        right: intProp(styles, 'margin-right'),
+	        bottom: intProp(styles, 'margin-bottom'),
+	        left: intProp(styles, 'margin-left')
+	    };
+
+	    margin.height = margin.top + margin.bottom;
+	    margin.width = margin.left + margin.right;
+
+	    return margin;
+	}
+
+	function getPadding() {
+	    var el = this[0];
+	    var styles = window.getComputedStyle(el, null);
+
+	    return {
+	        top: intProp(styles, 'padding-top'),
+	        right: intProp(styles, 'padding-right'),
+	        bottom: intProp(styles, 'padding-bottom'),
+	        left: intProp(styles, 'padding-left')
+	    };
+	}
+
+	function getMetrics() {
+	    var el = this[0];
+	    var rect = el.getBoundingClientRect();
+	    var margin = getMargin.call(this);
+	    var padding = getPadding.call(this);
+
+	    return {
+	        height: el.clientHeight,
+	        width: el.clientWidth,
+	        top: rect.top,
+	        right: rect.right,
+	        bottom: rect.bottom,
+	        left: rect.left,
+	        outerHeight: rect.height + margin.height,
+	        outerWidth: rect.width + margin.width,
+	        marginTop: margin.top,
+	        marginRight: margin.right,
+	        marginBottom: margin.bottom,
+	        marginLeft: margin.left,
+	        marginHeight: margin.height,
+	        marginWidth: margin.width,
+	        paddingTop: padding.top,
+	        paddingRight: padding.right,
+	        paddingBottom: padding.bottom,
+	        paddingLeft: padding.left,
+	        lineHeight: parseInt(_domlib2.default.fn.css.call(this, 'line-height'), 10)
+	    };
+	}
+
+	function intProp(styles, value) {
+	    return parseInt(styles.getPropertyValue(value), 10);
+	}
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _domlib = __webpack_require__(4);
+
+	var _domlib2 = _interopRequireDefault(_domlib);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	if (typeof window !== 'undefined') {
+	    _domlib2.default.fn.textFit = textFit;
+	} /*!
 	   * textFit.js
 	   *
 	   * Copyright 2011, Peter Rudolfsen
 	   */
-function n(e){return this.each(function(){var e=(0,r["default"])(this),t=t||1,i=(0,r["default"])('<span style="display:inline-block;margin:0;padding:0;"></span>').html(e.text()),n=parseInt(window.getComputedStyle(this).getPropertyValue("font-size"),10),s=e.width(),a=0;if(0!==s){for(e.empty().append(i),a=i.width(),a>=s&&(n=8,e.css("font-size",n+"px"),a=i.width());s>a;)n+=1,e.css("font-size",n+"px"),a=i.width(),s=e.width();a>=s&&(n-=1),e.css("font-size",n/t+"px")}})}var s=t(4),r=i(s);"undefined"!=typeof window&&(r["default"].fn.textFit=n)},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(9),a=i(r);exports["default"]=s["default"].extend({},a["default"].Events)},function(e,exports){e.exports=i},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(9),s=i(n),r=function(){this.initialize.apply(this,arguments)};r.prototype={initialize:function(){}},r.extend=s["default"].Model.extend,exports["default"]=r},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(9),s=i(n),r=t(12),a=i(r),o=t(13),l=i(o);exports["default"]=s["default"].View.extend({startX:0,startY:0,startScale:1,rotation:0,getSignature:function(){return this.signature||this.lockSignature(),this.signature},lockSignature:function(){this.signature=(0,l["default"])(this.el.outerHTML),this.innerSignature=(0,l["default"])(this.el.innerHTML)},matchesSignature:function(e){return e===this.signature},matchesInnerSignature:function(e){return e===this.innerSignature},matchesAnySignature:function(e){return this.matchesSignature(e)||this.matchesInnerSignature(e)},disable:function(){this.isDisabled=!0,this.$el.addClass(a["default"].IS_DISABLED)},enable:function(){this.isDisabled=!1,this.$el.removeClass(a["default"].IS_DISABLED)},isInDOM:function(){return null!==this.el.parentNode},startTransform:function(e){e.preventDefault(),e.stopPropagation(),this.startX=e.pageX,this.startY=e.pageY,this.startScale=e.scale,this.startRotation=e.rotation,e.currentTarget.classList.add("alf-is-moving")},transformEventTarget:function(e){this.transformElByEvent(e.currentTarget,e)},transformEl:function(e){this.transformElByEvent(this.el,e)},transformElByEvent:function(e,t){t.preventDefault(),t.stopPropagation(),t=t.originalEvent||t;var i=t.pageX-this.startX,n=t.pageY-this.startY,s=t.scale,r=t.rotation-this.startRotation;this.doTransform(e,{x:i,y:n,scale:s,rotation:r})},doTransform:function(e,t){var i="";i+="translate3d("+t.x+"px, "+t.y+"px, 1px)",t.rotation&&(i+="rotate("+t.rotation+"deg) "),i+="scale("+t.scale+") ",e.style.webkitTransition="none",e.style.webkitTransform=i},enableScrolling:function(e){e=e||{x:!0,y:!0};var t=[];e.x&&t.push("alf-is-scrollable-x"),e.y&&t.push("alf-is-scrollable-y"),this.$el.addClass(t.join(" "))},preventDefault:function(e){e.preventDefault()}})},function(e,exports){"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports["default"]={ALLOW_MULTIPLE:"alf-allow-multiple",ALLOW_OVERFLOW:"alf-allow-overflow",ASSET_STYLESHEET:"alf-asset-stylesheet",BREAK_BEFORE:"alf-break-before",BTN_GROUP:"alf-btn-group",CONTAINER:"alf-container",CONTAINER_FULLSCREEN:"alf-container-fullscreen",CONTAINER_INLINE:"alf-container-inline",CONTAINER_IS_UNLOADED:"alf-container-is-unloaded",CONTROLS_OFF:"alf-controls-off",FULLSCREEN_CONTENT:"alf-fullscreen-content",FULLSCREEN_EXIT:"alf-fullscreen-exit",FULLSCREEN_TOOLBAR:"alf-fullscreen-toolbar",MULTI_CHOICE:"alf-multiple-choices",IMAGE:"alf-image",IS_BREAKABLE:"alf-is-breakable",IS_DISABLED:"alf-is-disabled",IS_DRAGGABLE:"alf-is-draggable",IS_DRAGGABLE_X:"alf-is-draggable-x",IS_DRAGGABLE_Y:"alf-is-draggable-y",IS_EDITABLE:"alf-is-editable",IS_HIDDEN:"alf-is-hidden",IS_FIRST_BLOCK:"alf-block-is-first",IS_LAST_BLOCK:"alf-block-is-last",IS_NON_BREAKABLE:"alf-is-non-breakable",IS_NON_REARRANGEABLE:"alf-is-non-rearrangeable",IS_NON_SPLITTABLE:"alf-is-non-splittable",IS_OPTIONAL:"alf-is-optional",IS_PLAYING:"alf-is-playing",IS_REARRANGEABLE:"alf-is-rearrangeable",IS_REMOVABLE:"alf-is-removable",IS_REMOVED:"alf-is-removed",IS_RESPONSIVE:"alf-is-responsive",IS_RESIZABLE:"alf-is-resizable",IS_SPLITTABLE:"alf-is-splittable",IS_VISIBLE:"alf-is-visible",NO_SCORE:"alf-no-score",PAGENUM_X:function(e){return"alf-pagenum-"+e},PAGENUM_TOTAL_X:function(e){return"alf-pagenum-total-"+e},REVISION:function(e){return"alf-rev-"+e},REGION:"alf-region",REGION_FLEXIBLE:"alf-region-flexible",SIZE_DETECTOR:"alf-size-detector",STICK_TO_NEXT:"alf-stick-to-next",STRETCH_TO_FIT:"alf-stretch-to-fit",SUPPORTS_FULLSCREEN:"alf-supports-fullscreen",WIDGET:"alf-widget"}},function(e,exports){"use strict";function t(e,t){var i=e[0],o=e[1],l=e[2],u=e[3];i=n(i,o,l,u,t[0],7,-680876936),u=n(u,i,o,l,t[1],12,-389564586),l=n(l,u,i,o,t[2],17,606105819),o=n(o,l,u,i,t[3],22,-1044525330),i=n(i,o,l,u,t[4],7,-176418897),u=n(u,i,o,l,t[5],12,1200080426),l=n(l,u,i,o,t[6],17,-1473231341),o=n(o,l,u,i,t[7],22,-45705983),i=n(i,o,l,u,t[8],7,1770035416),u=n(u,i,o,l,t[9],12,-1958414417),l=n(l,u,i,o,t[10],17,-42063),o=n(o,l,u,i,t[11],22,-1990404162),i=n(i,o,l,u,t[12],7,1804603682),u=n(u,i,o,l,t[13],12,-40341101),l=n(l,u,i,o,t[14],17,-1502002290),o=n(o,l,u,i,t[15],22,1236535329),i=s(i,o,l,u,t[1],5,-165796510),u=s(u,i,o,l,t[6],9,-1069501632),l=s(l,u,i,o,t[11],14,643717713),o=s(o,l,u,i,t[0],20,-373897302),i=s(i,o,l,u,t[5],5,-701558691),u=s(u,i,o,l,t[10],9,38016083),l=s(l,u,i,o,t[15],14,-660478335),o=s(o,l,u,i,t[4],20,-405537848),i=s(i,o,l,u,t[9],5,568446438),u=s(u,i,o,l,t[14],9,-1019803690),l=s(l,u,i,o,t[3],14,-187363961),o=s(o,l,u,i,t[8],20,1163531501),i=s(i,o,l,u,t[13],5,-1444681467),u=s(u,i,o,l,t[2],9,-51403784),l=s(l,u,i,o,t[7],14,1735328473),o=s(o,l,u,i,t[12],20,-1926607734),i=r(i,o,l,u,t[5],4,-378558),u=r(u,i,o,l,t[8],11,-2022574463),l=r(l,u,i,o,t[11],16,1839030562),o=r(o,l,u,i,t[14],23,-35309556),i=r(i,o,l,u,t[1],4,-1530992060),u=r(u,i,o,l,t[4],11,1272893353),l=r(l,u,i,o,t[7],16,-155497632),o=r(o,l,u,i,t[10],23,-1094730640),i=r(i,o,l,u,t[13],4,681279174),u=r(u,i,o,l,t[0],11,-358537222),l=r(l,u,i,o,t[3],16,-722521979),o=r(o,l,u,i,t[6],23,76029189),i=r(i,o,l,u,t[9],4,-640364487),u=r(u,i,o,l,t[12],11,-421815835),l=r(l,u,i,o,t[15],16,530742520),o=r(o,l,u,i,t[2],23,-995338651),i=a(i,o,l,u,t[0],6,-198630844),u=a(u,i,o,l,t[7],10,1126891415),l=a(l,u,i,o,t[14],15,-1416354905),o=a(o,l,u,i,t[5],21,-57434055),i=a(i,o,l,u,t[12],6,1700485571),u=a(u,i,o,l,t[3],10,-1894986606),l=a(l,u,i,o,t[10],15,-1051523),o=a(o,l,u,i,t[1],21,-2054922799),i=a(i,o,l,u,t[8],6,1873313359),u=a(u,i,o,l,t[15],10,-30611744),l=a(l,u,i,o,t[6],15,-1560198380),o=a(o,l,u,i,t[13],21,1309151649),i=a(i,o,l,u,t[4],6,-145523070),u=a(u,i,o,l,t[11],10,-1120210379),l=a(l,u,i,o,t[2],15,718787259),o=a(o,l,u,i,t[9],21,-343485551),e[0]=f(i,e[0]),e[1]=f(o,e[1]),e[2]=f(l,e[2]),e[3]=f(u,e[3])}function i(e,t,i,n,s,r){return t=f(f(t,e),f(n,r)),f(t<<s|t>>>32-s,i)}function n(e,t,n,s,r,a,o){return i(t&n|~t&s,e,t,r,a,o)}function s(e,t,n,s,r,a,o){return i(t&s|n&~s,e,t,r,a,o)}function r(e,t,n,s,r,a,o){return i(t^n^s,e,t,r,a,o)}function a(e,t,n,s,r,a,o){return i(n^(t|~s),e,t,r,a,o)}function o(e){var i,n=e.length,s=[1732584193,-271733879,-1732584194,271733878];for(i=64;i<=e.length;i+=64)t(s,l(e.substring(i-64,i)));e=e.substring(i-64);var r=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];for(i=0;i<e.length;i++)r[i>>2]|=e.charCodeAt(i)<<(i%4<<3);if(r[i>>2]|=128<<(i%4<<3),i>55)for(t(s,r),i=0;16>i;i++)r[i]=0;return r[14]=8*n,t(s,r),s}function l(e){var t,i=[];for(t=0;64>t;t+=4)i[t>>2]=e.charCodeAt(t)+(e.charCodeAt(t+1)<<8)+(e.charCodeAt(t+2)<<16)+(e.charCodeAt(t+3)<<24);return i}function u(e){for(var t="",i=0;4>i;i++)t+=c[e>>8*i+4&15]+c[e>>8*i&15];return t}function d(e){for(var t=0;t<e.length;t++)e[t]=u(e[t]);return e.join("")}function h(e){return d(o(e))}function f(e,t){return e+t&4294967295}Object.defineProperty(exports,"__esModule",{value:!0});var c="0123456789abcdef".split("");exports["default"]=h},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(15),s=i(n),r=t(16),a=i(r),o=t(17),l=i(o),u=t(18),d=i(u),h=t(19),f=i(h);exports["default"]={Dispatcher:s["default"],Appear:a["default"],Clip:l["default"],Fade:d["default"],Scale:f["default"]}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(10),s=i(n),r=t(9),a=i(r),o=t(1),l=i(o),u=t(2),d=i(u),h=Math,f=s["default"].extend();l["default"].extend(f.prototype,a["default"].Events,{initialize:function(e){e=this.options=l["default"].extend({},e||{}),l["default"].bindAll(this,"stopRunning"),this.isReset=!1,this._isRunning=!1,this._isReversible=!1,e.target&&this.setTarget(e.target),e.to&&this.setTo(e.to)},setTarget:function(e){this.target=l["default"].defaults(e,{el:null,width:null,height:null,top:null,left:null}),this.calcMetrics()},setTargetEl:function(e){this.setTarget({el:e})},setTo:function(e){this.to=l["default"].defaults(e,{el:null,width:null,height:null})},isRunning:function(){return this._isRunning},stopRunning:function(){this._isRunning=!1},calcMetrics:function(){var e,t;e=this.target,t=this.to,e=l["default"].extend(e,e.el.getBoundingClientRect()),t=l["default"].extend(t,{width:t.el.clientWidth,height:t.el.clientHeight}),t.scaleX=e.width/t.width,t.scaleY=e.height/t.height,t.scale=h.max(t.scaleX,t.scaleY),e.scaleX=t.width/e.width,e.scaleY=t.height/e.height,e.scale=h.min(e.scaleX,e.scaleY),this.offsetX=h.round(e.left+(e.width-t.width)/2),this.offsetY=h.round(e.top+(e.height-t.height)/2),t.maskHeight=h.round(e.height/t.scale),t.maskWidth=h.round(e.width/t.scale),t.clipHeight=t.height-t.maskHeight,t.clipWidth=t.width-t.maskWidth},reset:function(){var e=this.to,t=this.options.effect.animateFromProps.call(this);e.el.style.webkitTransitionDuration="0ms",e.el.style.mozTransitionDuration="0ms",e.el.style.msTransitionDuration="0ms",e.el.style.oTransitionDuration="0ms",e.el.style.transitionDuration="0ms";for(var i in t)-1===i.toLowerCase().indexOf("transition")&&(e.el.style[i]=t[i])},run:function(e){if(this._isRunning)return!1;this._isRunning=!0,this._isReversible=!0;var t=this,i=this.target,n=this.to,s=function(){t._animate(e)};if(!this.options.upscaleTarget||!i||!i.el)return void this.trigger("willAppear",this,s);i.el.classList.add("alf-is-moving");var r="",a=n.width/2-i.width/2-i.left,o=n.height/2-i.height/2-i.top;r+="translate3d("+a+"px, "+o+"px, 1px) ",r+="scale("+i.scale+") ",(0,d["default"])(i.el).one("webkitTransitionEnd",l["default"].bind(this._onScaleEnd,this,e)),(0,d["default"])(i.el).one("transitionend",l["default"].bind(this._onScaleEnd,this,e)),i.el.style.webkitTransition="-webkit-transform ease-out 300ms",i.el.style.transition="transform ease-out 300ms",i.el.style.webkitTransform=r,i.el.style.transform=r},reverse:function(e){var t=this.options.effect;if(this._isRunning||!this._isReversible)return!1;this._isRunning=!0;var i=this.to,n=(t.reverseProps||t.animateFromProps).call(this);(0,d["default"])(i.el).one("webkitTransitionEnd",l["default"].bind(this._onReverseEnd,this,e)),(0,d["default"])(i.el).one("transitionend",l["default"].bind(this._onReverseEnd,this,e));for(var s in n)i.el.style[s]=n[s]},reverseTo:function(e,t){this.to={el:e},this.calcMetrics(),this.reverse(t)},_animate:function(e){var t=this.to,i=this.options.effect.animateToProps.call(this);this.reset(),this.trigger("ready",this),(0,d["default"])(t.el).one("webkitTransitionEnd",l["default"].bind(this._onAnimateEnd,this,e)),(0,d["default"])(t.el).one("transitionend",l["default"].bind(this._onAnimateEnd,this,e)),l["default"].each(i,function(e,i){t.el.style[i]=e})},_onAnimateEnd:function(e){var t;this.to&&this.to.el&&(this.to.el.style.removeProperty("-webkit-transition"),this.to.el.style.removeProperty("transition")),this.target&&this.target.el&&(t=this.target.el.style,t.removeProperty("-webkit-transform"),t.removeProperty("-webkit-transition"),t.removeProperty("transform"),t.removeProperty("transition"),(0,d["default"])(this.target.el).removeClass("alf-is-moving")),e&&e.call(this,this),this.trigger("didAppear",this),setTimeout(this.stopRunning,100)},_onReverseEnd:function(e){this._isReversible=!1,this.to.el.style.webkitTransition="none",this.to.el.style.webkitTransform="none",this.to.el.style.mozTransition="none",this.to.el.style.mozTransform="none",this.to.el.style.msTransition="none",this.to.el.style.msTransform="none",this.to.el.style.oTransition="none",this.to.el.style.oTransform="none",this.to.el.style.transition="none",this.to.el.style.transform="none",e&&e.call(this,this),this.trigger("didDisappear",this),setTimeout(this.stopRunning,100)},_onScaleEnd:function(e){var t=this,i=function(){t._animate(e)};this.trigger("willAppear",this,i)}}),exports["default"]=f},function(e,exports){"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var t={reverseProps:function(){return{webkitTransition:"-webkit-transform ease-out 300ms",webkitTransform:"translate3d(-1500px, -1500px, 0) scale(0.4)"}},animateFromProps:function(){var e="";return e+="scaleX(0.8) scaleY(0.8) ",{webkitTransition:"-webkit-transform ease-out 300ms, opacity ease-out 300ms",webkitTransform:e,opacity:0}},animateToProps:function(){return{webkitTransition:"-webkit-transform ease-out 300ms, opacity ease-out 300ms",webkitTransform:"translate3d(0, 0, 0) scaleX(1) scaleY(1)",opacity:1}}};exports["default"]=t},function(e,exports){"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var t=Math;exports["default"]={animateFromProps:function(){var e="",i=this.to,n=t.round(this.clipHeight/2),s=i.height-n,r=t.round(this.clipWidth/2),a=i.width-r;return e+="translate3d("+this.offsetX+"px, "+this.offsetY+"px, 0px) ",e+="scale("+this.to.scale+") ",{webkitTransition:"-webkit-transform ease-out 300ms, clip ease-out 300ms",webkitTransform:e,clip:"rect("+n+"px, "+a+"px, "+s+"px, "+r+"px) "}},animateToProps:function(){var e=this.to;return{webkitTransition:"-webkit-transform ease-out 300ms, clip ease-out 300ms",webkitTransform:"translate3d(0, 0, 0) scaleX(1) scaleY(1)",clip:"rect(0px, "+e.width+"px, "+e.height+"px, 0px)"}}}},function(e,exports){"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var t={animateFromProps:function(){return{webkitTransition:"opacity ease-out 300ms",mozTransition:"opacity ease-out 300ms",msTransition:"opacity ease-out 300ms",oTransition:"opacity ease-out 300ms",transition:"opacity ease-out 300ms",opacity:0}},animateToProps:function(){return{webkitTransition:"opacity ease-out 300ms",mozTransition:"opacity ease-out 300ms",msTransition:"opacity ease-out 300ms",oTransition:"opacity ease-out 300ms",transition:"opacity ease-out 300ms",opacity:1}}};exports["default"]=t},function(e,exports){"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var t={animateFromProps:function(){var e="";return e+="translate3d("+this.offsetX+"px, "+this.offsetY+"px, 0px) ",e+="scaleX("+this.scaleX+") scaleY("+this.scaleY+") ",{webkitTransition:"-webkit-transform ease-out 300ms, opacity ease-out 200ms",webkitTransform:e,opacity:0}},animateToProps:function(){return{webkitTransition:"-webkit-transform ease-out 300ms, opacity ease-out 200ms",webkitTransform:"translate3d(0, 0, 0) scaleX(1) scaleY(1)",opacity:1}}};exports["default"]=t},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(21),s=i(n),r=t(22),a=i(r),o=t(23),l=i(o),u=t(24),d=i(u);exports["default"]={Manager:s["default"],View:a["default"],Page:l["default"],Fullscreen:d["default"]}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(10),s=i(n);exports["default"]=s["default"].extend({initialize:function(){this.layers=[],this.length=0},add:function(e){return this.layers.push(e),this.length=this.layers.length,this},remove:function(e){var t=this.layers;return t.splice(t.indexOf(e),1),this.length=this.layers.length,this},at:function(e){return this.layers[e]},getPos:function(e){return this.layers.indexOf(e)},getLayerAbove:function(e){return this.at(this.getPos(e)+1)},getLayerBelow:function(e){return this.at(this.getPos(e)-1)}})},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(11),a=i(r),o=t(14),l=i(o),u=t(12),d=i(u),h=a["default"].extend();s["default"].extend(h.prototype,{initialize:function(e){e&&e.manager&&(this.manager=e.manager,this.manager.add(this))},tearDown:function(){this.stopListening()},show:function(){return this.$el.removeClass(d["default"].IS_HIDDEN),this},hide:function(){return this.$el.addClass(d["default"].IS_HIDDEN),this},above:function(){return this.manager.getLayerAbove(this)},below:function(){return this.manager.getLayerBelow(this)},minimize:function(){var e=this,t=this.below();return t.show(),t.transition.reverse(function(){e.hide()}),this},transitionTo:function(e,t,i){return this._createTransition({layer:e,target:i,effect:t,upscaleTarget:!1})},scaleTo:function(e,t,i){return this._createTransition({layer:e,target:i,effect:t,upscaleTarget:!0})},transitionToLayerAbove:function(e,t){return this.transitionTo(this.above(),e,t)},transitionToLayerBelow:function(e,t){return this.transitionTo(this.below(),t,e)},_createTransition:function(e){e.to={el:e.layer.el};var t=new l["default"].Dispatcher(e);return this.listenTo(t,"didDisappear",function(t){e.layer.$el.addClass(d["default"].IS_HIDDEN)}),this.listenTo(t,"ready",function(){e.layer.$el.removeClass(d["default"].IS_HIDDEN)}),t}});var f=h.prototype;f.getLayerBelow=f.below,f.getLayerAbove=f.above,exports["default"]=h},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(22),a=i(r),o=a["default"].extend();s["default"].extend(o.prototype,{render:function(){return this}}),exports["default"]=o},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(2),a=i(r),o=t(22),l=i(o),u=t(12),d=i(u),h=t(25),f=i(h),c=t(8),p=i(c),g=l["default"].extend();s["default"].extend(g.prototype,{fullscreenEvents:{touch:{touchstart:"_onTouchStart",singleTap:"toggleControls","tap .alf-fullscreen-exit":"exitFullscreen",doubleTap:"exitFullscreen",touchend:"preventDefault"},pointer:{mouseover:"showControls",mouseout:"hideControls","click .alf-fullscreen-exit":"exitFullscreen",dblclick:"exitFullscreen"}},initialize:function(e){e=this.options=s["default"].extend({},e||{}),s["default"].bindAll(this,"_onScroll"),g.__super__.initialize.apply(this,s["default"].toArray(arguments)),this.position=this.$el.css("position"),this.listenTo(p["default"],"fullscreenWillAppear",this._fullscreenWillAppear),e.resizeToWindow=void 0===e.resizeToWindow?!0:e.resizeToWindow,this.delegateEvents(f["default"].touchScreen?this.fullscreenEvents.touch:this.fullscreenEvents.pointer)},tearDown:function(){this.stopListening(),this.$el.empty()},render:function(){return this},renderFullscreenContainer:function(e){var t,i,n=new RegExp("\\s?"+d["default"].REVISION("")+"[^\\s]*");return this.el.className=this.el.className.replace(n,""),i=(0,a["default"])("<div>").addClass(d["default"].BTN_GROUP),i.append((0,a["default"])("<button>").addClass(d["default"].FULLSCREEN_EXIT)),this.$toolbar=(0,a["default"])("<div>").addClass(d["default"].FULLSCREEN_TOOLBAR),this.$toolbar.append(i),this.$content=(0,a["default"])("<div>").addClass(d["default"].FULLSCREEN_CONTENT),this.$content.append(e.el),t=document.createDocumentFragment(),t.appendChild(this.$toolbar[0]),t.appendChild(this.$content[0]),this.$el.empty().removeClass(d["default"].CONTROLS_OFF).addClass(d["default"].REVISION(e.options.revision)).append(t),this.options.resizeToWindow||this.metrics||this._calculateMetrics(),this},toggleControls:function(){this.$el.toggleClass(d["default"].CONTROLS_OFF)},showControls:function(){this.$el.removeClass(d["default"].CONTROLS_OFF)},hideControls:function(){this.$el.addClass(d["default"].CONTROLS_OFF)},exitFullscreen:function(e){e&&(e.stopPropagation(),e.preventDefault());var t=this.below();return this.gestureStarted||t.transition.isRunning()?!1:((0,a["default"])(window).off("mousewheel",this._onMouseWheelScroll).off("scroll touchmove touchend",this._onScroll),t.transition.reverse(),void p["default"].trigger("fullscreenWillDisappear"))},_calculateMetrics:function(){this._windowHeight=window.innerHeight,this._windowWidth=window.innerWidth,this.metrics=this.$el.metrics()},_onTouchStart:function(e){var t,i=(0,a["default"])(e.target);t=i.css("overflow"),"scroll"!==t&&"auto"!==t&&e.preventDefault()},_onGestureStart:function(e){return this.gestureStarted||this.below().transition.isRunning()?!1:(this.gestureStarted=!0,void this.startTransform(e))},_onGestureChange:function(e){return this.below().transition.isRunning()?!1:void this.transformEventTarget(e)},_onGestureEnd:function(e){var t=this.below();return t.transition.isRunning()?!1:(t.transition.reverse(),void(this.gestureStarted=!1))},_fullscreenWillAppear:function(e){var t;if(t={},this.options.resizeToWindow&&(t.width=window.innerWidth+"px",t.height=window.innerHeight+"px"),"fixed"!==this.position){this.x=window.pageXOffset,this.y=window.pageYOffset;var i="translate("+this.x+"px, "+this.y+"px)";t[f["default"].prefixStyle("transform")]=i,t.transform=i}this.$el.css(t),(0,a["default"])(window).on("mousewheel",this._onMouseWheelScroll).on("scroll touchmove touchend",this._onScroll)},_onMouseWheelScroll:function(e){e.preventDefault()},_onScroll:function(e){if("fixed"!==this.position&&(this.y!==window.pageYOffset||this.x!==window.pageXOffset)){this.y=window.pageYOffset,this.x=window.pageXOffset;var t="translate("+this.x+"px, "+this.y+"px)",i={transform:t};i[f["default"].prefixStyle("transform")]=t,this.$el.css(i)}}}),exports["default"]=g},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}function n(e){return function(){console[e].apply(console,[].slice.call(arguments))}}Object.defineProperty(exports,"__esModule",{value:!0});var s=t(1),r=i(s),a="undefined"!=typeof window,o={touchScreen:a&&"ontouchstart"in window,getRandomInt:function(e,t){return Math.floor(Math.random()*(t-e+1))+e},getVendorPrefix:r["default"].memoize(function(e){var t=["","webkit","moz","ms"];return e=o.camelize(e),r["default"].find(t,function(t){return void 0!==document.body.style[t+e]})}),prefixStyle:function(e,t){var i=o.getVendorPrefix(e);return t?i+o.camelize(e):"-"+i+"-"+e},camelize:function(e){return e.charAt(0).toUpperCase()+e.slice(1)},matchMedia:"undefined"!=typeof window&&window.matchMedia&&r["default"].bind(window.matchMedia,window)};o.dom={getFieldMap:function(e){var t=e.getAttribute("data-map");return t?t.split(" "):[]},getMediaQuery:function(e){return e.getAttribute("data-media")}},a&&!window.console&&(window.console={}),a&&!window.console.log&&r["default"].each(["log","warning","error","info"],function(e){window.console[e]=function(){return{}}}),o.console={log:n("log"),warn:n("warn"),error:n("error"),info:n("info"),debug:n("debug"),groupCollapsed:n("groupCollapsed"),group:n("group"),groupEnd:n("groupEnd")},exports["default"]=o},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(27),s=i(n),r=t(35),a=i(r),o=t(52),l=i(o),u=t(51),d=i(u),h=t(55),f=i(h),c=t(36),p=i(c);exports["default"]={Article:s["default"],Page:a["default"],Template:l["default"],TemplateManager:d["default"],Content:f["default"],Format:p["default"]}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}var n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol?"symbol":typeof e};Object.defineProperty(exports,"__esModule",{value:!0});var s=t(2),r=i(s),a=t(1),o=i(a),l=t(25),u=i(l),d=t(11),h=i(d),f=t(28),c=i(f),p=t(33),g=i(p),m=t(34),v=i(m),_=t(36),E=i(_),w=t(12),y=i(w),T=t(51),b=i(T),M=t(35),C=i(M),S=t(55),P=i(S),O=h["default"].extend();o["default"].extend(O.prototype,g["default"],c["default"],{initialize:function(e){e=this.options=o["default"].extend({revision:"no-rev"},e||{}),o["default"].bindAll(this,"render"),this.templates=null,this.overrideTemplates={},this.layer=e.layer||null,this.fullscreenLayer=e.fullscreenLayer||this.layer&&this.layer.above()||null,this.pages={},this.numberOfPages=0,this.format=e.format||null,this.defaultMetrics(e.metrics),e.content&&this.setContent(e.content),this.setupWidgets(e),e.templates&&this.setTemplates(e.templates)},tearDown:function(){o["default"].invoke(this.pages,"tearDown")},render:function(){return this},discard:function(){o["default"].invoke(this.pages,"tearDown"),this.pages={},this.overrideTemplates={},this.numberOfPages=0},compile:function(){var e=new v["default"](this);return e.compile()},decompile:function(e){var t=new v["default"](this);return t.decompile(e),this},setTemplates:function(e){var t=this.templates||[];return e=b["default"].getEligibleTemplatesForArticle(this,e),t&&t.length?void(this.templates=o["default"].map(e,function(e){var i=o["default"].find(t,function(t){return t.name===e.name});return i&&(i.setElement(e.el),this._reloadPagesUsingTemplate(i)),i||e},this)):void(this.templates=e)},_reloadPagesUsingTemplate:function(e){o["default"].each(this.pages,function(t){t.template===e&&(t.template=null,t.setTemplateIfUsable(e))})},setTemplateForPageNum:function(e,t){this.overrideTemplates[t]=e,this.pages[t]&&(this.pages[t].hasOverrideTemplate=!0)},revert:function(e){for(var t in this.pages)e>t||!this.pages[t]||this.pages[t].revert()},reflow:function(e){o["default"].each(["prepareToReflow","reflow"],function(t){for(var i in this.pages)e>i||!this.pages[i]||this.pages[i][t]()},this)},renderPage:function(e,t){var i,n;return this._calcContentMetrics(e),i=o["default"].isObject(t)?t:this._getOrCreatePageForPageNum(t),n=this.overrideTemplates[i.pageNum],i.prepareToRender(),e.innerHTML="",(0,r["default"])(e).append(i.el),i.render(),i.hasOverrideTemplate=!(!n||n!==i.template),i},renderPages:function(e,t){var i;for(t=t||0,this._calcContentMetrics(e);!this.content.isEmpty()&&(i=this._doRenderPage(e,t));)this.pages[t]=i,t+=1;return this.numberOfPages=this.getNumberOfPagesInUse(),o["default"].invoke(this.pages,"allPagesDidRender",this.numberOfPages),this},getNumberOfPagesInUse:function(){var e=0;for(var t in this.pages)this.pages[t].pageTemplate.didRetainElements()?e+=1:(this.pages[t].tearDown(),delete this.pages[t]);return e},setContent:function(e){if(e instanceof P["default"])this.content=e;else{if(!o["default"].isPlainObject(e))throw new Error("Unsupported data in setContent: "+("undefined"==typeof e?"undefined":n(e)));this.content=new P["default"](e)}},findContainerInElement:function(e){var t,i;return i=(0,r["default"])(e),i=i.is("."+y["default"].CONTAINER)?i:i.find("."+y["default"].CONTAINER),i.length?(o["default"].each(this.pages,function(e){return t=o["default"].find(e.pageTemplate.containers,function(e){return e.el===i[0]}),t?!1:void 0}),t):!1},_getOrCreatePageForPageNum:function(e){var t=this.pages[e],i=this.overrideTemplates[e];return t||(t=this.createPage(e)),t.rendered?t:(t.scoredTemplates=b["default"].getScoredTemplatesForPage(t,this.templates.slice(0)),t.templates=o["default"].pluck(t.scoredTemplates,"template"),i&&t.setTemplateIfUsable(i)||t.setupBestTemplate()?t:!1)},createPage:function(e){var t=this.metrics;return new C["default"]({className:this.content.className,content:this.content,layer:this.layer,fullscreenLayer:this.fullscreenLayer,widgets:this.widgets,fullscreenWidgets:this.fullscreenWidgets,pageNum:e,format:this.format,revision:this.options.revision,metrics:{height:t.height,width:t.width,lineHeight:t.lineHeight}})},_doRenderPage:function(e,t){for(var i,n=0;;){if(i=this._getOrCreatePageForPageNum(t),!i)return!1;if(this.renderPage(e,i),i.pageTemplate.didRetainElements())return i;if(u["default"].console.warn("Page "+t+" did not retain any elements on attempt "+n,"left:",this.content.elementsLeft),n+=1,n>1||!this.overrideTemplates[t])return u["default"].console.warn("stopped trying after "+n+" attempts"),!1;this.overrideTemplates[t]=null}},_getSampleTemplate:function(){var e=0;return o["default"].find(this.templates,function(t){return t.regions&&t.regions.length>e})},_calcContentMetrics:function(e){if(!this.hasCalculatedMetrics){this.setMetrics((0,r["default"])(e).metrics()),this.format&&this.format instanceof E["default"]&&(this.metrics.height=this.format.get("height"),this.metrics.width=this.format.get("width"));var t,i=this._getSampleTemplate();if(!i)return void u["default"].console.warn("No sample template found. Failed to precalculate metrics for ",this);i=b["default"].getPageTemplateFromTemplate(i),t=i.regions,i.$el.css("visibility","hidden"),i.$el.addClass(y["default"].REVISION(this.options.revision)),e.appendChild(i.el),this._calcBlockMetrics(t[0].el),e.removeChild(i.el),t[0].$el.empty(),this.hasCalculatedMetrics=!0}},_calcBlockMetrics:function(e){var t=this.content.getBlocks(),i=document.createDocumentFragment();o["default"].each(t,function(e){i.appendChild(e.render().el)}),e.appendChild(i),o["default"].each(t,function(e){e.calculateMetrics()})}}),exports["default"]=O},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(29),a=i(r),o=t(30),l=i(o);exports["default"]={setupWidgets:function(e){var t;this.widgets=e.widgets,e.widgets instanceof a["default"]||(this.widgets=new a["default"](l["default"]),t=s["default"].isArray(e.widgets),s["default"].each(e.widgets,function(e,i){this.widgets.add(e,t?void 0:i)},this))}}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(10),s=i(n),r=t(1),a=i(r),o=s["default"].extend({initialize:function(e){this.widgets=[],a["default"].isPlainObject(e)&&a["default"].each(e,function(e,t){this.add(e,t)},this)},add:function(e,t){this.widgets.push(this.normalize(e,t))},normalize:function(e,t){if("function"==typeof e&&(e={run:e}),a["default"].defaults(e,{compile:!1,render:function(){},run:function(e){e()},fullscreen:function(e,t){t()},selector:t}),!e.selector)throw new Error("Failed to normalize widget. No selector found!");return e},getMatchesForContainer:function(e){var t=[];return this.each(function(i){var n=e.$el.is(i.selector)?e.$el:e.$el.find(i.selector);n.length&&t.push({container:e,widget:i,$el:n,el:n[0]})},this),t}});a["default"].each(["each","map","isEmpty","filter"],function(e){o.prototype[e]=function(){var t=Array.prototype.slice.call(arguments);return t.unshift(this.widgets),a["default"][e].apply(a["default"],t)}}),exports["default"]=o},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}function n(e,t){var i=(0,r["default"])('<div class="alf-slideshow-nav">'),n=(0,r["default"])('<a class="alf-slideshow-nav-next"></a>'),s=(0,r["default"])('<a class="alf-slideshow-nav-prev"></a>');i.append(s).append(n),e.append(i),s.on("dblclick",!1),n.on("dblclick",!1),s.on("click",function(){return t.gotoPrevPage(),!1}),n.on("click",function(){return t.gotoNextPage(),!1});var a=t.options.numberOfPages;s.addClass("alf-is-hidden"),t.on("pageWillAppear",function(e,t){0===t?s.addClass("alf-is-hidden"):t>0&&a-1>t?(s.removeClass("alf-is-hidden"),n.removeClass("alf-is-hidden")):t===a-1&&n.addClass("alf-is-hidden")})}Object.defineProperty(exports,"__esModule",{value:!0});var s=t(2),r=i(s),a=t(25),o=i(a),l=t(31),u=i(l);
-exports["default"]={".alf-slideshow":{compile:!0,render:function(){var e,t,i;e=(0,r["default"])("<div>").css({position:"relative",top:0,left:0}),t=(0,r["default"])("<div>").addClass("alf-slideshow-toggle alf-fullscreen-toggle alf-is-draggable"),this.$el.children(":not(:first-child)").remove(),e.append(t).append(this.$el),i=(0,r["default"])("<div>").addClass("alf-slideshow-stack"),this.$el.addClass("alf-slideshow-inline").prepend(i.clone().addClass("alf-slideshow-stack-1")).prepend(i.clone().addClass("alf-slideshow-stack-2")),this.container.$el.append(e)},run:function(e){var t=this.container.$el.find(".alf-slideshow-toggle");t.length&&"none"!==t.css("display")&&this.container.preventDefaultEvents(),this.container.$el.on(o["default"].touchScreen?"tap":"click",".alf-fullscreen-toggle",this.container.enterFullscreen).on("touchend",".alf-fullscreen-toggle",function(e){e.preventDefault()}),e()},fullscreen:function(e,t){var i,s,a,l;a=e.$el.find(".alf-slideshow").children().clone(),l=a.length,s=(0,r["default"])('<button class="alf-slideshow-progress"></button>'),s.text("1/"+l),e.layer.$toolbar.append(s),i=(0,r["default"])('<div class="alf-slideshow"><div class="alf-pages"><div class="alf-page alf-page-1"><section class="alf-page-loader swiper-page-is-loading"></section><section class="alf-page-content"></section></div><div class="alf-page alf-page-2"><section class="alf-page-loader swiper-page-is-loading"></section><section class="alf-page-content"></section></div><div class="alf-page alf-page-3"><section class="alf-page-loader swiper-page-is-loading"></section><section class="alf-page-content"></section></div></div></div>'),e.$el.empty().append(i);var d=new u["default"](i[0],{numberOfPages:a.length,enableKeyNavigation:!0});d.on("pageWillRender",function(e,t){(0,r["default"])(e).empty().append(a[t])}),d.on("pageWillAppear",function(e,t){s.text(t+1+"/"+l)}),d.start(),o["default"].touchScreen||n(e.layer.$content,d),t()}},".alf-stretch-to-fit h1":{compile:!0,render:function(){this.$el.textFit()}}}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(32),s=i(n);exports["default"]=s["default"]},function(e,exports){"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var t=5,i=["_onMove","_onMoveStart","_onMoveEnd","_onMoveStartCapture","_onMoveCapture","_onMoveEndCapture","_onTransitionEnd","_onKeyPress","_refresh","_renderPages"],n=Array.prototype.slice,s=function(e,t,i){return n.call(e).forEach(t,i)},r=function(e,t){var n=this,r=e.children[0];i.forEach(function(e){n[e]=n[e].bind(n)}),this.el=e,this.elements={pageContainer:r,pages:[],scrollablePages:[]},s(r.children,function(e,t){this.elements.pages.push({el:e,offset:100*t,pageNum:t}),e.classList.contains("is-scrollable")&&this.elements.scrollablePages.push(e)},this),this.concurrentPages=this.elements.pages.length,t=t||{},t.overflowScrolling=t.overflowScrolling||!1,t.renderDeferTime=t.renderDeferTime||200,t.scrollDuration=t.scrollDuration||320,t.tapToFlip=t.tapToFlip||!1,t.loadingClass=t.loadingClass||"swiper-page-is-loading",t.enableKeyNavigation=void 0===t.enableKeyNavigation?!0:t.enableKeyNavigation,this.options=t,this.events={},this.renderTimeout=null,this.pageFlipWidth=50,this.x=0,this.currentPage=0};r.prototype={start:function(){this.pageWidth=this.elements.pages[0].el.clientWidth,this.windowWidth=window.innerWidth,this._renderPages(),this.enable()},gotoPage:function(e,t,i){var n,s,r=this,a=this.x||0;t=void 0!==t?t:this.options.scrollDuration,i=0===t?!1:i,e=parseInt(e,10),clearTimeout(this.renderTimeout),0>e||isNaN(e)||0===this.options.numberOfPages?e=0:e>this.options.numberOfPages-1&&(e=this.options.numberOfPages-1),this.prevPage=this.currentPage,this.currentPage=e,e>0&&e<this.options.numberOfPages-1&&this._positionPages(),this.x=e*this.pageWidth*-1,this._moveX(this.elements.pageContainer,this.x+"px",t),i&&a!==this.x||this._onPageChange(!0),this.prevPage!==this.currentPage&&(n=this.elements.pages[e%this.concurrentPages],r.trigger("pageWillAppear",n.el.children[1],e),s=this.elements.pages[this.prevPage%this.concurrentPages],r.trigger("pageWillDisappear",s.el.children[1],this.prevPage))},on:function(e,t,i){var n=this.events[e]||(this.events[e]=[]);n.push({callback:t,context:i||this})},trigger:function(e){var t,i=this.events[e];if(i){t=n.call(arguments,1);for(var s in i)i[s].callback.apply(i[s].context,t)}},enable:function(){var e=this.elements.pageContainer;this._disableOverflowScrolling(),e.addEventListener("touchstart",this._onMoveStartCapture,!0),e.addEventListener("webkitTransitionEnd",this._onTransitionEnd,!0),e.addEventListener("transitionend",this._onTransitionEnd,!0),window.addEventListener("keydown",this._onKeyPress,!1),window.addEventListener("resize",this._refresh,!0)},disable:function(){this._enableOverflowScrolling(),this.elements.pageContainer.addEventListener("touchstart",this._onMoveStartCapture,!0),window.removeEventListener("keydown",this._onKeyPress,!1),window.removeEventListener("resize",this._refresh,!0)},gotoCurrentPage:function(e){this.gotoPage(this.currentPage,e)},gotoPrevPage:function(){this.gotoPage(this.currentPage-1,this.options.scrollDuration)},gotoNextPage:function(){this.gotoPage(this.currentPage+1,this.options.scrollDuration)},refresh:function(e){s(this.elements.pages,function(e){e.prevPage=void 0}),e=e||{};for(var t in e)this.options[t]=e[t];this.trigger("refresh"),this.gotoPage(this.currentPage,void 0,!1)},reset:function(e){this.prevPage=void 0,s(this.elements.pages,function(e){e.prevPage=void 0===e.prevPage?void 0:null,e.pageNum=null}),e=e||{};for(var t in e)this.options[t]=e[t];this.trigger("refresh"),this.gotoPage(0,0,!1)},_positionPages:function(){var e=this,t=this.currentPage,i=(this.concurrentPages-1)/2,n=t-i,s=t+i;n=0>n?0:n,s=s<this.options.numberOfPages?s:this.options.numberOfPages-1;for(var r=n;s>=r;r++){var a=this.elements.pages[r%this.concurrentPages],o=100*r,l=a.el.children[0];a.prevOffset=void 0===a.offset?o:a.offset,a.offset=o,a.prevOffset!==a.offset&&(l.classList.add(e.options.loadingClass),this._moveX(a.el,a.offset+"%"))}},_renderPage:function(e,t){var i=e.el.children[1],n=void 0===e.prevPage;e.prevPage=e.pageNum,e.pageNum=t,(n||e.prevPage!==e.pageNum)&&(i.scrollTop=0,i.scrollLeft=0,n||this.trigger("pageWillDestruct",i,e.prevPage),this.trigger("pageWillRender",i,t)),e.el.children[0].classList.remove(this.options.loadingClass)},_renderPages:function(){for(var e,t,i=this,n=this.currentPage,s=n,r=this.options,a=this.elements.pages,o=n<=this.prevPage?1:-1,l=0;l<this.concurrentPages;l++)s+=l*o,o*=-1,e=a[s%this.concurrentPages],!e||s>r.numberOfPages-1||i._renderPage(e,s);i.trigger("pageDidAppear",a[n%this.concurrentPages].el.children[1],n),t=a[this.prevPage%this.concurrentPages],t&&i.trigger("pageDidDisappear",t.el.children[1],this.prevPage)},_refresh:function(e){this.pageWidth=this.elements.pages[0].el.clientWidth,this.windowWidth=window.innerWidth,this.gotoCurrentPage()},_onKeyPress:function(e){if(this.options.enableKeyNavigation)switch(e.keyCode){case 37:this.gotoPrevPage();break;case 39:this.gotoNextPage()}},_onMoveStartCapture:function(e){var t=this.elements.pageContainer;this.moved=!1,this.pointX=e.touches[0].pageX,this.pointY=e.touches[0].pageY,this.deltaX=0,this.deltaY=0,this.distX=0,this.distY=0,this.directionCalc=!1,this.multitouch=e.touches.length>1,this.multitouch?(this._disableOverflowScrolling(),t.removeEventListener("touchmove",this._onMoveCapture,!0),t.removeEventListener("touchend",this._onMoveEndCapture,!0)):(t.addEventListener("touchmove",this._onMoveCapture,!0),t.addEventListener("touchend",this._onMoveEndCapture,!0)),t.addEventListener("touchstart",this._onMoveStart,!1)},_onMoveCapture:function(e){var t=this.elements.pageContainer,i=e.touches[0].pageX,n=e.touches[0].pageY;this.multitouch||(this.deltaX=i-this.pointX,this.deltaY=n-this.pointY,this.pointX=i,this.pointY=n,this.directionCalc||(this.distX<4&&this.distY<4&&(this.distX+=Math.abs(this.deltaX),this.distY+=Math.abs(this.deltaY),this.directionCalc=!0),this.distY<2||this.distX>this.distY+5?(this._disableOverflowScrolling(),t.addEventListener("touchmove",this._onMove,!1),t.addEventListener("touchend",this._onMoveEnd,!1)):(this.distX<2||this.distY>this.distX+5)&&this._enableOverflowScrolling()))},_onMoveEndCapture:function(e){if(this.elements.pageContainer.removeEventListener("touchstart",this._onMoveStart,!1),this._disableOverflowScrolling(),this.options.tapToFlip&&!this.moved){if(this.pointX<this.pageFlipWidth)return void this.gotoPrevPage();if(this.pointX>this.windowWidth-this.pageFlipWidth)return void this.gotoNextPage()}},_onMoveStart:function(e){this.startX=e.touches[0].pageX,this.startY=e.touches[0].pageY},_onMove:function(e){e.preventDefault(),clearTimeout(this.renderTimeout),this.moved=!0,(this.x>0||this.currentPage===this.options.numberOfPages-1&&this.x<0)&&(this.deltaX*=.5),this.x+=this.deltaX,this._moveX(this.elements.pageContainer,Math.round(this.x)+"px",0)},_onMoveEnd:function(){var e=this.elements.pageContainer,i=this.startX-this.pointX,n=Math.abs(i),s=Math.abs(this.deltaX),r=this.pageWidth/2,a=this.options.scrollDuration;this.elements.pageContainer.style.webkitTransitionDuration=a+"ms",this.elements.pageContainer.style.MozTransitionDuration=a+"ms",e.removeEventListener("touchmove",this._onMove,!1),e.removeEventListener("touchend",this._onMoveEnd,!1),this._disableOverflowScrolling(),r>n&&t>s?this.gotoCurrentPage():i>0?this.gotoNextPage():this.gotoPrevPage()},_moveX:function(e,t,i){void 0!==i&&(e.style.webkitTransitionDuration=i+"ms",e.style.MozTransitionDuration=i+"ms"),e.style.webkitTransform="translate3d("+t+", 0, 0)",e.style.MozTransform="translate("+t+", 0)"},_onPageChange:function(e){e?this._renderPages():this.renderTimeout=setTimeout(this._renderPages,this.options.renderDeferTime)},_onTransitionEnd:function(e){-1!==e.propertyName.indexOf("transform")&&this._onPageChange()},_preventDefaultEvent:function(e){e.preventDefault()},_disableOverflowScrolling:function(){if(this.options.overflowScrolling){var e=this;s(this.elements.scrollablePages,function(t){t.addEventListener("touchmove",e._preventDefaultEvent,!0)})}},_enableOverflowScrolling:function(){if(this.options.overflowScrolling){var e=this;s(this.elements.scrollablePages,function(t){t.removeEventListener("touchmove",e._preventDefaultEvent,!0)})}}},r.prototype.destroy=r.prototype.disable,exports["default"]=r,Function.prototype.bind||(Function.prototype.bind=function(e){if("function"!=typeof this)throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");var t=Array.prototype.slice.call(arguments,1),i=this,n=function(){},s=function(){return i.apply(this instanceof n?this:e||window,t.concat(Array.prototype.slice.call(arguments)))};return n.prototype=this.prototype,s.prototype=new n,s})},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(12),a=i(r);t(2),exports["default"]={isInline:!1,defaultMetrics:function(e){this.metrics=s["default"].extend({height:0,width:0,outerHeight:0,lineHeight:24,marginTop:0,marginRight:0,marginBottom:0,marginLeft:0,marginHeight:0,marginWidth:0},this.metrics||{},e||{})},setMetrics:function(e){this.metrics=s["default"].extend(this.metrics||{},e)},calculateMetrics:function(){if(!this.el.children.length)return void(this.metrics=this.$el.metrics());var e=parseInt(window.getComputedStyle(this.el).getPropertyValue("border-bottom-width"),10);return e?void(this.metrics=this.$el.metrics()):(this.isInline||(this.el.style.borderBottom="1px solid transparent"),this.metrics=this.$el.metrics(),void(this.isInline||(this.el.style.removeProperty("border-bottom"),this.metrics.outerHeight-=1)))},lockSize:function(){var e=this.metrics;this.$el.css({height:e.height+"px",width:e.width+"px"})},isTextElement:function(){return-1!==["P","H1","H2","H3","H4","H5","H6","HEADER","SPAN"].indexOf(this.el.tagName)},normalize:function(e,t){if(!this._isNormalized){var i={},n=this.$el.hasClass(a["default"].CONTAINER),r=this.metrics,o=0;this._normalizeTopMargin(i),t=t||0;var l=Math.min(t,r.marginTop);e=e||r.lineHeight,o=(r.outerHeight-l)%e,0===o||n||(o=e-o,r.marginBottom+=o,r.marginHeight+=o,r.outerHeight+=o,i["margin-bottom"]=r.marginBottom+"px"),this._isNormalized=!0,s["default"].isEmpty(i)||this.$el.css(i)}},_normalizeTopMargin:function(e){var t=this.metrics;t.marginTop>0&&this.isTextElement()&&(t.outerHeight-=t.marginTop,t.marginHeight-=t.marginTop,t.marginTop=0,e["margin-top"]=0)}}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(2),a=i(r),o=t(10),l=i(o),u=t(35),d=i(u),h=t(12),f=i(h),c=l["default"].extend({initialize:function(e){this.article=e,this.compiled={}},compile:function(){var e,t=this.article.content.toJSON();return t.meta.articleId=t.meta.articleId||t.meta.id,delete t.meta.id,e=s["default"].map((0,a["default"])("."+f["default"].ASSET_STYLESHEET),function(e){return e.href}),t.compiled={},t.compiled.pages=s["default"].map(this.article.pages,function(e){return e.compile()}),t.compiled.assets={stylesheets:e,revision:this.article.options.revision},t},decompile:function(e){var t=s["default"].isObject(e)?e:JSON.parse(e),i=t.compiled.assets.revision;i&&(this.article.options.revision=i),this.article.pages=s["default"].map(t.compiled.pages,function(e){var n=new d["default"]({revision:i,assetsBaseUrl:t.service.assetsBaseUrl});return n.decompile(e),n})}});exports["default"]=c},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(2),s=i(n),r=t(1),a=i(r),o=t(11),l=i(o),u=t(36),d=i(u),h=t(38),f=i(h),c=t(39),p=i(c),g=t(51),m=i(g),v=t(33),_=i(v),E=t(28),w=i(E),y=t(12),T=i(y),b=t(25),M=i(b),C=l["default"].extend();a["default"].extend(C.prototype,_["default"],w["default"],{className:"page",initialize:function(e){e=this.options=a["default"].extend({revision:"no-rev"},e||{}),a["default"].bindAll(this,"render"),this.decompiled=!1,this.pageNum="number"==typeof e.pageNum?e.pageNum:null,this.className=e.className||"",this.content=e.content||null,this.layer=e.layer||null,this.fullscreenLayer=e.fullscreenLayer||this.layer&&this.layer.above()||null,this.templateManager=e.templateManager||m["default"],this.format=e.format||null,e.pixelRatio=parseInt(e.pixelRatio||window.devicePixelRatio||1,10),this.defaultMetrics(e.metrics),this.setupWidgets(e)},tearDown:function(){this.el=null,this.pageTemplate&&this.pageTemplate.tearDown(),this.pageTemplate=null,this.content=null,this.fullscreenLayer&&this.fullscreenLayer.hide()},revert:function(){this.rendered=!1,this.pageTemplate.revert()},restoreFromHtml:function(e){this.setElement((0,s["default"])(e)),this.setPageTemplate(new p["default"]({el:this.el.children[0]})),this.rendered=!0},getBestTemplate:function(){var e;return e=this.templateManager.getBestTemplateForPage(this,this.templates),e.template?e:(M["default"].console.warn("No template found for page "+this.pageNum+"! Remaining elements: "+this.content.elementsLeft),!1)},setupBestTemplate:function(){var e=this.getBestTemplate();return e?(this.setTemplate(e.template,e.containerMap,e.score),!0):!1},setTemplate:function(e,t){return this.rendered=!1,this.score=t||0,this.template===e?(this.pageTemplate.reload(),this):(this.template=e,this.setPageTemplate(this.templateManager.getPageTemplateFromTemplate(e,{page:this})),this)},setTemplateIfUsable:function(e){var t,i=e.getContainerMap(this.content);return t=!e.containers||!e.containers.length,(t=t||a["default"].all(i.positions,function(e){return e.isOptional||e.match}))?(this.setTemplate(e,i),!0):(M["default"].console.warn("Page ",this.pageNum,": Template ",e.name,"is no longer usable"),!1)},setPageTemplate:function(e){this.pageTemplate=e,this.$el.empty(),this.$el.append(this.pageTemplate.el),this.containers=this.pageTemplate.containers,this.regions=this.pageTemplate.regions},prepareToRender:function(){var e=[];return this.rendered||!this.template?this:(this.className&&e.push(this.className),e.push(T["default"].REVISION(this.options.revision)),e.push(T["default"].PAGENUM_X(this.pageNum+1)),this.$el.addClass(e.join(" ")),void this.pageTemplate.prepareToRender())},render:function(e){return!this.rendered&&this.decompiled?this._renderCompiled(e):this._pendingReflow?(this._pendingReflow=!1,this.reflow(),this):this.template?this.rendered?(this.pageTemplate.loadContainers(),this):(this._setupMetrics(),this.pageTemplate.render(),this.rendered=!0,e&&this._appendToEl(e),this):this},allPagesDidRender:function(e){var t,i=T["default"].PAGENUM_X("last"),n=T["default"].PAGENUM_TOTAL_X(""),s=[T["default"].PAGENUM_TOTAL_X(e)];t=new RegExp(" ?("+i+"|"+n+"[\\d]*)","g"),e===this.pageNum+1&&s.push(i),this.el.className=this.el.className.replace(t,""),this.$el.addClass(s.join(" "))},play:function(){this.$el.addClass(T["default"].IS_PLAYING)},stop:function(){this.$el.removeClass(T["default"].IS_PLAYING)},prepareToReflow:function(){this.pageTemplate.prepareToReflow()},reflow:function(){return this.isInDOM()?void this.pageTemplate.reflow():void(this._pendingReflow=!0)},lockSize:function(){this.pageTemplate.isResponsive||this.$el.css({width:this.metrics.width+"px",height:this.metrics.height+"px",overflow:"hidden",position:"relative"})},compile:function(){var e=new f["default"](this);return e.compile()},decompile:function(e,t){var i=new f["default"](this);return i.decompile(e,t),this},_renderCompiled:function(e){return e&&this._appendToEl(e),this._setupMetrics(),this.pageTemplate.decompile(),this.rendered=!0,this},_appendToEl:function(e){var t=this.el;setTimeout(function(){(0,s["default"])(e).empty().append(t)},0)},_setupMetrics:function(){var e=this.$el.metrics();this.format&&this.format instanceof d["default"]&&(e.height=this.format.get("height"),e.width=this.format.get("width")),!e.height&&this.metrics.height&&(e.height=this.metrics.height,e.outerHeight=this.metrics.outerHeight),this.metrics=e,this.pageTemplate.metrics=e,e.contentHeight=e.height-e.marginHeight-e.paddingTop-e.paddingBottom,e.contentWidth=e.width-e.marginWidth-e.paddingRight-e.paddingLeft}}),exports["default"]=C},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(37),s=i(n),r=s["default"].extend({defaults:{title:"",name:"",width:0,height:0},initializeFromWindow:function(){return this.set({width:window.innerWidth,height:window.innerHeight,name:"window",title:"Window"}),this}});exports["default"]=r},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(9),s=i(n);exports["default"]=s["default"].Model.extend({})},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(2),a=i(r),o=t(10),l=i(o),u=t(39),d=i(u),h=t(12),f=i(h),c=t(50),p=i(c),g=t(40),m=i(g),v={classNames:[f["default"].IS_DRAGGABLE,f["default"].IS_DRAGGABLE_X,f["default"].IS_DRAGGABLE_Y,f["default"].IS_EDITABLE,f["default"].IS_OPTIONAL,f["default"].IS_REMOVABLE,f["default"].IS_RESIZABLE,f["default"].MULTI_CHOICE],attributes:["data-filter-format-name","data-filter-page-pos","data-map","data-media","data-name","data-score"],elements:["."+f["default"].SIZE_DETECTOR]},_=l["default"].extend({initialize:function(e){s["default"].bindAll(this,"_doDecompile"),this.page=e,this.compiled={v:1,elements:{},assets:{images:[]}}},compile:function(){return this.page.lockSize(),this.compiled.html=this._getCompiledHtml(),this._compileImages(),this._compileStylesheets(),this.compiled.assets.revision=this.page.options.revision,this.compiled},decompile:function(e,t){var i;t=t||function(){},this.page.decompiled=!0,this.compiledObject=s["default"].isObject(e)?e:JSON.parse(e),this.compiledObject.assets.revision&&(this.page.options.revision=this.compiledObject.assets.revision),i=(0,a["default"])(this.compiledObject.html).get(0),this.page.pageTemplate=new d["default"]({el:i.children[0],page:this.page}),this.page.setElement(i),this.promises=this.loadStylesheets(this.compiledObject.assets.stylesheets),m["default"].all(this.promises).then(this._doDecompile).then(t)},strip:function(e){var t,i=(0,a["default"])(e);t="."+v.classNames.join(", ."),i.find("."+f["default"].IS_DISABLED+", ."+f["default"].IS_REMOVED).remove(),i.find(t).removeClass(v.classNames.join(" ")),s["default"].each(v.attributes,function(e){i.find("["+e+"]").removeAttr(e)}),s["default"].each(v.elements,function(e){i.find(e).remove()})},_doDecompile:function(){this.page.containers=this.page.pageTemplate.containers,this.page.regions=this.page.pageTemplate.regions,s["default"].each(this.page.pageTemplate._getAllContainers(),function(e){this.page.layer&&e.setLayer(this.page.layer),this._decompileContainer(e,this.compiledObject.elements[e.id])},this)},_decompileContainer:function(e,t){new p["default"](e).decompile(t)},_getCompiledHtml:function(){var e,t,i,n;return e=(0,a["default"])(this.page.el.outerHTML),t=this.compiled,i=this.page.pageTemplate._getAllContainers(),s["default"].each(i,function(i){var r=new p["default"](i).compile();i.isDisabled||i.isRemoved||(t.elements[i.id]=r,i.fullscreenEl&&(n=(0,a["default"])(i.fullscreenEl).find("img[data-src]"),n.length>0&&(t.assets.images=t.assets.images.concat(s["default"].toArray(n)))),e.find("#"+i.id).replaceWith(r.html),delete r.html)}),this.strip(e),e[0].outerHTML},_compileImages:function(){var e,t=this.compiled;e=this.page.$("img[data-src]"),e.length>0&&(t.assets.images=t.assets.images.concat(s["default"].toArray(e))),t.assets.images=s["default"].map(t.assets.images,this._compileImageAsset,this)},_compileImageAsset:function(e){var t=(0,a["default"])(e),i={},n=t.attr("data-src-2x");return i["1x"]=t.attr("data-src"),n&&(i["2x"]=n),{height:parseInt(t.attr("height"),10),width:parseInt(t.attr("width"),10),urls:i}},_compileStylesheets:function(){this.compiled.assets.stylesheets=s["default"].map((0,a["default"])("."+f["default"].ASSET_STYLESHEET),function(e){return e.href})},loadStylesheets:function(e){e=s["default"].map(e,function(e){return-1===e.indexOf("://")?this.page.options.assetsBaseUrl+e:e},this);var t,i=s["default"].filter((0,a["default"])("."+f["default"].ASSET_STYLESHEET),function(e){return this.page.options.revision===e.getAttribute("data-revision")},this),n=[];return s["default"].each(i,function(i){var n=(0,a["default"])(i),s=e.indexOf(n.attr("href"));return-1!==s?void e.splice(s,1):void(e.length?(t=e.shift(),n.attr("href",t),this._trackStylesheetProgress(t)):n.remove())},this),s["default"].each(e,function(e){var t=(0,a["default"])('<link rel="stylesheet" type="text/css">');t.attr({"class":f["default"].ASSET_STYLESHEET,"data-revision":this.page.options.revision}),(0,a["default"])("head").append(t.attr("href",e)),n.push(this._trackStylesheetProgress(e))},this),n},_trackStylesheetProgress:function(e){var t,i;return t=m["default"].defer(),i=document.createElement("img"),this.page.pageTemplate.addDeferred(t),i.onerror=function(){t.resolve()},i.src=e,t}});exports["default"]=_},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(2),s=i(n),r=t(1),a=i(r),o=t(40),l=i(o),u=t(11),d=i(u),h=t(33),f=i(h),c=t(41),p=i(c),g=t(43),m=i(g),v=t(47),_=i(v),E=t(48),w=i(E),y=t(12),T=i(y),b=t(8),M=i(b);t(49);var C=d["default"].extend();a["default"].extend(C.prototype,f["default"],{initialize:function(e){this.options=e,e.page&&this.setPage(e.page),this.template=e.template||null,this.deferreds=[],this.fullscreenContainer=this._getFullscreenContainer()},tearDown:function(){this.stopListening(),a["default"].invoke(this.containers,"tearDown"),a["default"].invoke(this.regions,"tearDown"),this.template=null,this.containers=null,this.regions=null,this.fullscreenContainer&&this.fullscreenContainer.tearDown()},setElement:function(e){C.__super__.setElement.call(this,e),this.isPositionedGrid=!!this.el.className.match(/cols\-([0-9])+/),this.isResponsive=this.$el.hasClass(T["default"].IS_RESPONSIVE),this.reload()},setPage:function(e){this.page=e,this.content=e.content},prepareToRender:function(){this._setupContainers(),this._renderContainers()},render:function(){return this.loadContainers(),this._fit(),this._fillRegions(),this.trackProgress(),this},reload:function(){this._findContainers(),this._findRegions()},prepareToReflow:function(){a["default"].invoke(this.regions,"tearDown"),this._findRegions()},reflow:function(){this._fit(),this._fillRegions()},revert:function(){this._sizeListener=!1,this.stopListening(),a["default"].invoke(this.regions,"revert"),a["default"].invoke(this.containers,"revert")},decompile:function(){this.decompiled=!0,this.loadContainers(!0,this._getAllContainers()),this.trackProgress()},addDeferred:function(e){this.deferreds.push(e)},didRetainElements:function(){return a["default"].some(this.containers.concat(this.regions),function(e){return e.didRetainElements()})},loadContainers:function(e,t){var i=this.deferreds;return this._setupSizeDetector(),t=t||this.containers,a["default"].each(t,function(t){this._prepareContainerForLoad(t,e),t.load(),i=i.concat(t.deferreds)},this),this.deferreds=i,this},trackProgress:function(){var e=this.page,t=function(){e.trigger("loadComplete",e),M["default"].trigger("loadComplete",e)};this.deferreds.length?l["default"].all(this.deferreds,t):t()},_findContainers:function(){var e=this,t=this.containers;this.containers=a["default"].map(this.$el.find("."+T["default"].CONTAINER),function(i){var n;return n=a["default"].find(t,function(e){return e.el===i}),n||(n=new m["default"]({el:i}),n.isResponsive=e.isResponsive),n})},_findRegions:function(){var e=this.regions,t=this.isPositionedGrid;this.regions=a["default"].map(this.$el.find("."+T["default"].REGION),function(i){return a["default"].find(e,function(e){return e.el===i})||new p["default"]({el:i,isPositionedGrid:t||(0,s["default"])(i).closest(".alf-grid",this.$el).length>=1})},this)},_getAllContainers:function(){var e=a["default"].flatten(a["default"].pluck(this.regions,"containers"));return e.concat(this.containers)},_setupSizeDetector:function(){return this.sizeDetector?void this.sizeDetector.start():void(this.sizeDetector=new w["default"]({target:this.el,watch:this.isResponsive}).render())},_setupContainers:function(){function e(e,t){if(!(e.isRemoved||e.isDisabled||e.rendered)){var i=a["default"].filter(n,function(i){return t.call(this,e,i)});if(!i.length)return void(e.isOptional&&e.disable());e.content=this.content,e.matchingFigureElements=a["default"].flatten(a["default"].pluck(i,"mappedElements")),e.useBestMatchingFigureEl(),e.ref&&(e.figure.ref=e.ref)}}function t(e,t){if(t.retained)return!1;var i=t.getElementsMappedToField(e.fieldMap);return i.length?(t.mappedElements=i,t):!1}function i(e,t){return e.ref&&e.ref===t.ref?t:!1}var n=this.page.content.getFigures();a["default"].each(this.containers,function(i){i.fieldMap.length&&e.call(this,i,t)},this),a["default"].each(this.containers,function(t){t.fieldMap.length||e.call(this,t,i)},this)},_getFullscreenContainer:function(){var e=this.$el.find("."+T["default"].CONTAINER_FULLSCREEN)[0];return e?new _["default"]({el:e.cloneNode(!0),page:this,layer:this.page?this.page.fullscreenLayer:!1,revision:this.page&&this.page.options.revision}):!1},_fit:function(){var e=this.page.metrics,t={lineHeight:e.lineHeight,prefix:"alf-"},i=this.$el.find(".alf-grid");this.isPositionedGrid&&this.$el.grid(t),a["default"].each(i,function(e){(0,s["default"])(e).grid(t)}),a["default"].each(this.regions,function(t){t.metrics=t.$el.metrics(),t.metrics.contentHeight=0,t.metrics.lineHeight=e.lineHeight},this)},_renderContainers:function(){return a["default"].invoke(this.containers,"render"),this},_prepareContainerForLoad:function(e,t){var i,n;i=this.page.widgets,n=this.fullscreenContainer,e.page=this.page,e.setLayer(this.page.layer),e.matchingWidgets=i.getMatchesForContainer(e),e.options.pixelRatio=this.page.options.pixelRatio,e.renderWidgets(),e.unload(),t||(e.metrics=e.$el.metrics(),this.isResponsive||e.normalize()),n&&n.subscribeToContainer(e)},_fillRegions:function(){for(var e=this.page.content,t=[],i=0,n=this.regions[i];n&&(n.setContent(e),n.containers.length&&(t=t.concat(n.containers)),e.hasBlocksLeft());)n=this.regions[++i]||!1;this.loadContainers(!0,t)}}),exports["default"]=C},function(e,exports){/** @license MIT License (c) copyright B Cavalier & J Hann */
-"use strict";function t(e,t,n,s){return i(e).then(t,n,s)}function i(e){var t,i;return e instanceof s?t=e:l(e)?(i=o(),e.then(function(e){i.resolve(e)},function(e){i.reject(e)},function(e){i.progress(e)}),t=i.promise):t=r(e),t}function n(e){return t(e,a)}function s(e){this.then=e}function r(e){var t=new s(function(t){try{return i(t?t(e):e)}catch(n){return a(n)}});return t}function a(e){var t=new s(function(t,n){try{return n?i(n(e)):a(e)}catch(s){return a(s)}});return t}function o(){function e(e,t,i){return f(e,t,i)}function t(e){return p(e)}function n(e){return p(a(e))}function r(e){return c(e)}var l,u,d,h,f,c,p;return u=new s(e),l={then:e,resolve:t,reject:n,progress:r,promise:u,resolver:{resolve:t,reject:n,progress:r}},d=[],h=[],f=function(e,t,i){var n,s;return n=o(),s="function"==typeof i?function(e){try{n.progress(i(e))}catch(t){n.progress(t)}}:function(e){n.progress(e)},d.push(function(i){i.then(e,t).then(n.resolve,n.reject,s)}),h.push(s),n.promise},c=function(e){return m(h,e),e},p=function(e){return e=i(e),f=e.then,p=i,c=_,m(d,e),h=d=T,e},l}function l(e){return e&&"function"==typeof e.then}function u(e,i,n,s,r){return v(2,arguments),t(e,function(e){function a(e){g(e)}function l(e){p(e)}var u,d,h,f,c,p,g,m,v,E;if(v=e.length>>>0,u=Math.max(0,Math.min(i,v)),h=[],d=v-u+1,f=[],c=o(),u)for(m=c.progress,g=function(e){f.push(e),--d||(p=g=_,c.reject(f))},p=function(e){h.push(e),--u||(p=g=_,c.resolve(h))},E=0;v>E;++E)E in e&&t(e[E],l,a,m);else c.resolve(h);return c.then(n,s,r)})}function d(e,t,i,n){function s(e){return t?t(e[0]):e[0]}return u(e,1,s,i,n)}function h(e,t,i,n){return v(1,arguments),c(e,E).then(t,i,n)}function f(){return c(arguments,E)}function c(e,i){return t(e,function(e){var n,s,r,a,l,u;if(r=s=e.length>>>0,n=[],u=o(),r)for(a=function(e,s){t(e,i).then(function(e){n[s]=e,--r||u.resolve(n)},u.reject)},l=0;s>l;l++)l in e?a(e[l],l):--r;else u.resolve(n);return u.promise})}function p(e,i){var n=y.call(arguments,1);return t(e,function(e){var s;return s=e.length,n[0]=function(e,n,r){return t(e,function(e){return t(n,function(t){return i(e,t,r,s)})})},w.apply(e,n)})}function g(e,i,n){var s=arguments.length>2;return t(e,function(e){return e=s?n:e,i.resolve(e),e},function(e){return i.reject(e),a(e)},i.progress)}function m(e,t){for(var i,n=0;i=e[n++];)i(t)}function v(e,t){for(var i,n=t.length;n>e;)if(i=t[--n],null!=i&&"function"!=typeof i)throw new Error("arg "+n+" must be a function")}function _(){}function E(e){return e}Object.defineProperty(exports,"__esModule",{value:!0});var w,y,T;t.defer=o,t.resolve=i,t.reject=n,t.join=f,t.all=h,t.map=c,t.reduce=p,t.any=d,t.some=u,t.chain=g,t.isPromise=l,s.prototype={always:function(e,t){return this.then(e,e,t)},otherwise:function(e){return this.then(T,e)},"yield":function(e){return this.then(function(){return e})},spread:function(e){return this.then(function(t){return h(t,function(t){return e.apply(T,t)})})}},y=[].slice,w=[].reduce||function(e){var t,i,n,s,r;if(r=0,t=Object(this),s=t.length>>>0,i=arguments,i.length<=1)for(;;){if(r in t){n=t[r++];break}if(++r>=s)throw new TypeError}else n=i[1];for(;s>r;++r)r in t&&(n=e(n,t[r],r,t));return n},exports["default"]=t},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(11),a=i(r),o=t(33),l=i(o),u=t(42),d=i(u),h=t(43),f=i(h),c=t(44),p=i(c),g=t(46),m=i(g),v=t(25),_=i(v),E=t(12),w=i(E),y=a["default"].extend();s["default"].extend(y.prototype,l["default"],d["default"],{className:w["default"].REGION,initialize:function(e){this.options=e||{},this.defaultMetrics(this.options.metrics),this.metrics.contentHeight=0,this.fragment=null,this._contentContainers=[],this.options.elements&&this.addElements(this.options.elements)},tearDown:function(){this.stopListening(),this.fragment=null,this.revert(),this.el=null,this.$el=null},clone:function(){var e=new y({el:this.el.cloneNode(!0)});return e.content=this.content,e},setElement:function(e){y.__super__.setElement.call(this,e),this._originalHtml=this.$el.html(),this.isFlexible=this.$el.hasClass(w["default"].REGION_FLEXIBLE),this._originalContainers=this._getInlineContainers(),this.containers=this._originalContainers.slice(0)},setContent:function(e){this.content=e,this.addElements(e.getElements())},addElements:function(e){return this.$el.empty(),this.fragment=document.createDocumentFragment(),s["default"].forEach(e,this._addElement,this),this.el.appendChild(this.fragment),this.containers=this._contentContainers,this._contentContainers=[],this},getOverflow:function(e){e=e||{};var t=e.outerHeight||0,i=0;return this.lastUsedElement&&(i=Math.min(this.lastUsedElement.metrics.marginBottom,e.marginTop)),this.metrics.contentHeight-this.metrics.height+t-i},hasSpaceLeft:function(){return this.getOverflow()<0},revert:function(e){s["default"].invoke(this.elements,"revert"),e=e?e:this._originalHtml||"",this.metrics.contentHeight=0,this.lastUsedElement=null,this.releaseAll(),this.el.innerHTML=e,this._originalHtml=e},_addElement:function(e){var t;return e=this._verifyElementIsUsable(e),!e||!this.isFlexible&&0===this.metrics.height?!0:0!==this.metrics.contentHeight&&e.el&&e.$el.hasClass(w["default"].BREAK_BEFORE)?!1:(this._verifyElementMetrics(e),t=this.getOverflow(e.metrics),this.isFlexible||-1*t>=this.metrics.lineHeight?(this._useElement(e),!0):t>-this.metrics.lineHeight&&t<=e.metrics.marginBottom?(e.shouldStickToNext()||this._useElement(e),!1):this._overflowElementIfSupported(e))},_useElement:function(e){var t=0;this.lastUsedElement&&(t=Math.min(this.lastUsedElement.metrics.marginBottom,e.metrics.marginTop));var i=e.metrics.outerHeight-t;this.metrics.contentHeight+=i,this.fragment.appendChild(e.render().el),this.retain(e.figure||e),this.lastUsedElement=e,e instanceof f["default"]&&this._contentContainers.push(e)},_overflowElementIfSupported:function(e){var t,i,n=e.isRearrangeable();return n||e.isSplittable()?n?(this.anchoredBlock=e,!0):(t=this.metrics.height-this.metrics.contentHeight,this._useElement(e),i=e.getOverflowBlock(t).render(),this.content.addAfter(i,this.anchoredBlock||this.lastUsedElement),this.anchoredBlock=null,!1):!1},_verifyElementIsUsable:function(e){if(e instanceof m["default"])return e;if(e instanceof p["default"]&&!this._originalContainers)return!1;var t,i;return s["default"].each(this._originalContainers,function(n){return t=e.getElementMappedToField(n.fieldMap),t?(i=n,!1):void 0}),t?(i=i.clone(),i.isInline=!0,i.content=this.content,i.setFigure(e,t),this.$el.append(i.render().el),i.calculateMetrics(),i.metrics.lineHeight=this.metrics.lineHeight,this.options.isPositionedGrid&&i.normalize(this.metrics.lineHeight,this.lastUsedElement&&this.lastUsedElement.metrics.marginBottom),i.releaseAll(),i.$el.remove(),i):!1},_verifyElementMetrics:function(e){e.metrics.lineHeight!==this.metrics.lineHeight&&_["default"].console.warn("lineHeight mismatch between page and content.","lineHeight on ",this.el,": ",this.metrics.lineHeight,"lineHeight on ",e.el,": ",e.metrics.lineHeight,"The page might not look good!"),this.options.isPositionedGrid&&e.normalize(this.metrics.lineHeight,this.lastUsedElement&&this.lastUsedElement.metrics.marginBottom)},_getInlineContainers:function(){return s["default"].map(this.$el.find("."+w["default"].CONTAINER_INLINE),function(e){return new f["default"]({el:e})})}}),exports["default"]=y},function(e,exports){"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports["default"]={retain:function(e){this.content.retain(e),this.retained=this.retained||[],this.retained.push(e)},releaseAll:function(){this.retained&&this.retained.length&&(this.content.release(this.retained),this.retained=[])},didRetainElements:function(){return!!this.retained&&this.retained.length>0}}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(2),a=i(r),o=t(11),l=i(o),u=t(14),d=i(u),h=t(33),f=i(h),c=t(42),p=i(c),g=t(12),m=i(g),v=t(8),_=i(v),E=t(25),w=i(E),y=t(40),T=i(y),b=l["default"].extend();b.loadedAssets=[],s["default"].extend(b.prototype,f["default"],p["default"],{fullscreenEvents:{touch:{"touchstart img, .alf-image":"onTouchStart","touchmove img, .alf-image":"onTouchMove","touchend img, .alf-image":"onTouchEnd","tap img, .alf-image":"onTap"},pointer:{"click img, .alf-image":"onClick","mousedown img, .alf-image":"onMouseDown"}},className:m["default"].CONTAINER,initialize:function(e){e=this.options=s["default"].extend({},e||{}),s["default"].bindAll(this,"load","_doLoad","_loadComplete","_loadReady","enterFullscreen"),this.defaultMetrics(),this.deferreds=[],this.loaded=null,this.isDirty=!1,this.isResponsive=!1,this.mouseDownX=0,this.mouseDownY=0,this.mouseDownTime=0,this.matchingFigureElements=[],this._lastState={},e.pixelRatio=parseInt(e.pixelRatio||window.devicePixelRatio||1,10)},tearDown:function(){this.releaseAll(),this.stopListening(),this.undelegateEvents(),this.el=null,this.figureEl=null,this.fullscreenEl&&(0,a["default"])(this.fullscreenEl).remove(),this.fullscreenEl=null,this.$el.find("img").each(function(){this.style.removeProperty("max-width"),this.style.removeProperty("max-height"),this.style.removeProperty("width"),this.style.removeProperty("height")})},remove:function(){this.$el.addClass(m["default"].IS_REMOVED),this.isRemoved=!0,this.releaseAll(),this.figure=null,this.figureEl=null,this.$el.empty()},clone:function(){var e;return e=new b({el:this.el.cloneNode(!0)}),e._setUniqueId(),e},setElement:function(e){b.__super__.setElement.call(this,e),this.fieldMap=w["default"].dom.getFieldMap(this.el),this.ref=this.el.dataset.ref,this.isOptional=this.$el.hasClass(m["default"].IS_OPTIONAL),this.isRemoved=this.$el.hasClass(m["default"].IS_REMOVED),this.type=this.$el.attr("data-type")},setFigure:function(e,t){return this.figureElSignature&&this.figureElSignature!==t.signature&&this.revert(),this.figure=e,this.figureEl=t,this.figureElSignature=t.signature,this.retain(e),this},setFigureEl:function(e){this.setFigure(e.figure,e)},lockFigureEl:function(){this.preferFigureElSignature=this.figureElSignature},useBestMatchingFigureEl:function(){var e=this;if(!this.matchingFigureElements.length)return!1;var t;return this.preferFigureElSignature&&(t=s["default"].find(this.matchingFigureElements,function(t){return t.matchesAnySignature(e.preferFigureElSignature)})),this.setFigureEl(t||this.matchingFigureElements[0]),!0},useNextFigureEl:function(){var e=this.matchingFigureElements.length;if(!e)return!1;var t=this.matchingFigureElements.indexOf(this.figureEl)+1;return this.setFigureEl(this.matchingFigureElements[t%e]),this.lockFigureEl(),!0},setLayer:function(e){this.layer=e,this.fullscreenLayer||(this.fullscreenLayer=e.above()),this._setupFullscreen()},setFullscreenEl:function(e){this.fullscreenEl=e,this._setupFullscreen()},preventDefaultEvents:function(){this.undelegateEvents(this.fullscreenEvents)},isSplittable:function(){return!1},isRearrangeable:function(){return this.$el.hasClass(m["default"].IS_REARRANGEABLE)?!0:!1},render:function(){return this.isReadyForRender()?(this.id=this.el.id||this._setUniqueId(),this.rendered=!0,this.isUsingSameFigureEl()?(this.$el.append(this._lastState.html),this.renderedWidgets=this._lastState.renderedWidgets||!1):(this.renderProcessedContainerContent(),this.renderBgImages(),this._originalHtml=this.el.outerHTML),this.matchingFigureElements&&this.matchingFigureElements.length>1&&this.$el.addClass(m["default"].MULTI_CHOICE),this):this},isReadyForRender:function(){return this.figureEl&&!this.rendered&&!this.isDisabled&&!this.isRemoved},renderProcessedContainerContent:function(){var e=this.figureEl.el.outerHTML,t=this.el.dataset.select||this.el.dataset.selectInner,i=t?this.$el:(0,a["default"])(this.el).find("[data-select], [data-select-inner]");return 0===i.length?this.$el.append(e):void i.each(function(t,i){var n,s=i.dataset.select,r=!1;s||(s=i.dataset.selectInner,r=!0);try{n=(0,a["default"])(e).find(s)[0]}catch(o){}n?i.innerHTML=r?n.innerHTML:n.outerHTML:i.parentNode.removeChild(i)})},renderBgImages:function(){var e=this;if("image"===this.type){var t=this.$el.find("img");t.length&&t.each(function(t,i){var n=i.getAttribute("data-src")||i.getAttribute("src"),s=i.getAttribute("data-src-2x"),r=parseInt(i.getAttribute("width"),10),o=parseInt(i.getAttribute("height"),10),l=o/r,u={width:"100%","padding-bottom":100*l+"%","background-image":"url("+n+")","background-repeat":"no-repeat","background-size":"cover","background-position":"50% 50%"},d={"data-ratio":l,"data-width":r,"data-height":o,"data-src":i.getAttribute("data-src")};s&&(d["data-src-2x"]=s);var h=(0,a["default"])("<div>").attr(d).addClass(m["default"].IMAGE).css(u);(0,a["default"])(i).replaceWith(h),e._trackAssetProgress(n)})}},discard:function(){this.rendered=!1,this._lastState={},this.$el.empty(),this.render(),this.renderedWidgets=!1,this.renderWidgets(),this.unload(),this.load()},revertToOriginal:function(){this.$el.html(this._originalHtml)},revert:function(){this.rendered&&this.saveState(),this._originalHtml=!1,this.rendered=!1,this.renderedWidgets=!1,this.figure=null,this.figureEl=null,this.fullscreenEl=null,this.fullscreenLoaded=!1,this.releaseAll(),this.$el.empty(),this.enable()},isUsingSameFigureEl:function(){var e=this.figureEl.matchesAnySignature(this._lastState.figureElSignature);return e||this.isUsingSimilarFigureEl()},isUsingSimilarFigureEl:function(){if(!this._lastState.html||1!==this.matchingFigureElements.length)return!1;var e=(0,a["default"])(this._lastState.html);return e.find("img").length?!1:e[0].tagName!==this.figureEl.el.tagName?!1:!0},saveState:function(e){this._lastState=s["default"].extend({html:this.el.innerHTML,figureElSignature:this.figureElSignature,preferFigureElSignature:this.preferFigureElSignature,renderedWidgets:this.renderedWidgets},e||{})},load:function(){T["default"].all(this._runWidgets(),this._doLoad)},unload:function(){this.loaded!==!1&&(this.loaded=!1,this.unloadElement(this.el))},unloadElement:function(e){var t=(0,a["default"])(e);t.addClass(m["default"].CONTAINER_IS_UNLOADED),t.find("img[data-src]").each(function(){this.setAttribute("src","data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==")})},addDeferred:function(e){this.deferreds.push(e)},shouldStickToNext:function(){return!1},enterFullscreen:function(e){if(!this._supportsFullscreen)return w["default"].console.warn("This container does not support fullscreen"),this.layer||w["default"].console.warn("  Missing layer"),void(this.fullscreenEl||w["default"].console.warn("  Missing fullscreenEl"));var t=this.transition;return this.gestureStarted||t.isRunning()?!1:(this.layer.transition=t,e&&e instanceof HTMLElement&&t.setTargetEl(e),void t.run())},_setupFullscreen:function(){!this._supportsFullscreen&&this.fullscreenEl&&this.layer&&this.fullscreenLayer&&(this.transition=this.transition||this.layer.transitionTo(this.fullscreenLayer,d["default"].Fade),this.$el.addClass(m["default"].SUPPORTS_FULLSCREEN),this.listenTo(this.transition,{willAppear:this._fullscreenWillAppear,didAppear:this._fullscreenDidAppear,didDisappear:this._fullscreenDidDisappear}),this.layer.transition=this.transition,this.delegateEvents(w["default"].touchScreen?this.fullscreenEvents.touch:this.fullscreenEvents.pointer),this._supportsFullscreen=!0)},_setUniqueId:function(e){return e||(e=s["default"].uniqueId("c")),this.id=e,this.el.id=e,e},renderWidgetMatch:function(e){e.widget.render.call(e,this,e.el),e.widget.compile||(this.isDirty=!0)},renderWidgets:function(){return this.renderedWidgets?!1:(s["default"].each(this.matchingWidgets,function(e){(!this.decompiled||this.decompiled&&!e.widget.compile)&&this.renderWidgetMatch(e)},this),void(this.renderedWidgets=!0))},_runWidgets:function(){var e,t=[];return s["default"].each(this.matchingWidgets,function(i){e=T["default"].defer(),i.widget.compile||(this.isDirty=!0),i.widget.run.call(i,e.resolve),t.push(e)},this),t},_doLoad:function(){var e,t=this,i=Math.min(this.options.pixelRatio,2);return this.loaded?void 0:(this.$el.hasClass(m["default"].ALLOW_OVERFLOW)||this._fitBoundaries(),this.$assets=this.$el.find("img[data-src]"),e="data-src"+(i>1?"-"+i+"x":""),s["default"].each(this.$assets,function(i){var n=i.getAttribute(e)||i.getAttribute("data-src");t._trackAssetProgress(n||i.getAttribute("src"),i),n&&(i.src=n)}),T["default"].any(this.deferreds,this._loadReady),T["default"].all(this.deferreds,this._loadComplete),this.loaded=!0,this)},_fullscreenWillAppear:function(e,t){this.trigger("fullscreenWillAppear",e,t)},_fullscreenDidAppear:function(e){this.trigger("fullscreenDidAppear",e)},_fullscreenDidDisappear:function(e){this.trigger("fullscreenDidDisappear",this),_["default"].trigger("fullscreenDidDisappear",this)},_loadReady:function(){this.$el.removeClass(m["default"].CONTAINER_IS_UNLOADED)},_loadComplete:function(){this.trigger("loadComplete")},_trackAssetProgress:function(e,t){var i=this,n=T["default"].defer();this.addDeferred(n),-1!==b.loadedAssets.indexOf(e)?n.resolve({},t):(t||(t=new Image,t.src=e),t.addEventListener("load",function(t){b.loadedAssets.push(e),n.resolve(t,t.currentTarget)}),t.addEventListener("error",function(t){n.resolve(t,t.currentTarget),_["default"].trigger("assetLoadError",i,e)}))},_fitBoundaries:function(){var e=[],t=this;this.decompiled||this.isResponsive||(this.$el.find("img").each(function(){var i,n=this.clientWidth,s=this.clientHeight;n>t.metrics.width&&(i=t.metrics.width/n,e.push({el:this,css:{height:s*i+"px",width:t.metrics.width+"px"}}))}),s["default"].each(e,function(e){(0,a["default"])(e.el).css(e.css)}))},onTouchStart:function(e){e=e.originalEvent||e;var t=e.touches[0];this._touchStartX=t.pageX,this._touchStartY=t.pageY,this._touchMoveX=t.pageX,this._touchMoveY=t.pageY},onTouchMove:function(e){e=e.originalEvent||e;var t=e.touches[0];this._touchMoveX=t.pageX,this._touchMoveY=t.pageY},onTouchEnd:function(e){var t,i;t=Math.abs(this._touchStartX-this._touchMoveX),i=Math.abs(this._touchStartY-this._touchMoveY),7>t&&7>i&&e.preventDefault()},onMouseDown:function(e){this.mouseDownX=e.pageX,this.mouseDownY=e.pageY,this.mouseDownTime=Date.now()},onTap:function(e){this.enterFullscreen(e.currentTarget)},onClick:function(e){var t=Math.abs(e.pageX-this.mouseDownX),i=Math.abs(e.pageY-this.mouseDownY),n=Date.now()-this.mouseDownTime;t>5||i>5||n>1500||this.enterFullscreen(e.currentTarget)},onGestureStart:function(e){var t=this.transition;return this.gestureStarted||t.isRunning()?!1:(this.gestureStarted=!0,t.setTargetEl(e.currentTarget),void this.startTransform(e))},onGestureChange:function(e){var t=this.transition;return t.isRunning()?!1:void this.transformEventTarget(e)},onGestureEnd:function(e){var t=this.transition;return t.isRunning()?!1:(t.run(),void(this.gestureStarted=!1))}}),exports["default"]=b},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}function n(e){return o["default"].map(e,p)}function s(e){if(-1===e.indexOf("*"))return new RegExp("^"+e+"$");var t=e.replace(/([\-\:])/g,"\\$1");return t=t.replace(/(^|[^\\W\*])\*(\\|$)/g,"$1[^\\W]+$2"),t=t.replace(/(^|[^\\W])\*\*(\\|$)/g,"$1(.*)?$2"),new RegExp("^"+t+"$")}function r(e,t){return o["default"].find(t,function(t){return t.match(e)})}Object.defineProperty(exports,"__esModule",{value:!0});var a=t(1),o=i(a),l=t(11),u=i(l),d=t(12),h=i(d),f=t(45),c=i(f),p=o["default"].memoize(s),g=o["default"].memoize(r,function(e,t){return[e,t]}),m=u["default"].extend({initialize:function(){var e=this;this.elements=o["default"].map(this.$el.children("[data-map]"),function(t,i){var n=new c["default"]({el:t,figure:e});return n.lockSignature(),n})},setElement:function(e){m.__super__.setElement.call(this,e),this.isOptional=this.$el.hasClass(h["default"].IS_OPTIONAL)},getElementMappedToField:function(e){var t=!1,i=!1;return o["default"].each(n(e),function(e){return(t=o["default"].find(this.elements,function(t){return g(e,t.fieldMap)}))?t.noScore?(i=i||t,void(t=!1)):!1:void 0},this),t||i},getElementsMappedToField:function(e){var t=this,i=o["default"].map(n(e),function(e){return o["default"].filter(t.elements,function(t){return g(e,t.fieldMap)})}),s=o["default"].flatten(i);return s=s.sort(function(e,t){return e.noScore===t.noScore?0:t.noScore?-1:1})}});exports["default"]=m},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(11),s=i(n),r=t(12),a=i(r),o=t(25),l=i(o),u=s["default"].extend({initialize:function(e){this.figure=e.figure},setElement:function(e){u.__super__.setElement.call(this,e),this.noScore=this.$el.hasClass(a["default"].NO_SCORE),this.fieldMap=l["default"].dom.getFieldMap(this.el)}});exports["default"]=u},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(2),a=i(r),o=t(11),l=i(o),u=t(33),d=i(u),h=t(12),f=i(h),c=l["default"].extend();s["default"].extend(c.prototype,d["default"],{tagName:"p",isInline:!0,initialize:function(e){e=e||{},this.isOverflow=!1,this.isDirty=!1,this.originalMetrics=null,e.metrics||this.defaultMetrics()},render:function(){if(this.isRendered)return this;if(this.isFirst&&this.$el.addClass(f["default"].IS_FIRST_BLOCK),this.isLast&&this.$el.addClass(f["default"].IS_LAST_BLOCK),this.isOverflow){var e=(0,a["default"])('<div style="overflow:hidden;padding:0;"></div>');e.css("margin-bottom",this.metrics.marginBottom+"px").addClass(f["default"].IS_SPLITTABLE).addClass(f["default"].IS_NON_REARRANGEABLE).append(this.el),this.$el.css("margin-bottom","0px"),this.setElement(e[0]),this.isDirty=!0}return this.isRendered=!0,this},clone:function(){var e=new c({el:this.el.cloneNode(!0)});return e.clonedFrom=this,e.metrics=s["default"].extend({},this.metrics),e.isLast=this.isLast,this.isDirty&&e.$el.removeAttr("style"),e},revert:function(){this.isDirty&&(this.isOverflow||this.el.style.removeProperty("overflow"),this.el.style.removeProperty("height"),this.isDirty=!1)},isSplittable:function(){return this.$el.hasClass(f["default"].IS_NON_SPLITTABLE)?!1:this.$el.hasClass(f["default"].IS_SPLITTABLE)||-1!==["P","UL","OL"].indexOf(this.el.tagName)},isRearrangeable:function(){return this.$el.hasClass(f["default"].IS_NON_REARRANGEABLE)?!1:this.$el.hasClass(f["default"].IS_REARRANGEABLE)||-1!==["DIV"].indexOf(this.el.tagName)},shouldStickToNext:function(){return this.$el.hasClass(f["default"].STICK_TO_NEXT)||-1!==["H1","H2","H3"].indexOf(this.el.tagName)},getOverflowBlock:function(e){var t,i,n=0;i=this.clone(),this.isOverflow&&i.setElement(i.$el.children().first()),i._isNormalized=!1,i.isOverflow=!0,i.overflowMarginTop=this.isOverflow?this.metrics.overflowMarginTop:0,t=e%this.metrics.lineHeight,n=e-t,this.$el.css({overflow:"hidden",height:n+"px"}),this.isDirty=!0;var s=i.overflowMarginTop;return i.$el.css("margin-top",s-n+"px"),i.metrics.height-=n,i.metrics.outerHeight-=n,i.metrics.overflowMarginTop=s-n,i}}),exports["default"]=c},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(11),a=i(r),o=t(33),l=i(o),u=t(25),d=i(u),h=t(12),f=i(h),c=t(8),p=i(c),g=t(40),m=i(g),v=a["default"].extend();s["default"].extend(v.prototype,l["default"],{initialize:function(e){e=this.options=s["default"].extend({},e||{}),this.layer=this.options.layer||null},tearDown:function(){this.stopListening(),this.$el.remove()},subscribeToContainer:function(e){var t;!e.fullscreenEl&&e.figure&&(t=this.getFullscreenElement(e.figure),t&&e.setFullscreenEl(t)),this.listenTo(e,{fullscreenWillAppear:function(t,i){this._loadMathchingWidgetsForContainer(e,i)}})},getFullscreenElement:function(e){var t=d["default"].dom.getFieldMap(this.el),i=e.getElementMappedToField(t);return i?i.el.cloneNode(!0):null},loadContainer:function(e,t){if(!this.layer)return void d["default"].console.warn("No fullscreen layer found");var i,n=function(){e.fullscreenLoaded=!0,t()};return this.$el.empty().addClass(f["default"].IS_VISIBLE).append(e.fullscreenEl),this.layer.renderFullscreenContainer(this),e.fullscreenLoaded?n():(i=this.layer.$el.find("img[data-src]"),i.length||n(),void i.each(function(){this.src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",this.addEventListener("load",n),this.src=this.getAttribute("data-src")}))},exitFullscreen:function(){this.layer.exitFullscreen()},_loadMathchingWidgetsForContainer:function(e,t){var i,n=[];return i=function(){p["default"].trigger("fullscreenWillAppear",e),t()},e.matchingWidgets&&e.matchingWidgets.length?(n.push(m["default"].defer()),this.loadContainer(e,n[0].resolve),s["default"].each(e.matchingWidgets,function(e){var t=m["default"].defer();n.push(t),e.widget.fullscreen.call(e,this,t.resolve)},this),void m["default"].all(n,i)):this.loadContainer(e,i)}}),exports["default"]=v},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(2),a=i(r),o=t(12),l=i(o),u=t(40),d=i(u),h=t(11),f=i(h),c=s["default"].memoize(function(e){if(!e)return{};var t=e.replace(/\s+/g,"").split(";"),i={};return s["default"].each(t,function(e){var t=e.split(":"),n=t[0],s=parseInt(t[1],10);isNaN(s)&&(s="false"!==t[1]),i[n]=s}),i}),p=f["default"].extend();s["default"].extend(p.prototype,{tagName:"object",className:l["default"].SIZE_DETECTOR,initialize:function(e){e=this.options=s["default"].extend({start:300,end:1200,interval:50,refreshRate:50,watch:!0,target:null},e||{}),this.$target=(0,a["default"])(this.options.target),s["default"].extend(this.options,c(this.$target.attr("data-respond"))),s["default"].bindAll(this,"_onResize","_setupListenerForView"),this._onResize=s["default"].throttle(this._onResize,e.refreshRate),this._deferred=d["default"].defer(),this.isReady=this._deferred.promise},start:function(){this._setupListenerForView()},tearDown:function(){var e=this.el.contentDocument;e&&e.defaultView&&e.defaultView.removeEventListener("resize",this._onResize),this.$el.remove()},render:function(){if(!this.options.watch)return this._applyClassNamesForWidth(this.$target.width()),this._deferred.resolve(),this;var e=this.$target.find("."+l["default"].SIZE_DETECTOR);return e.length?(this.setElement(e),this.start(),this):(this.$el.css({display:"block",position:"absolute",top:0,right:0,bottom:0,left:0,width:"100%","pointer-events":"none","z-index":-2147483648}),this.el.type="text/html",this.el.data="about:blank",this.start(),this.$target.append(this.$el),this)},getClassNamesForWidth:function(e){for(var t=this.options,i=t.start,n=t.end,s=t.interval,r=[],a=i;n>=a;a+=s)e>a?r.push("alf-gt"+a):r.push("alf-lt"+a);return r},_onResize:function(e){var t=e.target.innerWidth;this._applyClassNamesForWidth(t)},_setupListenerForViewOnLoad:function(){this.$el.on("load",s["default"].bind(function(){setTimeout(this._setupListenerForView,0),this.$el.off("load")},this))},_setupListenerForView:function(){if(!this.el.contentDocument)return void this._setupListenerForViewOnLoad();var e=this.el.contentDocument.defaultView;e.addEventListener("resize",this._onResize),this._applyClassNamesForWidth(e.innerWidth),this._deferred.resolve()},_applyClassNamesForWidth:function(e){var t=this.getClassNamesForWidth(e);if(this.options.target){var i=(0,a["default"])(this.options.target).get(0),n=i.className;n=a["default"].trim(n.replace(/alf\-(g|l)t(\d+)\s?/g,"")),n+=" "+t.join(" "),i.className=n}this.trigger("resize",e)}}),exports["default"]=p},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(5),s=i(n),r=function(e){var t;this.options=s["default"].extend({prefix:""},e),this.el=e.el,this.height=e.height||(0,s["default"])(this.el).height(),this.lineHeight=e.lineHeight||0,t=window.getComputedStyle(this.el,null),this.paddingTop=parseInt(t.getPropertyValue("padding-top"),10),this.paddingBottom=parseInt(t.getPropertyValue("padding-bottom"),10),this.height-=this.paddingTop+this.paddingBottom,this._position()};r.prototype._position=function(){var e=this,t=[],i=this.el.className.match(/cols\-([0-9]+)/);if(!i)throw new Error("Failed to find number of columns");i=parseInt(i[1],10);for(var n=0;i>n;n++)t[n]={remainingHeight:this.height,cells:[]};(0,s["default"])(this.el).find('[class*="col-"]').each(function(){var i=parseInt(this.className.match(/col\-([0-9]+)/)[1],10)-1,n=this.className.match(/colspan\-([0-9]+)/),r=e._createCellFromEl(this);if(n=n?parseInt(n[1],10):1,"none"!==(0,s["default"])(this).css("display"))for(var a=i;i+n>a;a++)t[a].cells.push(r)}),this._calcMetrics(t),s["default"].each(t,function(t,i){e._positionColumn(t,i)})},r.prototype._createCellFromEl=function(e){var t=(0,s["default"])(e).hasClass(this._class("flex"));return{el:e,flex:t,height:0,innerHeight:0,top:0}},r.prototype._calcMetrics=function(e){var t,i,n,r,a,o,l,u,d,h;for(t=this._class("col-top"),i=this._class("col-bottom"),n=e.length,l=0;n>l;l++)for(r=e[l].cells.length,u=0;r>u;u++)a=e[l].cells[u],o=(0,s["default"])(a.el),o.removeClass(t+" "+i),0===u&&(a.isTop=!0,o.addClass(t)),u===r-1&&(a.isBottom=!0,o.addClass(i));for(l=0;n>l;l++)for(r=e[l].cells.length,u=0;r>u;u++)a=e[l].cells[u],o=(0,s["default"])(a.el),a.height=a.flex?0:o.outerHeight(),a.isTop&&(d=window.getComputedStyle(a.el,null),e[l].marginTop=parseInt(d.getPropertyValue("margin-top"),10),e[l].marginTopOffset=e[l].marginTop%this.lineHeight,a.flex||(a.innerHeight=o.height(),0===a.innerHeight&&(h=parseInt(d.getPropertyValue("margin-bottom"),10),a.height-=h))),e[l].remainingHeight-=a.height},r.prototype._positionColumn=function(e,t){var i=this,n=this.paddingTop;s["default"].each(t.cells,function(e,r){var a=(0,s["default"])(r.el),o={},l=0;if(!i.lineHeight||r.isTop||r.isBottom&&!r.flex||(l=(n-t.marginTopOffset-i.paddingTop)%i.lineHeight,0!==l&&(l=i.lineHeight-l,t.remainingHeight-=l,n+=l)),(!r.isTop||r.top<n)&&(r.top=n),o.top=r.top+"px",r.flex){var u=parseInt(a.css("margin-bottom"),10)+parseInt(a.css("margin-top"),10);r.height=t.remainingHeight,o.height=(r.height>u?r.height-u:0)+"px"}a.css(o),n+=r.height})},r.prototype._class=function(e){return this.options.prefix+e},"undefined"!=typeof window&&(s["default"].fn.grid=function(e){return e=e||{},e.el=this[0],new r(e)}),exports["default"]=r},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(2),a=i(r),o=t(10),l=i(o),u=l["default"].extend({initialize:function(e){this.container=e,this.compiled={}},compile:function(){var e=this.container,t=(0,a["default"])(e.el.outerHTML);return e.isDirty&&e.revertToOriginal(),e.unloadElement(t),this.compiled={loaded:!1,metrics:e.metrics,html:t[0].outerHTML},e.fullscreenEl&&(this.compiled.fullscreenEl=e.fullscreenEl.outerHTML),this.compiled},decompile:function(e){var t=this.container;t.decompiled=!0,s["default"].extend(t,e),t.fullscreenEl&&t.setFullscreenEl((0,a["default"])(t.fullscreenEl).get(0))}});exports["default"]=u},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}function n(e,t){return{callback:e,name:t}}Object.defineProperty(exports,"__esModule",{value:!0});var s=t(1),r=i(s),a=t(52),o=i(a),l=t(53),u=i(l),d=t(54),h=i(d),f=t(25),c=i(f),p=t(39),g=i(p),m={filters:{article:r["default"].map(u["default"],n),page:r["default"].map(h["default"],n)},addArticleFilter:function(e,t){this.filters.article.push({callback:e,name:t||"articlefilter"})},addPageFilter:function(e,t){this.filters.page.push({callback:e,name:t||"pagefilter"})},getBestTemplateForPage:function(e,t){var i,n,s={score:-(1/0),template:null,containerMap:null};return r["default"].each(t,function(t){i=t.getContainerMap(e.content),n=t.score(e,i),(n>s.score||n===s.score&&Math.random()>.5)&&(s.score=n,s.template=t,s.containerMap=i)}),s},getEligibleTemplatesForArticle:function(e,t){return this._filterTemplates("article",e,t);
-},getEligibleTemplatesForPage:function(e,t){return this._filterTemplates("page",e,t)},getScoredTemplatesForPage:function(e,t){return r["default"].map(this.getEligibleTemplatesForPage(e,t),function(t){return{template:t,score:t.score(e)}})},getPageTemplateFromTemplate:function(e,t){return new g["default"](r["default"].extend(t||{},{el:e.el.cloneNode(!0)}))},getTemplateFromPageTemplate:function(e,t){var i=new o["default"](r["default"].extend(t||{},{el:e.el.cloneNode(!0)}));return r["default"].each(i.regions,function(t,i){t.revert(e.regions[i]._originalHtml)}),r["default"].invoke(i.containers,"revert"),i},_filterTemplates:function(e,t,i){return t.pages?c["default"].console.groupCollapsed("** Filtering templates for article"):c["default"].console.groupCollapsed("** Filtering templates for page",t.pageNum+1),r["default"].each(this.filters[e],function(e){var n=i.slice(0);i=e.callback.call(this,t,i),c["default"].console.groupCollapsed("Filter `"+e.name+"` on",n.length,"templates (removed",n.length-i.length,"templates)"),n.length-i.length&&r["default"].each(n,function(e){-1===i.indexOf(e)&&c["default"].console.debug("-",e.name)}),c["default"].console.groupEnd()},this),c["default"].console.debug("Remaining templates:",i.length),c["default"].console.groupEnd(),i}};exports["default"]=m},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(11),a=i(r),o=t(41),l=i(o),u=t(43),d=i(u),h=t(44),f=i(h),c=t(12),p=i(c),g=-500,m=100,v=0,_=-500,E=100,w=5,y=a["default"].extend();s["default"].extend(y.prototype,{setElement:function(e){y.__super__.setElement.call(this,e),this.name=this.$el.attr("data-name"),this.signature=void 0,this.lockSignature(),this.containers=this.$el.find("."+p["default"].CONTAINER).map(function(){return new d["default"]({el:this})}),this.regions=this.$el.find("."+p["default"].REGION).map(function(){return new l["default"]({el:this})}),this.baseScore=parseInt(this.$el.attr("data-score")||0,10)},score:function T(e,t){var T=this.baseScore,i=e.content.getBlocks();return t=t||this.getContainerMap(e.content),T+=t.score||0,s["default"].each(t.positions,function(e){T+=e.match?e.noScore?0:m:e.isOptional?v:g}),this.regions.length&&(T+=i.length?E:_),this.lastScore=T,T},getContainerMap:function(e){var t,i,n,r=[],a={matches:0,positions:{},score:0,template:this};return t=e.getElements(),i=e.getFigures(),n=t.length,s["default"].each(this.containers,function(e,s){var o,l,u;for(u=a.positions[s]={match:!1,fieldMap:e.fieldMap,isOptional:e.isOptional||!e.fieldMap.length&&e.ref},o=0;n>o;o++)if(t[o]instanceof f["default"]&&-1===r.indexOf(t[o])&&(l=t[o].getElementMappedToField(e.fieldMap)))return a.score-=o*w,a.matches+=1,r.push(t[o]),u.match=!0,u.index=i.indexOf(t[o]),void(u.noScore=l.noScore)}),a}}),exports["default"]=y},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(25),a=i(r),o=!!a["default"].matchMedia;exports["default"]={mediaQuery:function(e,t){return o?s["default"].filter(t,function(e){var t=a["default"].dom.getMediaQuery(e.el);return t?a["default"].matchMedia(t).matches:!0}):t},fieldMap:function(e,t){var i,n=e.content.fieldMap;return n&&n.length?s["default"].filter(t,function(e){return i=a["default"].dom.getFieldMap(e.el),i.length?s["default"].intersection(n,i).length>0:!1}):t},emptyContainers:function(e,t){var i;return i=function(e){return e.match===!0||e.match===!1&&e.isOptional},s["default"].filter(t,function(t){var n=t.getContainerMap(e.content);return s["default"].every(n.positions,i)})},formatName:function(e,t){var i;return e.format&&(i=e.format.get("name"))?s["default"].filter(t,function(e){var t=e.$el.attr("data-filter-format-name");return t?-1!==t.split(" ").indexOf(i):!0}):t}}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n);exports["default"]={emptyBlocks:function(e,t){var i=e.content.getBlocks(),n=e.content.getFigures();return i.length?t:s["default"].filter(t,function(e){var t=e.regions;return t.length?s["default"].any(t,function(e){return e.containers.length?s["default"].any(e.containers,function(e){return s["default"].any(n,function(t){return t.getElementMappedToField(e.fieldMap)})}):!1}):e})},emptyContainers:function(e,t){var i;return i=function(e){return e.match===!0||e.match===!1&&e.isOptional},s["default"].filter(t,function(t){var n=t.getContainerMap(e.content);return s["default"].every(n.positions,i)})},pagePosition:function(e,t){return s["default"].filter(t,function(t){var i=t.$el.attr("data-filter-page-pos"),n=e.pageNum+1,r=!1;return i?(i=i.split(" "),s["default"].each(i,function(e){var t=!1,i=parseInt(e,10);return"!"===e[0]&&(t=!0,i=parseInt(e.substr(1),10)),t&&i!==n||!t&&i===n?(r=!0,!1):void 0}),r):!0})}}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(2),a=i(r),o=t(25),l=i(o),u=t(37),d=i(u),h=t(46),f=i(h),c=t(44),p=i(c),g=d["default"].extend({defaults:{contents:{},meta:{}},initialize:function(e){e&&e.contents&&this._changeContents(),this.on("change:contents",this._changeContents),this.__defineGetter__("elementsLeft",this._getElementsLeft)},setElements:function(e){e=s["default"].filter(e,function(e){return"P"===e.tagName&&e.innerHTML.length<15&&!e.innerHTML.replace(/(\s+)?(<br(\s+)?\/?>)?(&nbsp;)?/gim,"")?!1:e}),this.elements=s["default"].map(e,function(e){var t={el:e};if("FIGURE"===e.tagName){var i=new p["default"](t);if(i.elements.length)return i}return new f["default"](t)});var t=this.getBlocks();t.length&&(t[0].isFirst=!0,t[t.length-1].isLast=!0)},addAfter:function(e,t){var i=this.elements;i.splice(i.indexOf(t)+1,0,e)},each:function(e,t){s["default"].each(this.elements,e,t||this)},release:function(e){e=s["default"].isArray(e)?e:[e],s["default"].each(e,function(e,t){e.retained=!1,e.clonedFrom&&!e.clonedFrom.retained?this.elements.splice(this.elements.indexOf(e),1):e.revert&&e.revert()},this)},releaseAll:function(){this.release(this.elements)},retain:function(e){var t=s["default"].isArray(e)?e:[e];s["default"].each(t,function(e){e.retained=!0})},retainAll:function(){s["default"].each(this.elements,function(e){e.retained=!0})},getElements:function(){return s["default"].filter(this.elements,function(e){return!e.retained})},getBlocks:function(){return s["default"].filter(this.elements,function(e){return!e.retained&&e instanceof f["default"]})},getFigures:function(){return s["default"].filter(this.elements,function(e,t){return!e.retained&&e instanceof p["default"]})},hasBlocksLeft:function(){return this.getBlocks().length>0},isEmpty:function(){return 0===this.elementsLeft},_changeContents:function(){var e,t;e=(0,a["default"])(this.get("contents").source),t=e.children(),this.className=e.attr("class"),this.fieldMap=l["default"].dom.getFieldMap(e[0]),this.setElements(t)},_getElementsLeft:function(){return s["default"].reduce(this.elements,function(e,t){return t.retained?e:e+1},0)}});exports["default"]=g},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(57),s=i(n);exports["default"]={Article:s["default"]}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(10),a=i(r),o=t(58),l=i(o),u=a["default"].extend({initialize:function(e){this.article=e},serialize:function(){return{pages:s["default"].map(this.article.pages,this._serializePage,this)}},unserialize:function(e){var t=[],i=new l["default"](null,this.article);return e="string"==typeof e?JSON.parse(e):e,s["default"].each(e.pages,function(e,n){e&&(e.pageNum=n,t.push(i.unserialize(e)))}),s["default"].each(t,function(e){this.article.pages[e.pageNum]=e,this.article.setTemplateForPageNum(e.template,e.pageNum)},this),this.article.revert(),this.article},_serializePage:function(e){var t=new l["default"](e,this.article);return t.serialize()}});exports["default"]=u},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(1),s=i(n),r=t(2),a=i(r),o=t(10),l=i(o),u=t(52),d=i(u),h=t(51),f=i(h),c=l["default"].extend({initialize:function(e,t){this.page=e,this.article=t},serialize:function(){var e=[],t=this.page;return this.article.overrideTemplates[t.pageNum]?(e=s["default"].map(t.pageTemplate.containers,function(e){return e.figureEl?{figureElementSignature:e.figureEl.signature,preferFigureElSignature:e.preferFigureElSignature,html:e.el.innerHTML}:null}),{template:{signature:t.template.signature,html:f["default"].getTemplateFromPageTemplate(t.pageTemplate).el.outerHTML},containers:e}):!1},unserialize:function(e){var t=e.template.signature,i=e.template.html,n=new d["default"]({el:(0,a["default"])(i)}),s=this._findOriginalTemplate(t);this.page=this.article.createPage(e.pageNum),this.page.setTemplate(s||n);var r=f["default"].getPageTemplateFromTemplate(n,{page:this.page});return this.page.setPageTemplate(r),this._restoreContainers(e),this.page},_findOriginalTemplate:function(e){return s["default"].find(this.article.templates,function(t){return t.matchesAnySignature(e)})},_restoreContainers:function(e){s["default"].each(this.page.pageTemplate.containers,function(t,i){var n=e.containers[i],s=n&&n.figureElementSignature;s&&(t.figureElSignature=s,t.preferFigureElSignature=n.preferFigureElSignature,t.saveState({html:n.html,renderedWidgets:!0}))})}});exports["default"]=c},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(34),s=i(n);exports["default"]={Article:s["default"]}},function(e,exports,t){"use strict";function i(e){return e&&e.__esModule?e:{"default":e}}Object.defineProperty(exports,"__esModule",{value:!0});var n=t(31),s=i(n);exports["default"]={ScrollView:s["default"]}}])});
+
+	function textFit(compression) {
+	    return this.each(function () {
+	        var $this = (0, _domlib2.default)(this),
+	            compression = compression || 1,
+	            $span = (0, _domlib2.default)('<span style="display:inline-block;margin:0;padding:0;"></span>').html($this.text()),
+	            fontSize = parseInt(window.getComputedStyle(this).getPropertyValue('font-size'), 10),
+	            thisWidth = $this.width(),
+	            spanWidth = 0;
+
+	        // This can happen if the element targeted to be resized is hidden (display: none), or not in the document
+	        if (thisWidth === 0) {
+	            return;
+	        }
+
+	        $this.empty().append($span);
+	        spanWidth = $span.width();
+
+	        if (spanWidth >= thisWidth) {
+	            fontSize = 8;
+	            $this.css('font-size', fontSize + 'px');
+	            spanWidth = $span.width();
+	        }
+
+	        while (spanWidth < thisWidth) {
+	            fontSize += 1;
+	            $this.css('font-size', fontSize + 'px');
+
+	            spanWidth = $span.width();
+	            thisWidth = $this.width();
+	        }
+
+	        if (spanWidth >= thisWidth) {
+	            fontSize -= 1;
+	        }
+
+	        $this.css('font-size', fontSize / compression + 'px');
+	    });
+	}
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _backbone = __webpack_require__(9);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _lodash2.default.extend({}, _backbone2.default.Events);
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_9__;
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _backbone = __webpack_require__(9);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Base object for all non-backbone objects
+	 *
+	 * Has the extend function to set up the prototype chain
+	 */
+	var Base = function Base() {
+	    this.initialize.apply(this, arguments);
+	};
+
+	Base.prototype = {
+	    initialize: function initialize() {}
+	};
+
+	Base.extend = _backbone2.default.Model.extend;
+
+	exports.default = Base;
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _backbone = __webpack_require__(9);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _md = __webpack_require__(13);
+
+	var _md2 = _interopRequireDefault(_md);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _backbone2.default.View.extend({
+	    startX: 0,
+	    startY: 0,
+	    startScale: 1,
+	    rotation: 0,
+
+	    getSignature: function getSignature() {
+	        if (!this.signature) {
+	            this.lockSignature();
+	        }
+
+	        return this.signature;
+	    },
+
+	    lockSignature: function lockSignature() {
+	        this.signature = (0, _md2.default)(this.el.outerHTML);
+	        this.innerSignature = (0, _md2.default)(this.el.innerHTML);
+	    },
+
+	    matchesSignature: function matchesSignature(signature) {
+	        return signature === this.signature;
+	    },
+
+	    matchesInnerSignature: function matchesInnerSignature(signature) {
+	        return signature === this.innerSignature;
+	    },
+
+	    matchesAnySignature: function matchesAnySignature(signature) {
+	        return this.matchesSignature(signature) || this.matchesInnerSignature(signature);
+	    },
+
+	    disable: function disable() {
+	        this.isDisabled = true;
+	        this.$el.addClass(_classnames2.default.IS_DISABLED);
+	    },
+
+	    enable: function enable() {
+	        this.isDisabled = false;
+	        this.$el.removeClass(_classnames2.default.IS_DISABLED);
+	    },
+
+	    isInDOM: function isInDOM() {
+	        return this.el.parentNode !== null;
+	    },
+
+	    startTransform: function startTransform(event) {
+	        event.preventDefault();
+	        event.stopPropagation();
+
+	        this.startX = event.pageX;
+	        this.startY = event.pageY;
+	        this.startScale = event.scale;
+	        this.startRotation = event.rotation;
+	        event.currentTarget.classList.add('alf-is-moving');
+	    },
+
+	    transformEventTarget: function transformEventTarget(event) {
+	        this.transformElByEvent(event.currentTarget, event);
+	    },
+
+	    transformEl: function transformEl(event) {
+	        this.transformElByEvent(this.el, event);
+	    },
+
+	    transformElByEvent: function transformElByEvent(el, event) {
+	        event.preventDefault();
+	        event.stopPropagation();
+	        event = event.originalEvent || event;
+
+	        var x = event.pageX - this.startX;
+	        var y = event.pageY - this.startY;
+	        var scale = event.scale;
+	        var rotation = event.rotation - this.startRotation;
+
+	        this.doTransform(el, { x: x, y: y, scale: scale, rotation: rotation });
+	    },
+
+	    doTransform: function doTransform(el, params) {
+	        var transform = '';
+
+	        // Using z = 1px to put it on top of the lowest lvl elements
+	        transform += 'translate3d(' + params.x + 'px, ' + params.y + 'px, 1px)';
+	        if (params.rotation) {
+	            transform += 'rotate(' + params.rotation + 'deg) ';
+	        }
+	        transform += 'scale(' + params.scale + ') ';
+
+	        el.style.webkitTransition = 'none';
+	        el.style.webkitTransform = transform;
+	    },
+
+	    enableScrolling: function enableScrolling(directions) {
+	        directions = directions || {
+	            x: true,
+	            y: true
+	        };
+
+	        var classes = [];
+	        directions.x && classes.push('alf-is-scrollable-x');
+	        directions.y && classes.push('alf-is-scrollable-y');
+
+	        this.$el.addClass(classes.join(' '));
+	    },
+
+	    preventDefault: function preventDefault(event) {
+	        event.preventDefault();
+	    }
+	});
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	/**
+	 * Class names in use by alf
+	 */
+	exports.default = {
+	    ALLOW_MULTIPLE: 'alf-allow-multiple',
+	    ALLOW_OVERFLOW: 'alf-allow-overflow',
+	    ASSET_STYLESHEET: 'alf-asset-stylesheet',
+	    BREAK_BEFORE: 'alf-break-before',
+	    BTN_GROUP: 'alf-btn-group',
+	    CONTAINER: 'alf-container',
+	    CONTAINER_FULLSCREEN: 'alf-container-fullscreen',
+	    CONTAINER_INLINE: 'alf-container-inline',
+	    CONTAINER_IS_UNLOADED: 'alf-container-is-unloaded',
+	    CONTROLS_OFF: 'alf-controls-off',
+	    FULLSCREEN_CONTENT: 'alf-fullscreen-content',
+	    FULLSCREEN_EXIT: 'alf-fullscreen-exit',
+	    FULLSCREEN_TOOLBAR: 'alf-fullscreen-toolbar',
+	    MULTI_CHOICE: 'alf-multiple-choices',
+	    IMAGE: 'alf-image',
+	    IS_BREAKABLE: 'alf-is-breakable',
+	    IS_DISABLED: 'alf-is-disabled',
+	    IS_DRAGGABLE: 'alf-is-draggable',
+	    IS_DRAGGABLE_X: 'alf-is-draggable-x',
+	    IS_DRAGGABLE_Y: 'alf-is-draggable-y',
+	    IS_EDITABLE: 'alf-is-editable',
+	    IS_HIDDEN: 'alf-is-hidden',
+	    IS_FIRST_BLOCK: 'alf-block-is-first',
+	    IS_LAST_BLOCK: 'alf-block-is-last',
+	    IS_NON_BREAKABLE: 'alf-is-non-breakable',
+	    IS_NON_REARRANGEABLE: 'alf-is-non-rearrangeable',
+	    IS_NON_SPLITTABLE: 'alf-is-non-splittable',
+	    IS_OPTIONAL: 'alf-is-optional',
+	    IS_PLAYING: 'alf-is-playing',
+	    IS_REARRANGEABLE: 'alf-is-rearrangeable',
+	    IS_REMOVABLE: 'alf-is-removable',
+	    IS_REMOVED: 'alf-is-removed',
+	    IS_RESPONSIVE: 'alf-is-responsive',
+	    IS_RESIZABLE: 'alf-is-resizable',
+	    IS_SPLITTABLE: 'alf-is-splittable',
+	    IS_VISIBLE: 'alf-is-visible',
+	    NO_SCORE: 'alf-no-score',
+	    PAGENUM_X: function PAGENUM_X(x) {
+	        return 'alf-pagenum-' + x;
+	    },
+	    PAGENUM_TOTAL_X: function PAGENUM_TOTAL_X(x) {
+	        return 'alf-pagenum-total-' + x;
+	    },
+	    REVISION: function REVISION(revision) {
+	        return 'alf-rev-' + revision;
+	    },
+	    REGION: 'alf-region',
+	    REGION_FLEXIBLE: 'alf-region-flexible',
+	    SIZE_DETECTOR: 'alf-size-detector',
+	    STICK_TO_NEXT: 'alf-stick-to-next',
+	    STRETCH_TO_FIT: 'alf-stretch-to-fit',
+	    SUPPORTS_FULLSCREEN: 'alf-supports-fullscreen',
+	    WIDGET: 'alf-widget'
+	};
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	function md5cycle(x, k) {
+	    var a = x[0],
+	        b = x[1],
+	        c = x[2],
+	        d = x[3];
+
+	    a = ff(a, b, c, d, k[0], 7, -680876936);
+	    d = ff(d, a, b, c, k[1], 12, -389564586);
+	    c = ff(c, d, a, b, k[2], 17, 606105819);
+	    b = ff(b, c, d, a, k[3], 22, -1044525330);
+	    a = ff(a, b, c, d, k[4], 7, -176418897);
+	    d = ff(d, a, b, c, k[5], 12, 1200080426);
+	    c = ff(c, d, a, b, k[6], 17, -1473231341);
+	    b = ff(b, c, d, a, k[7], 22, -45705983);
+	    a = ff(a, b, c, d, k[8], 7, 1770035416);
+	    d = ff(d, a, b, c, k[9], 12, -1958414417);
+	    c = ff(c, d, a, b, k[10], 17, -42063);
+	    b = ff(b, c, d, a, k[11], 22, -1990404162);
+	    a = ff(a, b, c, d, k[12], 7, 1804603682);
+	    d = ff(d, a, b, c, k[13], 12, -40341101);
+	    c = ff(c, d, a, b, k[14], 17, -1502002290);
+	    b = ff(b, c, d, a, k[15], 22, 1236535329);
+
+	    a = gg(a, b, c, d, k[1], 5, -165796510);
+	    d = gg(d, a, b, c, k[6], 9, -1069501632);
+	    c = gg(c, d, a, b, k[11], 14, 643717713);
+	    b = gg(b, c, d, a, k[0], 20, -373897302);
+	    a = gg(a, b, c, d, k[5], 5, -701558691);
+	    d = gg(d, a, b, c, k[10], 9, 38016083);
+	    c = gg(c, d, a, b, k[15], 14, -660478335);
+	    b = gg(b, c, d, a, k[4], 20, -405537848);
+	    a = gg(a, b, c, d, k[9], 5, 568446438);
+	    d = gg(d, a, b, c, k[14], 9, -1019803690);
+	    c = gg(c, d, a, b, k[3], 14, -187363961);
+	    b = gg(b, c, d, a, k[8], 20, 1163531501);
+	    a = gg(a, b, c, d, k[13], 5, -1444681467);
+	    d = gg(d, a, b, c, k[2], 9, -51403784);
+	    c = gg(c, d, a, b, k[7], 14, 1735328473);
+	    b = gg(b, c, d, a, k[12], 20, -1926607734);
+
+	    a = hh(a, b, c, d, k[5], 4, -378558);
+	    d = hh(d, a, b, c, k[8], 11, -2022574463);
+	    c = hh(c, d, a, b, k[11], 16, 1839030562);
+	    b = hh(b, c, d, a, k[14], 23, -35309556);
+	    a = hh(a, b, c, d, k[1], 4, -1530992060);
+	    d = hh(d, a, b, c, k[4], 11, 1272893353);
+	    c = hh(c, d, a, b, k[7], 16, -155497632);
+	    b = hh(b, c, d, a, k[10], 23, -1094730640);
+	    a = hh(a, b, c, d, k[13], 4, 681279174);
+	    d = hh(d, a, b, c, k[0], 11, -358537222);
+	    c = hh(c, d, a, b, k[3], 16, -722521979);
+	    b = hh(b, c, d, a, k[6], 23, 76029189);
+	    a = hh(a, b, c, d, k[9], 4, -640364487);
+	    d = hh(d, a, b, c, k[12], 11, -421815835);
+	    c = hh(c, d, a, b, k[15], 16, 530742520);
+	    b = hh(b, c, d, a, k[2], 23, -995338651);
+
+	    a = ii(a, b, c, d, k[0], 6, -198630844);
+	    d = ii(d, a, b, c, k[7], 10, 1126891415);
+	    c = ii(c, d, a, b, k[14], 15, -1416354905);
+	    b = ii(b, c, d, a, k[5], 21, -57434055);
+	    a = ii(a, b, c, d, k[12], 6, 1700485571);
+	    d = ii(d, a, b, c, k[3], 10, -1894986606);
+	    c = ii(c, d, a, b, k[10], 15, -1051523);
+	    b = ii(b, c, d, a, k[1], 21, -2054922799);
+	    a = ii(a, b, c, d, k[8], 6, 1873313359);
+	    d = ii(d, a, b, c, k[15], 10, -30611744);
+	    c = ii(c, d, a, b, k[6], 15, -1560198380);
+	    b = ii(b, c, d, a, k[13], 21, 1309151649);
+	    a = ii(a, b, c, d, k[4], 6, -145523070);
+	    d = ii(d, a, b, c, k[11], 10, -1120210379);
+	    c = ii(c, d, a, b, k[2], 15, 718787259);
+	    b = ii(b, c, d, a, k[9], 21, -343485551);
+
+	    x[0] = add32(a, x[0]);
+	    x[1] = add32(b, x[1]);
+	    x[2] = add32(c, x[2]);
+	    x[3] = add32(d, x[3]);
+	}
+
+	function cmn(q, a, b, x, s, t) {
+	    a = add32(add32(a, q), add32(x, t));
+	    return add32(a << s | a >>> 32 - s, b);
+	}
+
+	function ff(a, b, c, d, x, s, t) {
+	    return cmn(b & c | ~b & d, a, b, x, s, t);
+	}
+
+	function gg(a, b, c, d, x, s, t) {
+	    return cmn(b & d | c & ~d, a, b, x, s, t);
+	}
+
+	function hh(a, b, c, d, x, s, t) {
+	    return cmn(b ^ c ^ d, a, b, x, s, t);
+	}
+
+	function ii(a, b, c, d, x, s, t) {
+	    return cmn(c ^ (b | ~d), a, b, x, s, t);
+	}
+
+	function md51(s) {
+	    var n = s.length,
+	        state = [1732584193, -271733879, -1732584194, 271733878],
+	        i;
+	    for (i = 64; i <= s.length; i += 64) {
+	        md5cycle(state, md5blk(s.substring(i - 64, i)));
+	    }
+	    s = s.substring(i - 64);
+	    var tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	    for (i = 0; i < s.length; i++) {
+	        tail[i >> 2] |= s.charCodeAt(i) << (i % 4 << 3);
+	    }tail[i >> 2] |= 0x80 << (i % 4 << 3);
+	    if (i > 55) {
+	        md5cycle(state, tail);
+	        for (i = 0; i < 16; i++) {
+	            tail[i] = 0;
+	        }
+	    }
+	    tail[14] = n * 8;
+	    md5cycle(state, tail);
+	    return state;
+	}
+
+	/* there needs to be support for Unicode here,
+	 * unless we pretend that we can redefine the MD-5
+	 * algorithm for multi-byte characters (perhaps
+	 * by adding every four 16-bit characters and
+	 * shortening the sum to 32 bits). Otherwise
+	 * I suggest performing MD-5 as if every character
+	 * was two bytes--e.g., 0040 0025 = @%--but then
+	 * how will an ordinary MD-5 sum be matched?
+	 * There is no way to standardize text to something
+	 * like UTF-8 before transformation; speed cost is
+	 * utterly prohibitive. The JavaScript standard
+	 * itself needs to look at this: it should start
+	 * providing access to strings as preformed UTF-8
+	 * 8-bit unsigned value arrays.
+	 */
+	function md5blk(s) {
+	    /* I figured global was faster.   */
+	    var md5blks = [],
+	        i; /* Andy King said do it this way. */
+	    for (i = 0; i < 64; i += 4) {
+	        md5blks[i >> 2] = s.charCodeAt(i) + (s.charCodeAt(i + 1) << 8) + (s.charCodeAt(i + 2) << 16) + (s.charCodeAt(i + 3) << 24);
+	    }
+	    return md5blks;
+	}
+
+	var hex_chr = '0123456789abcdef'.split('');
+
+	function rhex(n) {
+	    var s = '',
+	        j = 0;
+	    for (; j < 4; j++) {
+	        s += hex_chr[n >> j * 8 + 4 & 0x0F] + hex_chr[n >> j * 8 & 0x0F];
+	    }return s;
+	}
+
+	function hex(x) {
+	    for (var i = 0; i < x.length; i++) {
+	        x[i] = rhex(x[i]);
+	    }return x.join('');
+	}
+
+	function md5(s) {
+	    return hex(md51(s));
+	}
+
+	/* this function is much faster,
+	so if possible we use it. Some IEs
+	are the only ones I know of that
+	need the idiotic second function,
+	generated by an if clause.  */
+
+	function add32(a, b) {
+	    return a + b & 0xFFFFFFFF;
+	}
+
+	exports.default = md5;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _Dispatcher = __webpack_require__(15);
+
+	var _Dispatcher2 = _interopRequireDefault(_Dispatcher);
+
+	var _Appear = __webpack_require__(16);
+
+	var _Appear2 = _interopRequireDefault(_Appear);
+
+	var _Clip = __webpack_require__(17);
+
+	var _Clip2 = _interopRequireDefault(_Clip);
+
+	var _Fade = __webpack_require__(18);
+
+	var _Fade2 = _interopRequireDefault(_Fade);
+
+	var _Scale = __webpack_require__(19);
+
+	var _Scale2 = _interopRequireDefault(_Scale);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    Dispatcher: _Dispatcher2.default,
+	    Appear: _Appear2.default,
+	    Clip: _Clip2.default,
+	    Fade: _Fade2.default,
+	    Scale: _Scale2.default
+	};
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _Base = __webpack_require__(10);
+
+	var _Base2 = _interopRequireDefault(_Base);
+
+	var _backbone = __webpack_require__(9);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var m = Math;
+
+	var Dispatcher = _Base2.default.extend();
+
+	_lodash2.default.extend(Dispatcher.prototype, _backbone2.default.Events, {
+
+	    initialize: function initialize(options) {
+	        options = this.options = _lodash2.default.extend({}, options || {});
+
+	        _lodash2.default.bindAll(this, 'stopRunning');
+
+	        this.isReset = false;
+	        this._isRunning = false;
+	        this._isReversible = false;
+
+	        options.target && this.setTarget(options.target);
+	        options.to && this.setTo(options.to);
+	    },
+
+	    setTarget: function setTarget(target) {
+	        this.target = _lodash2.default.defaults(target, {
+	            el: null,
+	            width: null,
+	            height: null,
+	            top: null,
+	            left: null
+	        });
+
+	        this.calcMetrics();
+	    },
+
+	    setTargetEl: function setTargetEl(el) {
+	        this.setTarget({ el: el });
+	    },
+
+	    setTo: function setTo(to) {
+	        this.to = _lodash2.default.defaults(to, {
+	            el: null,
+	            width: null,
+	            height: null
+	        });
+	    },
+
+	    isRunning: function isRunning() {
+	        return this._isRunning;
+	    },
+
+	    stopRunning: function stopRunning() {
+	        this._isRunning = false;
+	    },
+
+	    /**
+	     * Calculate metrics
+	     *
+	     * Calculate the most common metrics needed to perform transitions on it
+	     *
+	     * @return {void}
+	     */
+	    calcMetrics: function calcMetrics() {
+	        var target, to;
+
+	        target = this.target;
+	        to = this.to;
+
+	        target = _lodash2.default.extend(target, target.el.getBoundingClientRect());
+
+	        // Cannot use getBoundingClientRect here, as it's affected by the scale prop
+	        to = _lodash2.default.extend(to, {
+	            width: to.el.clientWidth,
+	            height: to.el.clientHeight
+	        });
+
+	        to.scaleX = target.width / to.width;
+	        to.scaleY = target.height / to.height;
+	        to.scale = m.max(to.scaleX, to.scaleY);
+
+	        target.scaleX = to.width / target.width;
+	        target.scaleY = to.height / target.height;
+	        target.scale = m.min(target.scaleX, target.scaleY);
+
+	        this.offsetX = m.round(target.left + (target.width - to.width) / 2);
+	        this.offsetY = m.round(target.top + (target.height - to.height) / 2);
+
+	        // mask = visible area based on what we're transitioning from
+	        to.maskHeight = m.round(target.height / to.scale);
+	        to.maskWidth = m.round(target.width / to.scale);
+
+	        to.clipHeight = to.height - to.maskHeight;
+	        to.clipWidth = to.width - to.maskWidth;
+	    },
+
+	    /**
+	     * Reset the element and make it ready for the animation to come
+	     *
+	     * @param {Function} callback called when element is ready for animation
+	     * @return {void}
+	     */
+	    reset: function reset() {
+	        var to = this.to;
+	        var props = this.options.effect.animateFromProps.call(this);
+
+	        to.el.style.webkitTransitionDuration = '0ms';
+	        to.el.style.mozTransitionDuration = '0ms';
+	        to.el.style.msTransitionDuration = '0ms';
+	        to.el.style.oTransitionDuration = '0ms';
+	        to.el.style.transitionDuration = '0ms';
+
+	        for (var key in props) {
+	            // Skip all transition properties, these are only used for reverse
+	            if (key.toLowerCase().indexOf('transition') !== -1) {
+	                continue;
+	            }
+	            to.el.style[key] = props[key];
+	        }
+	    },
+
+	    /**
+	     * Run the transition
+	     *
+	     * @param {Function} callback [description]
+	     * @return {void}
+	     */
+	    run: function run(callback) {
+	        // jshint maxstatements:23
+	        if (this._isRunning) {
+	            return false;
+	        }
+
+	        this._isRunning = true;
+	        this._isReversible = true;
+
+	        var that = this;
+	        var target = this.target;
+	        var to = this.to;
+	        var done = function done() {
+	            that._animate(callback);
+	        };
+
+	        if (!this.options.upscaleTarget || !target || !target.el) {
+	            this.trigger('willAppear', this, done);
+
+	            return;
+	        }
+
+	        target.el.classList.add('alf-is-moving');
+
+	        /**
+	         * This is a good candidate to be extendable with custom transitions,
+	         * like the to-transition
+	         */
+	        var transform = '';
+
+	        // Horizontally centered
+	        var translateX = to.width / 2 - target.width / 2 - target.left;
+
+	        // Vertically centered
+	        var translateY = to.height / 2 - target.height / 2 - target.top;
+
+	        // Using z = 1px to make it it's above other elements
+	        transform += 'translate3d(' + translateX + 'px, ' + translateY + 'px, 1px) ';
+	        transform += 'scale(' + target.scale + ') ';
+
+	        (0, _dom2.default)(target.el).one('webkitTransitionEnd', _lodash2.default.bind(this._onScaleEnd, this, callback));
+	        (0, _dom2.default)(target.el).one('transitionend', _lodash2.default.bind(this._onScaleEnd, this, callback));
+
+	        target.el.style['webkitTransition'] = '-webkit-transform ease-out 300ms';
+	        target.el.style['transition'] = 'transform ease-out 300ms';
+	        target.el.style['webkitTransform'] = transform;
+	        target.el.style['transform'] = transform;
+	    },
+
+	    /**
+	     * Reverse the transition back to the element it started from
+	     *
+	     * @param {Function} callback called when the transition ends
+	     * @return {void}
+	     */
+	    reverse: function reverse(callback) {
+	        var effect = this.options.effect;
+
+	        if (this._isRunning || !this._isReversible) {
+	            return false;
+	        }
+	        this._isRunning = true;
+
+	        var to = this.to;
+	        var props = (effect.reverseProps || effect.animateFromProps).call(this);
+
+	        (0, _dom2.default)(to.el).one('webkitTransitionEnd', _lodash2.default.bind(this._onReverseEnd, this, callback));
+	        (0, _dom2.default)(to.el).one('transitionend', _lodash2.default.bind(this._onReverseEnd, this, callback));
+
+	        for (var key in props) {
+	            to.el.style[key] = props[key];
+	        }
+	    },
+
+	    /**
+	     * Reverse to another element than the original
+	     *
+	     * @param {Function} callback called when the transition ends
+	     * @return {void}
+	     */
+	    reverseTo: function reverseTo(el, callback) {
+	        this.to = { el: el };
+	        this.calcMetrics();
+	        this.reverse(callback);
+	    },
+
+	    _animate: function _animate(callback) {
+	        var to = this.to;
+	        var props = this.options.effect.animateToProps.call(this);
+
+	        this.reset();
+
+	        this.trigger('ready', this);
+
+	        (0, _dom2.default)(to.el).one('webkitTransitionEnd', _lodash2.default.bind(this._onAnimateEnd, this, callback));
+	        (0, _dom2.default)(to.el).one('transitionend', _lodash2.default.bind(this._onAnimateEnd, this, callback));
+
+	        _lodash2.default.each(props, function (value, key) {
+	            to.el.style[key] = value;
+	        });
+	    },
+
+	    /**
+	     * On animate end
+	     *
+	     * Triggers when the _animate function is 100% complete
+	     * Calls the optionally supplied callback and cleans up
+	     *
+	     * @param {Function} callback optional function
+	     * @return {void}
+	     */
+	    _onAnimateEnd: function _onAnimateEnd(callback) {
+	        var targetStyle;
+
+	        if (this.to && this.to.el) {
+	            this.to.el.style.removeProperty('-webkit-transition');
+	            this.to.el.style.removeProperty('transition');
+	        }
+
+	        if (this.target && this.target.el) {
+	            targetStyle = this.target.el.style;
+	            targetStyle.removeProperty('-webkit-transform');
+	            targetStyle.removeProperty('-webkit-transition');
+	            targetStyle.removeProperty('transform');
+	            targetStyle.removeProperty('transition');
+
+	            (0, _dom2.default)(this.target.el).removeClass('alf-is-moving');
+	        }
+
+	        callback && callback.call(this, this);
+	        this.trigger('didAppear', this);
+
+	        setTimeout(this.stopRunning, 100);
+	    },
+
+	    _onReverseEnd: function _onReverseEnd(callback) {
+	        this._isReversible = false;
+	        this.to.el.style.webkitTransition = 'none';
+	        this.to.el.style.webkitTransform = 'none';
+	        this.to.el.style.mozTransition = 'none';
+	        this.to.el.style.mozTransform = 'none';
+	        this.to.el.style.msTransition = 'none';
+	        this.to.el.style.msTransform = 'none';
+	        this.to.el.style.oTransition = 'none';
+	        this.to.el.style.oTransform = 'none';
+	        this.to.el.style.transition = 'none';
+	        this.to.el.style.transform = 'none';
+
+	        callback && callback.call(this, this);
+	        this.trigger('didDisappear', this);
+
+	        // When tapping extremely fast, resetting _isRunning without a delay
+	        // could cause double reverse events, which would put the user in limbo
+	        setTimeout(this.stopRunning, 100);
+	    },
+
+	    _onScaleEnd: function _onScaleEnd(callback) {
+	        var that = this;
+	        var done = function done() {
+	            that._animate(callback);
+	        };
+
+	        this.trigger('willAppear', this, done);
+	    }
+
+	});
+
+	exports.default = Dispatcher;
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var Appear = {
+	    reverseProps: function reverseProps() {
+	        return {
+	            webkitTransition: '-webkit-transform ease-out 300ms',
+	            webkitTransform: 'translate3d(-1500px, -1500px, 0) scale(0.4)'
+	        };
+	    },
+	    animateFromProps: function animateFromProps() {
+	        var transform = '';
+
+	        transform += 'scaleX(0.8) scaleY(0.8) ';
+
+	        return {
+	            webkitTransition: '-webkit-transform ease-out 300ms, opacity ease-out 300ms',
+	            webkitTransform: transform,
+	            opacity: 0
+	        };
+	    },
+	    animateToProps: function animateToProps() {
+	        return {
+	            webkitTransition: '-webkit-transform ease-out 300ms, opacity ease-out 300ms',
+	            webkitTransform: 'translate3d(0, 0, 0) scaleX(1) scaleY(1)',
+	            opacity: 1
+	        };
+	    }
+	};
+
+	exports.default = Appear;
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var m = Math;
+
+	exports.default = {
+	    animateFromProps: function animateFromProps() {
+	        // Add support for top and bottom clipping as well?
+	        var transform = '';
+	        var to = this.to;
+	        var clipTop = m.round(this.clipHeight / 2);
+	        var clipBottom = to.height - clipTop;
+	        var clipLeft = m.round(this.clipWidth / 2);
+	        var clipRight = to.width - clipLeft;
+
+	        transform += 'translate3d(' + this.offsetX + 'px, ' + this.offsetY + 'px, 0px) ';
+	        transform += 'scale(' + this.to.scale + ') ';
+
+	        return {
+	            webkitTransition: '-webkit-transform ease-out 300ms, clip ease-out 300ms',
+	            webkitTransform: transform,
+	            clip: 'rect(' + clipTop + 'px, ' + clipRight + 'px, ' + clipBottom + 'px, ' + clipLeft + 'px) '
+	        };
+	    },
+	    animateToProps: function animateToProps() {
+	        var to = this.to;
+
+	        return {
+	            webkitTransition: '-webkit-transform ease-out 300ms, clip ease-out 300ms',
+	            webkitTransform: 'translate3d(0, 0, 0) scaleX(1) scaleY(1)',
+	            clip: 'rect(0px, ' + to.width + 'px, ' + to.height + 'px, 0px)'
+	        };
+	    }
+	};
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var Fade = {
+
+	    animateFromProps: function animateFromProps() {
+	        return {
+	            webkitTransition: 'opacity ease-out 300ms',
+	            mozTransition: 'opacity ease-out 300ms',
+	            msTransition: 'opacity ease-out 300ms',
+	            oTransition: 'opacity ease-out 300ms',
+	            transition: 'opacity ease-out 300ms',
+	            opacity: 0
+	        };
+	    },
+
+	    animateToProps: function animateToProps() {
+	        return {
+	            webkitTransition: 'opacity ease-out 300ms',
+	            mozTransition: 'opacity ease-out 300ms',
+	            msTransition: 'opacity ease-out 300ms',
+	            oTransition: 'opacity ease-out 300ms',
+	            transition: 'opacity ease-out 300ms',
+	            opacity: 1
+	        };
+	    }
+
+	};
+
+	exports.default = Fade;
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var Scale = {
+
+	    animateFromProps: function animateFromProps() {
+	        var transform = '';
+
+	        transform += 'translate3d(' + this.offsetX + 'px, ' + this.offsetY + 'px, 0px) ';
+	        transform += 'scaleX(' + this.scaleX + ') scaleY(' + this.scaleY + ') ';
+
+	        return {
+	            webkitTransition: '-webkit-transform ease-out 300ms, opacity ease-out 200ms',
+	            webkitTransform: transform,
+	            opacity: 0
+	        };
+	    },
+
+	    animateToProps: function animateToProps() {
+	        return {
+	            webkitTransition: '-webkit-transform ease-out 300ms, opacity ease-out 200ms',
+	            webkitTransform: 'translate3d(0, 0, 0) scaleX(1) scaleY(1)',
+	            opacity: 1
+	        };
+	    }
+
+	};
+
+	exports.default = Scale;
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _Manager = __webpack_require__(21);
+
+	var _Manager2 = _interopRequireDefault(_Manager);
+
+	var _View = __webpack_require__(22);
+
+	var _View2 = _interopRequireDefault(_View);
+
+	var _Page = __webpack_require__(23);
+
+	var _Page2 = _interopRequireDefault(_Page);
+
+	var _Fullscreen = __webpack_require__(24);
+
+	var _Fullscreen2 = _interopRequireDefault(_Fullscreen);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    Manager: _Manager2.default,
+	    View: _View2.default,
+	    Page: _Page2.default,
+	    Fullscreen: _Fullscreen2.default
+	};
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _Base = __webpack_require__(10);
+
+	var _Base2 = _interopRequireDefault(_Base);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _Base2.default.extend({
+
+	    initialize: function initialize() {
+	        this.layers = [];
+	        this.length = 0;
+	    },
+
+	    /**
+	     * Add a layer view to the stack
+	     *
+	     * @param {LayerView} layerView
+	     * @return {LayerManager} self
+	     */
+	    add: function add(layerView) {
+	        this.layers.push(layerView);
+	        this.length = this.layers.length;
+
+	        return this;
+	    },
+
+	    /**
+	     * Remove a specific layer view from the stack
+	     *
+	     * @param {LayerView} layerView
+	     * @return {LayerManager} self
+	     */
+	    remove: function remove(layerView) {
+	        var layers = this.layers;
+	        layers.splice(layers.indexOf(layerView), 1);
+	        this.length = this.layers.length;
+
+	        return this;
+	    },
+
+	    /**
+	     * Get a layer view by it's index/position
+	     *
+	     * @param {Number} the index/position
+	     * @return {LayerView}
+	     */
+	    at: function at(index) {
+	        return this.layers[index];
+	    },
+
+	    /**
+	     * Get the position of a layer view
+	     *
+	     * @param {LayerView} layerView
+	     * @return {Number} the position
+	     */
+	    getPos: function getPos(layerView) {
+	        return this.layers.indexOf(layerView);
+	    },
+
+	    /**
+	     * Get the layer above the input layerView
+	     *
+	     * @param {LayerView} layerView the layer to search from
+	     * @return {LayerView} the layer positioned above
+	     */
+	    getLayerAbove: function getLayerAbove(layerView) {
+	        return this.at(this.getPos(layerView) + 1);
+	    },
+
+	    /**
+	     * Get the layer below the input layerView
+	     *
+	     * @param {LayerView} layerView the layer to search from
+	     * @return {LayerView} the layer positioned below
+	     */
+	    getLayerBelow: function getLayerBelow(layerView) {
+	        return this.at(this.getPos(layerView) - 1);
+	    }
+
+	});
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _transition = __webpack_require__(14);
+
+	var _transition2 = _interopRequireDefault(_transition);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * The base for all layers
+	 *
+	 * @type {LayerView}
+	 */
+	var LayerView = _BaseView2.default.extend();
+
+	_lodash2.default.extend(LayerView.prototype, {
+	    /**
+	     * Initialize layer view
+	     *
+	     * @param {Array} options
+	     * @return {void}
+	     */
+
+	    initialize: function initialize(options) {
+	        if (options && options.manager) {
+	            this.manager = options.manager;
+	            this.manager.add(this);
+	        }
+	    },
+	    tearDown: function tearDown() {
+	        this.stopListening();
+	    },
+	    show: function show() {
+	        this.$el.removeClass(_classnames2.default.IS_HIDDEN);
+
+	        return this;
+	    },
+	    hide: function hide() {
+	        this.$el.addClass(_classnames2.default.IS_HIDDEN);
+
+	        return this;
+	    },
+	    above: function above() {
+	        return this.manager.getLayerAbove(this);
+	    },
+	    below: function below() {
+	        return this.manager.getLayerBelow(this);
+	    },
+	    minimize: function minimize() {
+	        var that = this;
+	        var layerBelow = this.below();
+
+	        layerBelow.show();
+	        layerBelow.transition.reverse(function __minimizeCb() {
+	            that.hide();
+	        });
+
+	        return this;
+	    },
+
+	    /**
+	     * Transition to a layer
+	     *
+	     * @param {layout.Layer} layer [description]
+	     * @param {Object} effect [description]
+	     * @param {HTMLElement} target optional
+	     * @return {transition.Dispatcher}
+	     */
+	    transitionTo: function transitionTo(layer, effect, target) {
+	        return this._createTransition({
+	            layer: layer,
+	            target: target,
+	            effect: effect,
+	            upscaleTarget: false
+	        });
+	    },
+
+	    /**
+	     * Transition to a layer with upscaling of the target
+	     *
+	     * @param {layout.Layer} layer [description]
+	     * @param {Object} effect [description]
+	     * @param {HTMLElement} target optional
+	     * @return {transition.Dispatcher}
+	     */
+	    scaleTo: function scaleTo(layer, effect, target) {
+	        return this._createTransition({
+	            layer: layer,
+	            target: target,
+	            effect: effect,
+	            upscaleTarget: true
+	        });
+	    },
+	    transitionToLayerAbove: function transitionToLayerAbove(effect, target) {
+	        return this.transitionTo(this.above(), effect, target);
+	    },
+	    transitionToLayerBelow: function transitionToLayerBelow(target, effect) {
+	        return this.transitionTo(this.below(), effect, target);
+	    },
+	    _createTransition: function _createTransition(options) {
+	        options.to = {
+	            el: options.layer.el
+	        };
+	        var trans = new _transition2.default.Dispatcher(options);
+
+	        this.listenTo(trans, 'didDisappear', function __didDisappearCb(transition) {
+	            options.layer.$el.addClass(_classnames2.default.IS_HIDDEN);
+	        });
+
+	        this.listenTo(trans, 'ready', function __readyCb() {
+	            options.layer.$el.removeClass(_classnames2.default.IS_HIDDEN);
+	        });
+
+	        return trans;
+	    }
+	});
+
+	/**
+	 * Aliases
+	 */
+
+	var proto = LayerView.prototype;
+
+	proto.getLayerBelow = proto.below;
+	proto.getLayerAbove = proto.above;
+
+	exports.default = LayerView;
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _View = __webpack_require__(22);
+
+	var _View2 = _interopRequireDefault(_View);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Page layer
+	 *
+	 * The layer all pages rendered through the
+	 * layout system should be rendered on to
+	 *
+	 */
+	var Page = _View2.default.extend();
+
+	_lodash2.default.extend(Page.prototype, {
+	    render: function render() {
+	        return this;
+	    }
+	});
+
+	exports.default = Page;
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _View = __webpack_require__(22);
+
+	var _View2 = _interopRequireDefault(_View);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _hub = __webpack_require__(8);
+
+	var _hub2 = _interopRequireDefault(_hub);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Fullscreen layer
+	 *
+	 * The layer all fullscreen elements is displayed in
+	 *
+	 */
+	var Fullscreen = _View2.default.extend();
+
+	_lodash2.default.extend(Fullscreen.prototype, {
+
+	    fullscreenEvents: {
+	        touch: {
+	            'touchstart': '_onTouchStart',
+	            'singleTap': 'toggleControls',
+	            'tap .alf-fullscreen-exit': 'exitFullscreen',
+	            'doubleTap': 'exitFullscreen',
+	            'touchend': 'preventDefault'
+	        },
+	        pointer: {
+	            'mouseover': 'showControls',
+	            'mouseout': 'hideControls',
+	            'click .alf-fullscreen-exit': 'exitFullscreen',
+	            'dblclick': 'exitFullscreen'
+	        }
+	        // 'gesturestart': '_onGestureStart',
+	        // 'gesturechange': '_onGestureChange',
+	        // 'gestureend': '_onGestureEnd'
+	    },
+
+	    initialize: function initialize(options) {
+	        options = this.options = _lodash2.default.extend({}, options || {});
+
+	        _lodash2.default.bindAll(this, '_onScroll');
+
+	        Fullscreen.__super__.initialize.apply(this, _lodash2.default.toArray(arguments));
+
+	        this.position = this.$el.css('position');
+	        this.listenTo(_hub2.default, 'fullscreenWillAppear', this._fullscreenWillAppear);
+
+	        /**
+	         * Should the layer be automatically resized to the window size?
+	         * If this is set to false, it'll respect the width and height it initially has
+	         * Default is true
+	         */
+	        options.resizeToWindow = options.resizeToWindow === undefined ? true : options.resizeToWindow;
+
+	        this.delegateEvents(_util2.default.touchScreen ? this.fullscreenEvents.touch : this.fullscreenEvents.pointer);
+	    },
+
+	    tearDown: function tearDown() {
+	        this.stopListening();
+	        this.$el.empty();
+	    },
+
+	    render: function render() {
+	        return this;
+	    },
+
+	    /**
+	     * Render the fullscreen layer
+	     *
+	     * This is called every time a container goes into fullscreen
+	     * It clears the old content and inserts everything each time
+	     * to remove any possible "pollution" from old fullscreen content
+	     *
+	     * @param {HTMLElement} el the container fullscreen element
+	     * @return {Fullscreen} self
+	     */
+	    renderFullscreenContainer: function renderFullscreenContainer(container) {
+	        var fragment, $btnGroup;
+
+	        var regexp = new RegExp('\\s?' + _classnames2.default.REVISION('') + '[^\\s]*');
+
+	        this.el.className = this.el.className.replace(regexp, '');
+
+	        $btnGroup = (0, _dom2.default)('<div>').addClass(_classnames2.default.BTN_GROUP);
+	        $btnGroup.append((0, _dom2.default)('<button>').addClass(_classnames2.default.FULLSCREEN_EXIT));
+
+	        // TODO: move toolbar to its own object?
+	        this.$toolbar = (0, _dom2.default)('<div>').addClass(_classnames2.default.FULLSCREEN_TOOLBAR);
+	        this.$toolbar.append($btnGroup);
+
+	        this.$content = (0, _dom2.default)('<div>').addClass(_classnames2.default.FULLSCREEN_CONTENT);
+	        this.$content.append(container.el);
+
+	        fragment = document.createDocumentFragment();
+	        fragment.appendChild(this.$toolbar[0]);
+	        fragment.appendChild(this.$content[0]);
+
+	        this.$el.empty().removeClass(_classnames2.default.CONTROLS_OFF).addClass(_classnames2.default.REVISION(container.options.revision)).append(fragment);
+
+	        if (!this.options.resizeToWindow && !this.metrics) {
+	            this._calculateMetrics();
+	        }
+
+	        return this;
+	    },
+
+	    toggleControls: function toggleControls() {
+	        this.$el.toggleClass(_classnames2.default.CONTROLS_OFF);
+	    },
+
+	    showControls: function showControls() {
+	        this.$el.removeClass(_classnames2.default.CONTROLS_OFF);
+	    },
+
+	    hideControls: function hideControls() {
+	        this.$el.addClass(_classnames2.default.CONTROLS_OFF);
+	    },
+
+	    exitFullscreen: function exitFullscreen(event) {
+	        if (event) {
+	            event.stopPropagation();
+	            event.preventDefault();
+	        }
+
+	        var below = this.below();
+	        if (this.gestureStarted || below.transition.isRunning()) {
+	            return false;
+	        }
+
+	        (0, _dom2.default)(window).off('mousewheel', this._onMouseWheelScroll).off('scroll touchmove touchend', this._onScroll);
+
+	        below.transition.reverse();
+
+	        _hub2.default.trigger('fullscreenWillDisappear');
+	    },
+
+	    _calculateMetrics: function _calculateMetrics() {
+	        this._windowHeight = window.innerHeight;
+	        this._windowWidth = window.innerWidth;
+	        this.metrics = this.$el.metrics();
+	    },
+
+	    _onTouchStart: function _onTouchStart(event) {
+	        var $target = (0, _dom2.default)(event.target);
+	        var overflow;
+
+	        overflow = $target.css('overflow');
+	        if (overflow === 'scroll' || overflow === 'auto') {
+	            return;
+	        }
+
+	        event.preventDefault();
+	    },
+
+	    _onGestureStart: function _onGestureStart(event) {
+	        if (this.gestureStarted || this.below().transition.isRunning()) {
+	            return false;
+	        }
+	        this.gestureStarted = true;
+	        this.startTransform(event);
+	    },
+
+	    _onGestureChange: function _onGestureChange(event) {
+	        if (this.below().transition.isRunning()) {
+	            return false;
+	        }
+	        this.transformEventTarget(event);
+	    },
+
+	    _onGestureEnd: function _onGestureEnd(event) {
+	        var below = this.below();
+	        if (below.transition.isRunning()) {
+	            return false;
+	        }
+
+	        below.transition.reverse();
+	        this.gestureStarted = false;
+	    },
+
+	    _fullscreenWillAppear: function _fullscreenWillAppear(container) {
+	        var styles;
+
+	        styles = {};
+	        if (this.options.resizeToWindow) {
+	            styles.width = window.innerWidth + 'px';
+	            styles.height = window.innerHeight + 'px';
+	        }
+
+	        if (this.position !== 'fixed') {
+	            this.x = window.pageXOffset;
+	            this.y = window.pageYOffset;
+
+	            var transform = 'translate(' + this.x + 'px, ' + this.y + 'px)';
+
+	            styles[_util2.default.prefixStyle('transform')] = transform;
+	            styles.transform = transform;
+	        }
+
+	        this.$el.css(styles);
+
+	        (0, _dom2.default)(window).on('mousewheel', this._onMouseWheelScroll).on('scroll touchmove touchend', this._onScroll);
+	    },
+
+	    _onMouseWheelScroll: function _onMouseWheelScroll(event) {
+	        event.preventDefault();
+	    },
+
+	    _onScroll: function _onScroll(event) {
+	        if (this.position === 'fixed' || this.y === window.pageYOffset && this.x === window.pageXOffset) {
+	            return;
+	        }
+
+	        this.y = window.pageYOffset;
+	        this.x = window.pageXOffset;
+
+	        var transform = 'translate(' + this.x + 'px, ' + this.y + 'px)';
+	        var css = { transform: transform };
+
+	        css[_util2.default.prefixStyle('transform')] = transform;
+
+	        this.$el.css(css);
+	    }
+
+	});
+
+	exports.default = Fullscreen;
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var hasWindow = typeof window !== 'undefined';
+
+	var util = {
+	    touchScreen: hasWindow && 'ontouchstart' in window,
+
+	    getRandomInt: function getRandomInt(min, max) {
+	        return Math.floor(Math.random() * (max - min + 1)) + min;
+	    },
+
+	    getVendorPrefix: _lodash2.default.memoize(function (style) {
+	        var prefixes = ['', 'webkit', 'moz', 'ms'];
+
+	        style = util.camelize(style);
+	        return _lodash2.default.find(prefixes, function (vendor) {
+	            return document.body.style[vendor + style] !== undefined;
+	        });
+	    }),
+
+	    prefixStyle: function prefixStyle(style, camelCase) {
+	        var prefix = util.getVendorPrefix(style);
+
+	        return camelCase ? prefix + util.camelize(style) : '-' + prefix + '-' + style;
+	    },
+	    camelize: function camelize(string) {
+	        return string.charAt(0).toUpperCase() + string.slice(1);
+	    },
+
+	    matchMedia: typeof window !== 'undefined' && window.matchMedia && _lodash2.default.bind(window.matchMedia, window)
+
+	};
+
+	/**
+	 * Utility functions for DOM operations
+	 * @type {Object}
+	 */
+	util.dom = {
+	    getFieldMap: function getFieldMap(el) {
+	        var map = el.getAttribute('data-map');
+
+	        return map ? map.split(' ') : [];
+	    },
+	    getMediaQuery: function getMediaQuery(el) {
+	        return el.getAttribute('data-media');
+	    }
+	};
+
+	if (hasWindow && !window.console) {
+	    window.console = {};
+	}
+
+	if (hasWindow && !window.console.log) {
+	    _lodash2.default.each(['log', 'warning', 'error', 'info'], function (fn) {
+	        window.console[fn] = function () {
+	            return {};
+	        };
+	    });
+	}
+
+	function logger(level) {
+	    return function () {
+	        console[level].apply(console, [].slice.call(arguments));
+	    };
+	}
+
+	/**
+	 * Console logging
+	 * @type {Object}
+	 */
+	util.console = {
+	    log: logger('log'),
+	    warn: logger('warn'),
+	    error: logger('error'),
+	    info: logger('info'),
+	    debug: logger('debug'),
+	    groupCollapsed: logger('groupCollapsed'),
+	    group: logger('group'),
+	    groupEnd: logger('groupEnd')
+	};
+
+	exports.default = util;
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _Article = __webpack_require__(27);
+
+	var _Article2 = _interopRequireDefault(_Article);
+
+	var _Page = __webpack_require__(35);
+
+	var _Page2 = _interopRequireDefault(_Page);
+
+	var _Template = __webpack_require__(52);
+
+	var _Template2 = _interopRequireDefault(_Template);
+
+	var _TemplateManager = __webpack_require__(51);
+
+	var _TemplateManager2 = _interopRequireDefault(_TemplateManager);
+
+	var _Content = __webpack_require__(55);
+
+	var _Content2 = _interopRequireDefault(_Content);
+
+	var _Format = __webpack_require__(36);
+
+	var _Format2 = _interopRequireDefault(_Format);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    Article: _Article2.default,
+	    Page: _Page2.default,
+	    Template: _Template2.default,
+	    TemplateManager: _TemplateManager2.default,
+	    Content: _Content2.default,
+	    Format: _Format2.default
+	};
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	/**
+	 * Objects needed to do layout
+	 */
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _Widgetable = __webpack_require__(28);
+
+	var _Widgetable2 = _interopRequireDefault(_Widgetable);
+
+	var _LayoutElement = __webpack_require__(33);
+
+	var _LayoutElement2 = _interopRequireDefault(_LayoutElement);
+
+	var _Article = __webpack_require__(34);
+
+	var _Article2 = _interopRequireDefault(_Article);
+
+	var _Format = __webpack_require__(36);
+
+	var _Format2 = _interopRequireDefault(_Format);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _TemplateManager = __webpack_require__(51);
+
+	var _TemplateManager2 = _interopRequireDefault(_TemplateManager);
+
+	var _Page = __webpack_require__(35);
+
+	var _Page2 = _interopRequireDefault(_Page);
+
+	var _Content = __webpack_require__(55);
+
+	var _Content2 = _interopRequireDefault(_Content);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Article = _BaseView2.default.extend();
+
+	_lodash2.default.extend(Article.prototype, _LayoutElement2.default, _Widgetable2.default, {
+	    /**
+	     * Article matches content with templates and handles page rendering.
+	     *
+	     * @param {Object} options
+	     * @param {Content} options.content
+	     * @param {Template[]} options.templates
+	     * @param {Page} options.layer
+	     * @param {Fullscreen} [options.fullscreenLayer]
+	     * @param {Object} [options.metrics]
+	     */
+
+	    initialize: function initialize(options) {
+	        options = this.options = _lodash2.default.extend({
+	            revision: 'no-rev'
+	        }, options || {});
+
+	        _lodash2.default.bindAll(this, 'render');
+
+	        // Defaults
+	        this.templates = null;
+	        this.overrideTemplates = {};
+	        this.layer = options.layer || null;
+	        this.fullscreenLayer = options.fullscreenLayer || this.layer && this.layer.above() || null;
+	        this.pages = {};
+	        this.numberOfPages = 0;
+	        this.format = options.format || null;
+
+	        this.defaultMetrics(options.metrics);
+	        options.content && this.setContent(options.content);
+	        this.setupWidgets(options);
+
+	        options.templates && this.setTemplates(options.templates);
+	    },
+	    tearDown: function tearDown() {
+	        _lodash2.default.invoke(this.pages, 'tearDown');
+	    },
+	    render: function render() {
+	        return this;
+	    },
+	    discard: function discard() {
+	        _lodash2.default.invoke(this.pages, 'tearDown');
+	        this.pages = {};
+	        this.overrideTemplates = {};
+	        this.numberOfPages = 0;
+	    },
+
+	    /**
+	     * Compile the page
+	     *
+	     * @return {string}
+	     */
+	    compile: function compile() {
+	        var compiler = new _Article2.default(this);
+
+	        return compiler.compile();
+	    },
+	    decompile: function decompile(stringOrObject) {
+	        var compiler = new _Article2.default(this);
+
+	        compiler.decompile(stringOrObject);
+
+	        return this;
+	    },
+	    setTemplates: function setTemplates(templates) {
+	        var existingTemplates = this.templates || [];
+
+	        templates = _TemplateManager2.default.getEligibleTemplatesForArticle(this, templates);
+
+	        if (!existingTemplates || !existingTemplates.length) {
+	            this.templates = templates;
+	            return;
+	        }
+
+	        this.templates = _lodash2.default.map(templates, function (template) {
+	            var matchingTemplate = _lodash2.default.find(existingTemplates, function (existingTemplate) {
+	                return existingTemplate.name === template.name;
+	            });
+
+	            if (matchingTemplate) {
+	                matchingTemplate.setElement(template.el);
+	                this._reloadPagesUsingTemplate(matchingTemplate);
+	            }
+
+	            return matchingTemplate || template;
+	        }, this);
+	    },
+	    _reloadPagesUsingTemplate: function _reloadPagesUsingTemplate(template) {
+	        _lodash2.default.each(this.pages, function (page) {
+	            if (page.template === template) {
+	                page.template = null;
+	                page.setTemplateIfUsable(template);
+	            }
+	        });
+	    },
+	    setTemplateForPageNum: function setTemplateForPageNum(template, pageNum) {
+	        this.overrideTemplates[pageNum] = template;
+	        if (this.pages[pageNum]) {
+	            this.pages[pageNum].hasOverrideTemplate = true;
+	        }
+	    },
+	    revert: function revert(pageNum) {
+	        for (var i in this.pages) {
+	            if (i < pageNum || !this.pages[i]) {
+	                continue;
+	            }
+
+	            this.pages[i].revert();
+	        }
+	    },
+	    reflow: function reflow(pageNum) {
+	        _lodash2.default.each(['prepareToReflow', 'reflow'], function (fn) {
+	            for (var i in this.pages) {
+	                if (i < pageNum || !this.pages[i]) {
+	                    continue;
+	                }
+
+	                this.pages[i][fn]();
+	            }
+	        }, this);
+	    },
+
+	    /**
+	     * Render the article onto a page
+	     *
+	     * Should this be the other way around?
+	     * Should the article render the page, or the page render the article?
+	     * If we are to support multiple articles per page, this needs to be refactored
+	     *
+	     * @param {HTMLElement} el the element to hold the page
+	     * @param {number|Page} pageOrPageNum the page number or page object
+	     * @return {Article} returns itself for chaining
+	     */
+	    renderPage: function renderPage(el, pageOrPageNum) {
+	        var page, overrideTemplate;
+
+	        this._calcContentMetrics(el);
+
+	        page = _lodash2.default.isObject(pageOrPageNum) ? pageOrPageNum : this._getOrCreatePageForPageNum(pageOrPageNum);
+	        overrideTemplate = this.overrideTemplates[page.pageNum];
+
+	        page.prepareToRender();
+	        el.innerHTML = '';
+	        (0, _dom2.default)(el).append(page.el);
+	        page.render();
+
+	        page.hasOverrideTemplate = !!(overrideTemplate && overrideTemplate === page.template);
+
+	        return page;
+	    },
+
+	    /**
+	     * Render all pages
+	     *
+	     * @param {HTMLElement} el the element it should render into
+	     * @param {number} pageNum optional pageNumber to start rendering at
+	     * @return {Article} itself
+	     */
+	    renderPages: function renderPages(el, pageNum) {
+	        var page;
+
+	        pageNum = pageNum || 0;
+
+	        this._calcContentMetrics(el);
+
+	        while (!this.content.isEmpty()) {
+	            page = this._doRenderPage(el, pageNum);
+	            if (!page) {
+	                break;
+	            }
+
+	            this.pages[pageNum] = page;
+	            pageNum += 1;
+	        }
+
+	        this.numberOfPages = this.getNumberOfPagesInUse();
+
+	        _lodash2.default.invoke(this.pages, 'allPagesDidRender', this.numberOfPages);
+
+	        return this;
+	    },
+	    getNumberOfPagesInUse: function getNumberOfPagesInUse() {
+	        var pageNum = 0;
+
+	        for (var i in this.pages) {
+	            if (this.pages[i].pageTemplate.didRetainElements()) {
+	                pageNum += 1;
+	            } else {
+	                this.pages[i].tearDown();
+	                delete this.pages[i];
+	            }
+	        }
+
+	        return pageNum;
+	    },
+
+	    /**
+	     * Set the Content object
+	     *
+	     * @param {Content} content
+	     */
+	    setContent: function setContent(content) {
+	        if (content instanceof _Content2.default) {
+	            this.content = content;
+	        } else if (_lodash2.default.isPlainObject(content)) {
+	            this.content = new _Content2.default(content);
+	        } else {
+	            throw new Error('Unsupported data in setContent: ' + (typeof content === 'undefined' ? 'undefined' : _typeof(content)));
+	        }
+	    },
+	    findContainerInElement: function findContainerInElement(element) {
+	        var container, $el;
+
+	        $el = (0, _dom2.default)(element);
+	        $el = $el.is('.' + _classnames2.default.CONTAINER) ? $el : $el.find('.' + _classnames2.default.CONTAINER);
+
+	        if (!$el.length) {
+	            return false;
+	        }
+
+	        _lodash2.default.each(this.pages, function (page) {
+	            container = _lodash2.default.find(page.pageTemplate.containers, function (c) {
+	                return c.el === $el[0];
+	            });
+
+	            if (container) {
+	                return false;
+	            }
+	        });
+
+	        return container;
+	    },
+
+	    /**
+	     * Get page for a specific page num
+	     *
+	     * @param {number} pageNum
+	     * @return {Page}
+	     */
+	    _getOrCreatePageForPageNum: function _getOrCreatePageForPageNum(pageNum) {
+	        var page = this.pages[pageNum];
+	        var overrideTemplate = this.overrideTemplates[pageNum];
+
+	        if (!page) {
+	            page = this.createPage(pageNum);
+	        }
+
+	        if (page.rendered) {
+	            return page;
+	        }
+
+	        page.scoredTemplates = _TemplateManager2.default.getScoredTemplatesForPage(page, this.templates.slice(0));
+	        page.templates = _lodash2.default.pluck(page.scoredTemplates, 'template');
+
+	        if (overrideTemplate && page.setTemplateIfUsable(overrideTemplate) || page.setupBestTemplate()) {
+	            return page;
+	        } else {
+	            return false;
+	        }
+	    },
+	    createPage: function createPage(pageNum) {
+	        var m = this.metrics;
+
+	        return new _Page2.default({
+	            className: this.content.className,
+	            content: this.content,
+	            layer: this.layer,
+	            fullscreenLayer: this.fullscreenLayer,
+	            widgets: this.widgets,
+	            fullscreenWidgets: this.fullscreenWidgets,
+	            pageNum: pageNum,
+	            format: this.format,
+	            revision: this.options.revision,
+	            metrics: {
+	                height: m.height,
+	                width: m.width,
+	                lineHeight: m.lineHeight
+	            }
+	        });
+	    },
+
+	    /**
+	     * Try to render a page for a certain pageNum
+	     *
+	     * @param {HTMLElement} el
+	     * @param {number} pageNum
+	     * @return {boolean} true on success, false on failure
+	     * @private
+	     */
+	    _doRenderPage: function _doRenderPage(el, pageNum) {
+	        var attempts = 0;
+	        var page;
+
+	        while (true) {
+	            page = this._getOrCreatePageForPageNum(pageNum);
+
+	            if (!page) {
+	                return false;
+	            }
+
+	            this.renderPage(el, page);
+
+	            if (page.pageTemplate.didRetainElements()) {
+	                return page;
+	            }
+
+	            // If we get here, there're issues
+	            _util2.default.console.warn('Page ' + pageNum + ' did not retain any elements on attempt ' + attempts, 'left:', this.content.elementsLeft);
+
+	            attempts += 1;
+	            if (attempts > 1 || !this.overrideTemplates[pageNum]) {
+	                _util2.default.console.warn('stopped trying after ' + attempts + ' attempts');
+	                return false;
+	            }
+
+	            // Reset the overridden template so we can let alf chose the best one
+	            this.overrideTemplates[pageNum] = null;
+	        }
+	    },
+
+	    /**
+	     * Get sample template
+	     *
+	     * Find the best suited template for precalculating metrics
+	     *
+	     * @return {Template}
+	     */
+	    _getSampleTemplate: function _getSampleTemplate() {
+	        // @todo fix this. This is just waiting to blow up.
+	        var numRegions = 0;
+
+	        return _lodash2.default.find(this.templates, function __sampleTemplateCb(template) {
+	            return template.regions && template.regions.length > numRegions;
+	        });
+	    },
+
+	    /**
+	     * Calculate content metrics
+	     *
+	     * @todo move parts of this to Content?
+	     * @param {HTMLelement} el
+	     * @return {void}
+	     */
+	    _calcContentMetrics: function _calcContentMetrics(el) {
+	        if (this.hasCalculatedMetrics) {
+	            return;
+	        }
+
+	        this.setMetrics((0, _dom2.default)(el).metrics());
+
+	        // If a format object exists, allow it to override width and height
+	        if (this.format && this.format instanceof _Format2.default) {
+	            this.metrics.height = this.format.get('height');
+	            this.metrics.width = this.format.get('width');
+	        }
+
+	        // Try finding a template that can be used as a sample for calculating metrics
+	        var sampleTemplate = this._getSampleTemplate();
+	        var regions;
+
+	        if (!sampleTemplate) {
+	            _util2.default.console.warn('No sample template found. Failed to precalculate metrics for ', this);
+	            return;
+	        }
+
+	        // Make sure not to pollute the original template
+	        sampleTemplate = _TemplateManager2.default.getPageTemplateFromTemplate(sampleTemplate);
+	        regions = sampleTemplate.regions;
+
+	        // display: none disables all metrics calculation, so we just hide it from view
+	        sampleTemplate.$el.css('visibility', 'hidden');
+	        sampleTemplate.$el.addClass(_classnames2.default.REVISION(this.options.revision));
+
+	        // I don't like the extra repaint this causes
+	        // Ideally, the sampleTemplate is inserted AFTER the blocks are in place
+
+	        el.appendChild(sampleTemplate.el);
+	        this._calcBlockMetrics(regions[0].el);
+	        el.removeChild(sampleTemplate.el);
+	        regions[0].$el.empty();
+
+	        this.hasCalculatedMetrics = true;
+	    },
+
+	    /**
+	     * Calculate metrics with a page template
+	     *
+	     * Stuff all the content inside a page template to calculate all metrics in a big batch.
+	     *
+	     * @param {HTMLElement} regionEl the region to use
+	     * @return {void}
+	     * @private
+	     */
+	    _calcBlockMetrics: function _calcBlockMetrics(regionEl) {
+	        var blocks = this.content.getBlocks();
+	        var fragment = document.createDocumentFragment();
+
+	        _lodash2.default.each(blocks, function __blockAppendCb(block) {
+	            fragment.appendChild(block.render().el);
+	        });
+
+	        regionEl.appendChild(fragment);
+
+	        // Calculate metrics for all blocks in 1 big batch. This is to maximize performance
+	        _lodash2.default.each(blocks, function __blockCalcCb(block) {
+	            block.calculateMetrics();
+	        });
+	    }
+	});
+
+	exports.default = Article;
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _WidgetList = __webpack_require__(29);
+
+	var _WidgetList2 = _interopRequireDefault(_WidgetList);
+
+	var _inline = __webpack_require__(30);
+
+	var _inline2 = _interopRequireDefault(_inline);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    setupWidgets: function setupWidgets(options) {
+	        var isArray;
+
+	        this.widgets = options.widgets;
+
+	        if (!(options.widgets instanceof _WidgetList2.default)) {
+	            this.widgets = new _WidgetList2.default(_inline2.default);
+
+	            isArray = _lodash2.default.isArray(options.widgets);
+	            _lodash2.default.each(options.widgets, function (widget, selector) {
+	                this.widgets.add(widget, isArray ? undefined : selector);
+	            }, this);
+	        }
+	    }
+	};
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _Base = __webpack_require__(10);
+
+	var _Base2 = _interopRequireDefault(_Base);
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var WidgetList = _Base2.default.extend({
+	    initialize: function initialize(widgets) {
+	        this.widgets = [];
+
+	        if (_lodash2.default.isPlainObject(widgets)) {
+	            _lodash2.default.each(widgets, function (widget, selector) {
+	                this.add(widget, selector);
+	            }, this);
+	        }
+	    },
+	    add: function add(widget, selector) {
+	        this.widgets.push(this.normalize(widget, selector));
+	    },
+	    normalize: function normalize(widget, selector) {
+	        if (typeof widget === 'function') {
+	            widget = {
+	                run: widget
+	            };
+	        }
+
+	        _lodash2.default.defaults(widget, {
+	            compile: false,
+	            render: function render() {},
+	            run: function run(done) {
+	                done();
+	            },
+	            fullscreen: function fullscreen(container, done) {
+	                done();
+	            },
+
+	            selector: selector
+	        });
+
+	        if (!widget.selector) {
+	            throw new Error('Failed to normalize widget. No selector found!');
+	        }
+
+	        return widget;
+	    },
+	    getMatchesForContainer: function getMatchesForContainer(container) {
+	        var matches = [];
+
+	        this.each(function (widget) {
+	            var el = container.$el.is(widget.selector) ? container.$el : container.$el.find(widget.selector);
+
+	            if (el.length) {
+	                // If we chose the event-way of structuring widgets
+	                // this could return an event object that supports `on` and `trigger`
+	                matches.push({
+	                    // TODO: this container should be a proxy with limited access to the real container
+	                    container: container,
+	                    widget: widget,
+	                    $el: el,
+	                    el: el[0]
+	                });
+	            }
+	        }, this);
+
+	        return matches;
+	    }
+	});
+
+	/**
+	 * Mixin basic iterator functions from underscore
+	 *
+	 * Add more as needed
+	 */
+	_lodash2.default.each(['each', 'map', 'isEmpty', 'filter'], function (fn) {
+	    WidgetList.prototype[fn] = function () {
+	        var args = Array.prototype.slice.call(arguments);
+	        args.unshift(this.widgets);
+
+	        return _lodash2.default[fn].apply(_lodash2.default, args);
+	    };
+	});
+
+	exports.default = WidgetList;
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _ScrollView = __webpack_require__(31);
+
+	var _ScrollView2 = _interopRequireDefault(_ScrollView);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function setupSlideshowPointerNav($parent, scrollView) {
+	    var $nav = (0, _dom2.default)('<div class="alf-slideshow-nav">');
+	    var $navNext = (0, _dom2.default)('<a class="alf-slideshow-nav-next"></a>');
+	    var $navPrev = (0, _dom2.default)('<a class="alf-slideshow-nav-prev"></a>');
+
+	    $nav.append($navPrev).append($navNext);
+
+	    $parent.append($nav);
+
+	    $navPrev.on('dblclick', false);
+	    $navNext.on('dblclick', false);
+
+	    $navPrev.on('click', function () {
+	        scrollView.gotoPrevPage();
+	        return false;
+	    });
+	    $navNext.on('click', function () {
+	        scrollView.gotoNextPage();
+	        return false;
+	    });
+
+	    var numPages = scrollView.options.numberOfPages;
+
+	    $navPrev.addClass('alf-is-hidden');
+
+	    scrollView.on('pageWillAppear', function (el, pageNum) {
+	        if (pageNum === 0) {
+	            $navPrev.addClass('alf-is-hidden');
+	        } else if (pageNum > 0 && pageNum < numPages - 1) {
+	            $navPrev.removeClass('alf-is-hidden');
+	            $navNext.removeClass('alf-is-hidden');
+	        } else if (pageNum === numPages - 1) {
+	            $navNext.addClass('alf-is-hidden');
+	        }
+	    });
+	} /**
+	   * Builtin inline widgets
+	   */
+
+	exports.default = {
+	    /**
+	     * Slideshow widget
+	     *
+	     * @param {Container} container the matching container
+	     * @param {DOMObject} $el the element matching the selector
+	     * @param {Function} done callback to call when complete
+	     * @return {void}
+	     */
+	    '.alf-slideshow': {
+	        compile: true,
+
+	        render: function render() {
+	            console.log('RENDER SLIDESHOW');
+
+	            var $wrapper, $toggler, $stack;
+
+	            $wrapper = (0, _dom2.default)('<div>').css({
+	                position: 'relative',
+	                top: 0,
+	                left: 0
+	            });
+
+	            $toggler = (0, _dom2.default)('<div>').addClass('alf-slideshow-toggle alf-fullscreen-toggle alf-is-draggable');
+
+	            this.$el.children(':not(:first-child)').remove();
+
+	            $wrapper.append($toggler).append(this.$el);
+
+	            $stack = (0, _dom2.default)('<div>').addClass('alf-slideshow-stack');
+
+	            this.$el.addClass('alf-slideshow-inline').prepend($stack.clone().addClass('alf-slideshow-stack-1')).prepend($stack.clone().addClass('alf-slideshow-stack-2'));
+
+	            this.container.$el.append($wrapper);
+	        },
+	        run: function run(done) {
+	            var $toggler = this.container.$el.find('.alf-slideshow-toggle');
+
+	            // Only disable default events if there's a visible button
+	            if ($toggler.length && $toggler.css('display') !== 'none') {
+	                this.container.preventDefaultEvents();
+	            }
+
+	            this.container.$el.on(_util2.default.touchScreen ? 'tap' : 'click', '.alf-fullscreen-toggle', this.container.enterFullscreen).on('touchend', '.alf-fullscreen-toggle', function (event) {
+	                event.preventDefault();
+	            });
+
+	            done();
+	        },
+	        fullscreen: function fullscreen(fullscreenContainer, done) {
+	            var slideshowEl, $progress, elements, numberOfImages;
+
+	            elements = fullscreenContainer.$el.find('.alf-slideshow').children().clone();
+	            numberOfImages = elements.length;
+
+	            $progress = (0, _dom2.default)('<button class="alf-slideshow-progress"></button>');
+	            $progress.text('1/' + numberOfImages);
+
+	            fullscreenContainer.layer.$toolbar.append($progress);
+
+	            // TODO: find a better solution to all this boilerplate markup
+	            slideshowEl = (0, _dom2.default)('' + '<div class="alf-slideshow"><div class="alf-pages">' + '<div class="alf-page alf-page-1">' + '<section class="alf-page-loader swiper-page-is-loading"></section><section class="alf-page-content"></section>' + '</div>' + '<div class="alf-page alf-page-2">' + '<section class="alf-page-loader swiper-page-is-loading"></section><section class="alf-page-content"></section>' + '</div>' + '<div class="alf-page alf-page-3">' + '<section class="alf-page-loader swiper-page-is-loading"></section><section class="alf-page-content"></section>' + '</div>' + '</div></div>');
+
+	            fullscreenContainer.$el.empty().append(slideshowEl);
+
+	            var scrollView = new _ScrollView2.default(slideshowEl[0], {
+	                numberOfPages: elements.length,
+	                enableKeyNavigation: true
+	            });
+
+	            scrollView.on('pageWillRender', function (el, pageNum) {
+	                (0, _dom2.default)(el).empty().append(elements[pageNum]);
+	            });
+
+	            scrollView.on('pageWillAppear', function (el, pageNum) {
+	                $progress.text(pageNum + 1 + '/' + numberOfImages);
+	            });
+
+	            scrollView.start();
+
+	            if (!_util2.default.touchScreen) {
+	                setupSlideshowPointerNav(fullscreenContainer.layer.$content, scrollView);
+	            }
+
+	            done();
+	        }
+	    },
+
+	    '.alf-stretch-to-fit h1': {
+	        compile: true,
+
+	        render: function render() {
+	            this.$el.textFit();
+	        }
+	    }
+
+	};
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _swiper = __webpack_require__(32);
+
+	var _swiper2 = _interopRequireDefault(_swiper);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Just a rename of the Swiper lib,
+	 * untill something else is needed
+	 */
+	exports.default = _swiper2.default;
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	/**
+	 * Swiper.js
+	 * Copyright 2012 Peter Rudolfsen <peter@aptoma.com>
+	 */
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var FLICK_SPEED_TRESHOLD = 5;
+
+	var BIND_METHODS = ['_onMove', '_onMoveStart', '_onMoveEnd', '_onMoveStartCapture', '_onMoveCapture', '_onMoveEndCapture', '_onTransitionEnd', '_onKeyPress', '_refresh', '_renderPages'];
+
+	var slice = Array.prototype.slice,
+	    each = function each(array, callback, context) {
+	    return slice.call(array).forEach(callback, context);
+	};
+
+	var Swiper = function Swiper(el, options) {
+	    var self = this,
+	        pageContainer = el.children[0];
+
+	    BIND_METHODS.forEach(function (fn) {
+	        self[fn] = self[fn].bind(self);
+	    });
+
+	    this.el = el;
+	    this.elements = {
+	        pageContainer: pageContainer,
+	        pages: [],
+	        scrollablePages: []
+	    };
+
+	    each(pageContainer.children, function (el, i) {
+	        this.elements.pages.push({ el: el, offset: i * 100, pageNum: i });
+	        if (el.classList.contains('is-scrollable')) {
+	            this.elements.scrollablePages.push(el);
+	        }
+	    }, this);
+
+	    this.concurrentPages = this.elements.pages.length;
+
+	    options = options || {};
+	    options.overflowScrolling = options.overflowScrolling || false;
+	    options.renderDeferTime = options.renderDeferTime || 200;
+	    options.scrollDuration = options.scrollDuration || 320;
+	    options.tapToFlip = options.tapToFlip || false;
+	    options.loadingClass = options.loadingClass || 'swiper-page-is-loading';
+	    options.enableKeyNavigation = options.enableKeyNavigation === undefined ? true : options.enableKeyNavigation;
+
+	    this.options = options;
+	    this.events = {};
+	    this.renderTimeout = null;
+	    this.pageFlipWidth = 50;
+	    this.x = 0;
+	    this.currentPage = 0;
+	};
+
+	Swiper.prototype = {
+
+	    start: function start() {
+	        this.pageWidth = this.elements.pages[0].el.clientWidth;
+	        this.windowWidth = window.innerWidth;
+
+	        this._renderPages();
+	        this.enable();
+	    },
+
+	    gotoPage: function gotoPage(pageNum, scrollDuration, waitForScroll) {
+	        var self = this,
+	            currentPage,
+	            prevPage,
+	            prevX = this.x || 0;
+
+	        scrollDuration = scrollDuration !== undefined ? scrollDuration : this.options.scrollDuration;
+	        waitForScroll = scrollDuration === 0 ? false : waitForScroll;
+
+	        // If pageNum is a string, bad things happens with calulcations
+	        pageNum = parseInt(pageNum, 10);
+
+	        clearTimeout(this.renderTimeout);
+
+	        if (pageNum < 0 || isNaN(pageNum) || this.options.numberOfPages === 0) {
+	            pageNum = 0;
+	        } else if (pageNum > this.options.numberOfPages - 1) {
+	            pageNum = this.options.numberOfPages - 1;
+	        }
+
+	        // Make sure currentPage is in sync
+	        this.prevPage = this.currentPage;
+	        this.currentPage = pageNum;
+
+	        // Don't update positions on the first and last page
+	        if (pageNum > 0 && pageNum < this.options.numberOfPages - 1) {
+	            this._positionPages();
+	        }
+
+	        this.x = pageNum * this.pageWidth * -1;
+	        this._moveX(this.elements.pageContainer, this.x + 'px', scrollDuration);
+
+	        if (!waitForScroll || prevX === this.x) {
+	            // Trigger page change with no delay in page rendering,
+	            // as the transition doesn't fire with 0 duration
+	            this._onPageChange(true);
+	        }
+
+	        // If staying on the same page...
+	        if (this.prevPage === this.currentPage) {
+	            return;
+	        }
+
+	        currentPage = this.elements.pages[pageNum % this.concurrentPages];
+	        self.trigger('pageWillAppear', currentPage.el.children[1], pageNum);
+
+	        prevPage = this.elements.pages[this.prevPage % this.concurrentPages];
+	        self.trigger('pageWillDisappear', prevPage.el.children[1], this.prevPage);
+	    },
+
+	    on: function on(event, callback, context) {
+	        var events = this.events[event] || (this.events[event] = []);
+
+	        events.push({
+	            callback: callback,
+	            context: context || this
+	        });
+	    },
+
+	    trigger: function trigger(event) {
+	        var events = this.events[event],
+	            args;
+	        if (!events) {
+	            return;
+	        }
+
+	        args = slice.call(arguments, 1);
+
+	        for (var i in events) {
+	            events[i].callback.apply(events[i].context, args);
+	        }
+	    },
+
+	    enable: function enable() {
+	        var container = this.elements.pageContainer;
+
+	        this._disableOverflowScrolling();
+	        container.addEventListener('touchstart', this._onMoveStartCapture, true);
+	        container.addEventListener('webkitTransitionEnd', this._onTransitionEnd, true);
+	        container.addEventListener('transitionend', this._onTransitionEnd, true);
+	        window.addEventListener('keydown', this._onKeyPress, false);
+	        window.addEventListener('resize', this._refresh, true);
+	    },
+
+	    disable: function disable() {
+	        this._enableOverflowScrolling();
+	        this.elements.pageContainer.addEventListener('touchstart', this._onMoveStartCapture, true);
+	        window.removeEventListener('keydown', this._onKeyPress, false);
+	        window.removeEventListener('resize', this._refresh, true);
+	    },
+
+	    gotoCurrentPage: function gotoCurrentPage(duration) {
+	        this.gotoPage(this.currentPage, duration);
+	    },
+
+	    gotoPrevPage: function gotoPrevPage() {
+	        this.gotoPage(this.currentPage - 1, this.options.scrollDuration);
+	    },
+
+	    gotoNextPage: function gotoNextPage() {
+	        this.gotoPage(this.currentPage + 1, this.options.scrollDuration);
+	    },
+
+	    /**
+	     * Refresh the scrollview and re-trigger events
+	     *
+	     * @return {void}
+	     */
+	    refresh: function refresh(options) {
+	        each(this.elements.pages, function (page) {
+	            page.prevPage = undefined;
+	        });
+
+	        options = options || {};
+	        for (var key in options) {
+	            this.options[key] = options[key];
+	        }
+
+	        this.trigger('refresh');
+	        this.gotoPage(this.currentPage, undefined, false);
+	    },
+
+	    reset: function reset(options) {
+	        this.prevPage = undefined;
+	        each(this.elements.pages, function (page) {
+	            page.prevPage = page.prevPage === undefined ? undefined : null;
+	            page.pageNum = null;
+	        });
+
+	        options = options || {};
+	        for (var key in options) {
+	            this.options[key] = options[key];
+	        }
+
+	        this.trigger('refresh');
+	        this.gotoPage(0, 0, false);
+	    },
+
+	    /**
+	     * Calculate the position/offset pages based on the current page
+	     * The actual rendering is done when the transition ends in _onTransitionEnd
+	     *
+	     * @return {void}
+	     */
+	    _positionPages: function _positionPages() {
+	        var self = this,
+	            pageNum = this.currentPage,
+	            pagesPerSide = (this.concurrentPages - 1) / 2,
+	            startPage = pageNum - pagesPerSide,
+	            endPage = pageNum + pagesPerSide;
+
+	        startPage = startPage < 0 ? 0 : startPage;
+	        endPage = endPage < this.options.numberOfPages ? endPage : this.options.numberOfPages - 1;
+
+	        // Precalculate page order and offset
+	        for (var i = startPage; i <= endPage; i++) {
+	            var page = this.elements.pages[i % this.concurrentPages],
+	                offset = i * 100,
+	                loadingPageEl = page.el.children[0];
+
+	            page.prevOffset = page.offset === undefined ? offset : page.offset;
+	            page.offset = offset;
+
+	            if (page.prevOffset !== page.offset) {
+	                loadingPageEl.classList.add(self.options.loadingClass);
+	                this._moveX(page.el, page.offset + '%');
+	            }
+	        }
+	    },
+
+	    _renderPage: function _renderPage(page, pageNum) {
+	        var contentEl = page.el.children[1],
+	            initialRender = page.prevPage === undefined;
+
+	        page.prevPage = page.pageNum;
+	        page.pageNum = pageNum;
+
+	        if (initialRender || page.prevPage !== page.pageNum) {
+	            contentEl.scrollTop = 0;
+	            contentEl.scrollLeft = 0;
+
+	            if (!initialRender) {
+	                this.trigger('pageWillDestruct', contentEl, page.prevPage);
+	            }
+	            this.trigger('pageWillRender', contentEl, pageNum);
+	        }
+
+	        page.el.children[0].classList.remove(this.options.loadingClass);
+	    },
+
+	    /**
+	     * Render all pages
+	     *
+	     * Will first render the page the user is on,
+	     * and then alternate between the left and right pages on the sides.
+	     * Which of the left or right pages are rendered first,
+	     * depends on the direction the user is scrolling
+	     *
+	     * Examples of the render order:
+	     * If scrolling right to page 8 (pages come in from the right side, but the finger moving left):
+	     * Order: 8, 9, 7
+	     *
+	     * If scrolling left back to page 3:
+	     * Order: 3, 2, 4
+	     *
+	     * @return {void}
+	     */
+	    _renderPages: function _renderPages() {
+	        var self = this,
+	            page,
+	            prevPage,
+	            curPageNum = this.currentPage,
+	            pageNum = curPageNum,
+	            opts = this.options,
+	            pages = this.elements.pages,
+	            alternator = curPageNum <= this.prevPage ? 1 : -1;
+
+	        for (var i = 0; i < this.concurrentPages; i++) {
+	            pageNum = pageNum + i * alternator;
+	            alternator *= -1;
+
+	            page = pages[pageNum % this.concurrentPages];
+	            if (!page || pageNum > opts.numberOfPages - 1) {
+	                continue;
+	            }
+
+	            self._renderPage(page, pageNum);
+	        }
+	        self.trigger('pageDidAppear', pages[curPageNum % this.concurrentPages].el.children[1], curPageNum);
+
+	        prevPage = pages[this.prevPage % this.concurrentPages];
+	        if (prevPage) {
+	            self.trigger('pageDidDisappear', prevPage.el.children[1], this.prevPage);
+	        }
+	    },
+
+	    _refresh: function _refresh(event) {
+	        this.pageWidth = this.elements.pages[0].el.clientWidth;
+	        this.windowWidth = window.innerWidth;
+	        this.gotoCurrentPage();
+	    },
+
+	    /**
+	     * Keyboard navigation
+	     *
+	     * @param {Event} event
+	     * @return {void}
+	     */
+	    _onKeyPress: function _onKeyPress(event) {
+	        if (!this.options.enableKeyNavigation) {
+	            return;
+	        }
+
+	        switch (event.keyCode) {
+	            case 37:
+	                // left
+	                this.gotoPrevPage();
+	                break;
+
+	            case 39:
+	                // right
+	                this.gotoNextPage();
+	                break;
+	        }
+	    },
+
+	    /**
+	     * On move start capture-phase event
+	     * Initialize the movement, and add the appropiate event listeners
+	     *
+	     * @param {Event} event
+	     * @return {void}
+	     */
+	    _onMoveStartCapture: function _onMoveStartCapture(event) {
+	        var pageContainer = this.elements.pageContainer;
+
+	        this.moved = false;
+
+	        this.pointX = event.touches[0].pageX;
+	        this.pointY = event.touches[0].pageY;
+	        this.deltaX = 0;
+	        this.deltaY = 0;
+	        this.distX = 0;
+	        this.distY = 0;
+	        this.directionCalc = false;
+	        this.multitouch = event.touches.length > 1;
+
+	        // Disable scrolling when using multi-touch to not interfere with anything else needing it
+	        if (this.multitouch) {
+	            // Disable everything
+	            this._disableOverflowScrolling();
+	            pageContainer.removeEventListener('touchmove', this._onMoveCapture, true);
+	            pageContainer.removeEventListener('touchend', this._onMoveEndCapture, true);
+	        } else {
+	            pageContainer.addEventListener('touchmove', this._onMoveCapture, true);
+	            pageContainer.addEventListener('touchend', this._onMoveEndCapture, true);
+	        }
+
+	        pageContainer.addEventListener('touchstart', this._onMoveStart, false);
+	    },
+
+	    /**
+	     * On move capture-phase event
+	     * Find the direction (horizontal/vertical) the user swipes
+	     * and add the appropiate event listeners
+	     *
+	     * @param {Event} event
+	     * @return {void}
+	     */
+	    _onMoveCapture: function _onMoveCapture(event) {
+	        var pageContainer = this.elements.pageContainer,
+	            pointX = event.touches[0].pageX,
+	            pointY = event.touches[0].pageY;
+
+	        // Don't listen to multitouch events, to allow native multitouch gestures
+	        if (this.multitouch) {
+	            return;
+	        }
+
+	        this.deltaX = pointX - this.pointX;
+	        this.deltaY = pointY - this.pointY;
+	        this.pointX = pointX;
+	        this.pointY = pointY;
+
+	        // If the direction is already calculated, don't continue
+	        if (this.directionCalc) {
+	            return;
+	        }
+
+	        // Build up some distance, to see what direction the user scrolls
+	        if (this.distX < 4 && this.distY < 4) {
+	            this.distX += Math.abs(this.deltaX);
+	            this.distY += Math.abs(this.deltaY);
+	            this.directionCalc = true;
+	        }
+
+	        // Horizontal or vertical scrolling?
+	        if (this.distY < 2 || this.distX > this.distY + 5) {
+	            // Horizontal scrolling
+	            this._disableOverflowScrolling();
+	            pageContainer.addEventListener('touchmove', this._onMove, false);
+	            pageContainer.addEventListener('touchend', this._onMoveEnd, false);
+	        } else if (this.distX < 2 || this.distY > this.distX + 5) {
+	            // Vertical scrolling
+	            this._enableOverflowScrolling();
+	        }
+	    },
+
+	    /**
+	     * On move end capture-phase event
+	     * Clean up event listeners and reset to inital state
+	     *
+	     * @param {Event} event
+	     * @return {void}
+	     */
+	    _onMoveEndCapture: function _onMoveEndCapture(event) {
+	        this.elements.pageContainer.removeEventListener('touchstart', this._onMoveStart, false);
+	        this._disableOverflowScrolling();
+
+	        // Was this just a tap?
+	        if (this.options.tapToFlip && !this.moved) {
+	            if (this.pointX < this.pageFlipWidth) {
+	                this.gotoPrevPage();
+	                return;
+	            }
+
+	            if (this.pointX > this.windowWidth - this.pageFlipWidth) {
+	                this.gotoNextPage();
+	                return;
+	            }
+	        }
+	    },
+
+	    /**
+	     * On move start bubble-phase event
+	     *
+	     * @param {Event} event
+	     * @return {void}
+	     */
+	    _onMoveStart: function _onMoveStart(event) {
+	        this.startX = event.touches[0].pageX;
+	        this.startY = event.touches[0].pageY;
+	    },
+
+	    /**
+	     * On move bubble-phase event
+	     * Move the pages
+	     *
+	     * @param {Event} event
+	     * @return {void}
+	     */
+	    _onMove: function _onMove(event) {
+	        event.preventDefault();
+
+	        clearTimeout(this.renderTimeout);
+	        this.moved = true;
+	        if (this.x > 0 || this.currentPage === this.options.numberOfPages - 1 && this.x < 0) {
+	            this.deltaX *= 0.5;
+	        }
+
+	        this.x += this.deltaX;
+	        this._moveX(this.elements.pageContainer, Math.round(this.x) + 'px', 0);
+	    },
+
+	    /**
+	     * On move end bubble-phase event
+	     * Snap to the previous, current or next page
+	     *
+	     * @return {void}
+	     */
+	    _onMoveEnd: function _onMoveEnd() {
+	        var pageContainer = this.elements.pageContainer,
+	            distX = this.startX - this.pointX,
+	            absDistX = Math.abs(distX),
+	            absDeltaX = Math.abs(this.deltaX),
+	            pageFlipThresholdX = this.pageWidth / 2,
+	            duration = this.options.scrollDuration;
+
+	        this.elements.pageContainer.style.webkitTransitionDuration = duration + 'ms';
+	        this.elements.pageContainer.style.MozTransitionDuration = duration + 'ms';
+
+	        pageContainer.removeEventListener('touchmove', this._onMove, false);
+	        pageContainer.removeEventListener('touchend', this._onMoveEnd, false);
+	        this._disableOverflowScrolling();
+
+	        // Stick to current page if not moving past the page flip threshold, or flick speed threshold
+	        if (absDistX < pageFlipThresholdX && absDeltaX < FLICK_SPEED_TRESHOLD) {
+	            this.gotoCurrentPage();
+	        } else {
+	            if (distX > 0) {
+	                this.gotoNextPage();
+	            } else {
+	                this.gotoPrevPage();
+	            }
+	        }
+	    },
+
+	    /**
+	     * Move an element in x-space
+	     *
+	     * @param {HTMLElement} elm target element
+	     * @param {int} x pixels to move
+	     * @param {int} duration optional transition duration
+	     * @return {void}
+	     */
+	    _moveX: function _moveX(elm, x, duration) {
+	        if (duration !== undefined) {
+	            elm.style.webkitTransitionDuration = duration + 'ms';
+	            elm.style.MozTransitionDuration = duration + 'ms';
+	        }
+	        elm.style.webkitTransform = 'translate3d(' + x + ', 0, 0)';
+	        elm.style.MozTransform = 'translate(' + x + ', 0)';
+	    },
+
+	    _onPageChange: function _onPageChange(noDefer) {
+	        if (noDefer) {
+	            this._renderPages();
+	        } else {
+	            this.renderTimeout = setTimeout(this._renderPages, this.options.renderDeferTime);
+	        }
+	    },
+
+	    _onTransitionEnd: function _onTransitionEnd(event) {
+	        // This event fires if the content fades in as well
+	        // Make sure it only fires on transform changes
+	        if (event.propertyName.indexOf('transform') === -1) {
+	            return;
+	        }
+
+	        this._onPageChange();
+	    },
+
+	    /**
+	     * Prevent default event, used in callbacks
+	     *
+	     * @param {Event} event
+	     * @return {void}
+	     */
+	    _preventDefaultEvent: function _preventDefaultEvent(event) {
+	        event.preventDefault();
+	    },
+
+	    /**
+	     * Disable overflow scrolling
+	     *
+	     * @return {void}
+	     */
+	    _disableOverflowScrolling: function _disableOverflowScrolling() {
+	        if (!this.options.overflowScrolling) {
+	            return;
+	        }
+
+	        var self = this;
+	        each(this.elements.scrollablePages, function (el) {
+	            el.addEventListener('touchmove', self._preventDefaultEvent, true);
+	        });
+	    },
+
+	    /**
+	     * Enable overflow scrolling
+	     * @return {void}
+	     */
+	    _enableOverflowScrolling: function _enableOverflowScrolling() {
+	        if (!this.options.overflowScrolling) {
+	            return;
+	        }
+
+	        var self = this;
+	        each(this.elements.scrollablePages, function (el) {
+	            el.removeEventListener('touchmove', self._preventDefaultEvent, true);
+	        });
+	    }
+
+	};
+
+	/**
+	 * Aliases
+	 */
+	Swiper.prototype.destroy = Swiper.prototype.disable;
+
+	exports.default = Swiper;
+
+	if (!Function.prototype.bind) {
+	    Function.prototype.bind = function (oThis) {
+	        if (typeof this !== "function") {
+	            // closest thing possible to the ECMAScript 5 internal IsCallable function
+	            throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+	        }
+
+	        var aArgs = Array.prototype.slice.call(arguments, 1),
+	            fToBind = this,
+	            fNOP = function fNOP() {},
+	            fBound = function fBound() {
+	            return fToBind.apply(this instanceof fNOP ? this : oThis || window, aArgs.concat(Array.prototype.slice.call(arguments)));
+	        };
+
+	        fNOP.prototype = this.prototype;
+	        fBound.prototype = new fNOP();
+
+	        return fBound;
+	    };
+	}
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	__webpack_require__(2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Layout element mixin
+	 *
+	 * Contains common method for layout objects
+	 *
+	 * @type {Object}
+	 */
+	exports.default = {
+	    isInline: false,
+
+	    defaultMetrics: function defaultMetrics(metrics) {
+	        this.metrics = _lodash2.default.extend({
+	            height: 0,
+	            width: 0,
+	            outerHeight: 0,
+	            lineHeight: 24,
+	            marginTop: 0,
+	            marginRight: 0,
+	            marginBottom: 0,
+	            marginLeft: 0,
+	            marginHeight: 0,
+	            marginWidth: 0
+	        }, this.metrics || {}, metrics || {});
+	    },
+	    setMetrics: function setMetrics(metrics) {
+	        this.metrics = _lodash2.default.extend(this.metrics || {}, metrics);
+	    },
+
+	    /**
+	     * Calculate metrics of the element
+	     *
+	     * Uses a few tricks to account for inner elements with margin
+	     *
+	     * @return {void}
+	     */
+	    calculateMetrics: function calculateMetrics() {
+	        if (!this.el.children.length) {
+	            this.metrics = this.$el.metrics();
+
+	            return;
+	        }
+
+	        var borderBottom = parseInt(window.getComputedStyle(this.el).getPropertyValue('border-bottom-width'), 10);
+	        if (borderBottom) {
+	            this.metrics = this.$el.metrics();
+
+	            return;
+	        }
+
+	        if (!this.isInline) {
+	            // This sucks, but I currently see no other way.
+	            // It's a fix to force the margin on inner elements to be applied to the outerHeight
+	            this.el.style.borderBottom = '1px solid transparent';
+	        }
+
+	        this.metrics = this.$el.metrics();
+
+	        if (!this.isInline) {
+	            this.el.style.removeProperty('border-bottom');
+	            this.metrics.outerHeight -= 1;
+	        }
+	    },
+
+	    /**
+	     * Lock the size of the element
+	     *
+	     * Example of use:
+	     * You have a widget that needs to alter the container,
+	     * but wants to keep the original size
+	     */
+	    lockSize: function lockSize() {
+	        var metrics = this.metrics;
+
+	        this.$el.css({
+	            height: metrics.height + 'px',
+	            width: metrics.width + 'px'
+	        });
+	    },
+	    isTextElement: function isTextElement() {
+	        return ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'HEADER', 'SPAN'].indexOf(this.el.tagName) !== -1;
+	    },
+
+	    /**
+	     * Normalize the element size
+	     *
+	     * The vertical grid is defined by the lineHeight
+	     * This makes sure everything aligns nicely
+	     *
+	     * @return {void}
+	     */
+	    normalize: function normalize(lineHeight, elementAboveMarginBottom) {
+	        if (this._isNormalized) {
+	            return;
+	        }
+
+	        var css = {};
+	        var isContainer = this.$el.hasClass(_classnames2.default.CONTAINER);
+	        var metrics = this.metrics;
+	        var rest = 0;
+
+	        this._normalizeTopMargin(css);
+
+	        elementAboveMarginBottom = elementAboveMarginBottom || 0;
+
+	        var collapsedMargin = Math.min(elementAboveMarginBottom, metrics.marginTop);
+
+	        // Ideally it should use the lineHeight of the region it's in, not it's own
+	        lineHeight = lineHeight || metrics.lineHeight;
+
+	        rest = (metrics.outerHeight - collapsedMargin) % lineHeight;
+
+	        if (rest !== 0 && !isContainer) {
+	            rest = lineHeight - rest;
+
+	            metrics.marginBottom += rest;
+	            metrics.marginHeight += rest;
+	            metrics.outerHeight += rest;
+
+	            css['margin-bottom'] = metrics.marginBottom + 'px';
+	        }
+
+	        this._isNormalized = true;
+
+	        _lodash2.default.isEmpty(css) || this.$el.css(css);
+	    },
+
+	    /**
+	     * Normalize the top margin
+	     *
+	     * Margin top usually just makes things really hard for normal text paragraphs
+	     * It makes sense on quotes, factboxes, and elements with another design than normal text
+	     *
+	     * @param  {Object} css
+	     * @return {void}
+	     */
+	    _normalizeTopMargin: function _normalizeTopMargin(css) {
+	        var metrics = this.metrics;
+
+	        if (metrics.marginTop > 0 && this.isTextElement()) {
+	            metrics.outerHeight -= metrics.marginTop;
+	            metrics.marginHeight -= metrics.marginTop;
+	            metrics.marginTop = 0;
+	            css['margin-top'] = 0;
+	        }
+	    }
+	};
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _Base = __webpack_require__(10);
+
+	var _Base2 = _interopRequireDefault(_Base);
+
+	var _Page = __webpack_require__(35);
+
+	var _Page2 = _interopRequireDefault(_Page);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ArticleCompiler = _Base2.default.extend({
+
+	    initialize: function initialize(article) {
+	        this.article = article;
+	        this.compiled = {};
+	    },
+
+	    compile: function compile() {
+	        var data = this.article.content.toJSON();
+	        var stylesheets;
+
+	        data.meta.articleId = data.meta.articleId || data.meta.id;
+	        delete data.meta.id;
+
+	        stylesheets = _lodash2.default.map((0, _dom2.default)('.' + _classnames2.default.ASSET_STYLESHEET), function (ss) {
+	            return ss.href;
+	        });
+
+	        data.compiled = {};
+
+	        data.compiled.pages = _lodash2.default.map(this.article.pages, function (page) {
+	            return page.compile();
+	        });
+
+	        data.compiled.assets = {
+	            stylesheets: stylesheets,
+	            revision: this.article.options.revision
+	        };
+
+	        return data;
+	    },
+
+	    /**
+	     * Decompile the container
+	     *
+	     * @param {Object} object
+	     * @return {void}
+	     */
+	    decompile: function decompile(stringOrObject) {
+	        var object = _lodash2.default.isObject(stringOrObject) ? stringOrObject : JSON.parse(stringOrObject);
+	        var revision = object.compiled.assets.revision;
+
+	        if (revision) {
+	            this.article.options.revision = revision;
+	        }
+
+	        this.article.pages = _lodash2.default.map(object.compiled.pages, function (pageString) {
+	            var page = new _Page2.default({
+	                revision: revision,
+	                assetsBaseUrl: object.service.assetsBaseUrl
+	            });
+
+	            page.decompile(pageString);
+
+	            return page;
+	        });
+	    }
+
+	});
+
+	exports.default = ArticleCompiler;
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _Format = __webpack_require__(36);
+
+	var _Format2 = _interopRequireDefault(_Format);
+
+	var _Page = __webpack_require__(38);
+
+	var _Page2 = _interopRequireDefault(_Page);
+
+	var _PageTemplate = __webpack_require__(39);
+
+	var _PageTemplate2 = _interopRequireDefault(_PageTemplate);
+
+	var _TemplateManager = __webpack_require__(51);
+
+	var _TemplateManager2 = _interopRequireDefault(_TemplateManager);
+
+	var _LayoutElement = __webpack_require__(33);
+
+	var _LayoutElement2 = _interopRequireDefault(_LayoutElement);
+
+	var _Widgetable = __webpack_require__(28);
+
+	var _Widgetable2 = _interopRequireDefault(_Widgetable);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Page = _BaseView2.default.extend();
+
+	_lodash2.default.extend(Page.prototype, _LayoutElement2.default, _Widgetable2.default, {
+	    className: 'page',
+
+	    // jshint maxcomplexity:false
+	    initialize: function initialize(options) {
+	        options = this.options = _lodash2.default.extend({
+	            revision: 'no-rev'
+	        }, options || {});
+
+	        _lodash2.default.bindAll(this, 'render');
+
+	        this.decompiled = false;
+	        this.pageNum = typeof options.pageNum === 'number' ? options.pageNum : null;
+	        this.className = options.className || '';
+	        this.content = options.content || null;
+	        this.layer = options.layer || null;
+	        this.fullscreenLayer = options.fullscreenLayer || this.layer && this.layer.above() || null;
+	        this.templateManager = options.templateManager || _TemplateManager2.default;
+	        this.format = options.format || null;
+
+	        options.pixelRatio = parseInt(options.pixelRatio || window.devicePixelRatio || 1, 10);
+
+	        this.defaultMetrics(options.metrics);
+	        this.setupWidgets(options);
+	    },
+
+	    /**
+	     * Tear down the page
+	     *
+	     * The page should not be used again after this
+	     *
+	     * @return {void}
+	     */
+	    tearDown: function tearDown() {
+	        this.el = null;
+	        this.pageTemplate && this.pageTemplate.tearDown();
+	        this.pageTemplate = null;
+	        this.content = null;
+
+	        // TODO: this will not always be correct
+	        // the fullscreen layer should only be hidden if this Page has anything inside this layer
+	        this.fullscreenLayer && this.fullscreenLayer.hide();
+	    },
+
+	    /**
+	     * Revert the page
+	     *
+	     * This will clear the page,
+	     * but it can be used to render again
+	     *
+	     * The idea is that it should keep any manual changes to the
+	     * page template, but remove all the content
+	     *
+	     * Call render to rerender the page with new content
+	     *
+	     * @return {void}
+	     */
+	    revert: function revert() {
+	        this.rendered = false;
+	        this.pageTemplate.revert();
+	    },
+
+	    /**
+	     * Restore a page from raw HTML
+	     *
+	     * @param {string} html raw html of a page
+	     * @return {void}
+	     */
+	    restoreFromHtml: function restoreFromHtml(html) {
+	        this.setElement((0, _dom2.default)(html));
+
+	        this.setPageTemplate(new _PageTemplate2.default({
+	            el: this.el.children[0]
+	        }));
+
+	        this.rendered = true;
+	    },
+	    getBestTemplate: function getBestTemplate() {
+	        var best;
+
+	        best = this.templateManager.getBestTemplateForPage(this, this.templates);
+	        if (!best.template) {
+	            _util2.default.console.warn('No template found for page ' + this.pageNum + '! Remaining elements: ' + this.content.elementsLeft);
+	            return false;
+	        }
+
+	        return best;
+	    },
+
+	    /**
+	     * Pick the best template it has
+	     *
+	     * This assumes that the page already holds a reference to all
+	     * eligible templates for this page.
+	     */
+	    setupBestTemplate: function setupBestTemplate() {
+	        var best = this.getBestTemplate();
+
+	        if (!best) {
+	            return false;
+	        }
+
+	        this.setTemplate(best.template, best.containerMap, best.score);
+
+	        return true;
+	    },
+	    setTemplate: function setTemplate(template, score) {
+	        this.rendered = false;
+
+	        this.score = score || 0;
+
+	        if (this.template === template) {
+	            this.pageTemplate.reload();
+	            return this;
+	        }
+
+	        this.template = template;
+
+	        this.setPageTemplate(this.templateManager.getPageTemplateFromTemplate(template, {
+	            page: this
+	        }));
+
+	        return this;
+	    },
+
+	    /**
+	     * Set template if the template is usable
+	     *
+	     *
+	     * @param {[type]} template [description]
+	     */
+	    setTemplateIfUsable: function setTemplateIfUsable(template) {
+	        var ok;
+	        var containerMap = template.getContainerMap(this.content);
+
+	        ok = !template.containers || !template.containers.length;
+
+	        ok = ok || _lodash2.default.all(containerMap.positions, function (position) {
+	            return position.isOptional || position.match;
+	        });
+
+	        if (!ok) {
+	            _util2.default.console.warn('Page ', this.pageNum, ': Template ', template.name, 'is no longer usable');
+	            return false;
+	        }
+
+	        this.setTemplate(template, containerMap);
+
+	        return true;
+	    },
+
+	    /**
+	     * Set page template
+	     *
+	     * @param {PageTemplate} pageTemplate
+	     */
+	    setPageTemplate: function setPageTemplate(pageTemplate) {
+	        this.pageTemplate = pageTemplate;
+
+	        this.$el.empty();
+	        this.$el.append(this.pageTemplate.el);
+
+	        this.containers = this.pageTemplate.containers;
+	        this.regions = this.pageTemplate.regions;
+	    },
+
+	    /**
+	     * Prepare to render this page
+	     *
+	     * This is run BEFORE it exists in the DOM, so no calculations can be done here
+	     * This is mostly to make sure all possible content is in place
+	     *
+	     * @return {void}
+	     */
+	    prepareToRender: function prepareToRender() {
+	        var pageClassNames = [];
+
+	        if (this.rendered || !this.template) {
+	            return this;
+	        }
+
+	        this.className && pageClassNames.push(this.className);
+
+	        pageClassNames.push(_classnames2.default.REVISION(this.options.revision));
+
+	        // 1-6 is more logical for the end-user than 0-5
+	        pageClassNames.push(_classnames2.default.PAGENUM_X(this.pageNum + 1));
+	        this.$el.addClass(pageClassNames.join(' '));
+
+	        this.pageTemplate.prepareToRender();
+	    },
+	    render: function render(el) {
+	        // Is this Page created from a compiled object?
+	        if (!this.rendered && this.decompiled) {
+	            return this._renderCompiled(el);
+	        }
+
+	        if (this._pendingReflow) {
+	            this._pendingReflow = false;
+	            this.reflow();
+
+	            return this;
+	        }
+
+	        if (!this.template) {
+	            return this;
+	        }
+
+	        if (this.rendered) {
+	            this.pageTemplate.loadContainers();
+	            return this;
+	        }
+
+	        this._setupMetrics();
+	        this.pageTemplate.render();
+
+	        this.rendered = true;
+
+	        el && this._appendToEl(el);
+
+	        return this;
+	    },
+
+	    /**
+	     * All pages did render
+	     *
+	     * This is called after all pages are rendered
+	     *
+	     * @return {void}
+	     */
+	    allPagesDidRender: function allPagesDidRender(numberOfPages) {
+	        var regexp;
+	        var last = _classnames2.default.PAGENUM_X('last');
+	        var total = _classnames2.default.PAGENUM_TOTAL_X('');
+	        var pageClassNames = [_classnames2.default.PAGENUM_TOTAL_X(numberOfPages)];
+
+	        regexp = new RegExp(' ?(' + last + '|' + total + '[\\d]*)', 'g');
+
+	        if (numberOfPages === this.pageNum + 1) {
+	            pageClassNames.push(last);
+	        }
+
+	        this.el.className = this.el.className.replace(regexp, '');
+	        this.$el.addClass(pageClassNames.join(' '));
+	    },
+
+	    /**
+	     * Play the page
+	     *
+	     * Currently this only adds a CSS-class so it's possible
+	     * to add CSS transitions and animations when a page is playing.
+	     * A page should only be playing when it's visible on the screen.
+	     *
+	     * Future functionality may include reading animation/transition attributes on
+	     * HTML elements, making them into real animations/transitions (i.e. impress.js)
+	     *
+	     * @return {void}
+	     */
+	    play: function play() {
+	        this.$el.addClass(_classnames2.default.IS_PLAYING);
+	    },
+
+	    /**
+	     * Stop playing the page
+	     *
+	     * @see this.play()
+	     *
+	     * @return {void}
+	     */
+	    stop: function stop() {
+	        this.$el.removeClass(_classnames2.default.IS_PLAYING);
+	    },
+	    prepareToReflow: function prepareToReflow() {
+	        this.pageTemplate.prepareToReflow();
+	    },
+	    reflow: function reflow() {
+	        if (!this.isInDOM()) {
+	            this._pendingReflow = true;
+	            return;
+	        }
+
+	        this.pageTemplate.reflow();
+	    },
+
+	    /**
+	     * Lock the size of the page
+	     *
+	     * Typically done when compiling it for a specific width/height
+	     *
+	     * @return {void}
+	     */
+	    lockSize: function lockSize() {
+	        if (this.pageTemplate.isResponsive) {
+	            return;
+	        }
+
+	        this.$el.css({
+	            width: this.metrics.width + 'px',
+	            height: this.metrics.height + 'px',
+	            overflow: 'hidden',
+	            position: 'relative'
+	        });
+	    },
+	    compile: function compile() {
+	        var pageCompiler = new _Page2.default(this);
+
+	        return pageCompiler.compile();
+	    },
+
+	    /**
+	     * Decompile the Page
+	     *
+	     * @param {object|string} an object, or a stringified object
+	     * @return {Page} self
+	     */
+	    decompile: function decompile(objectOrString, callback) {
+	        var pageCompiler = new _Page2.default(this);
+
+	        pageCompiler.decompile(objectOrString, callback);
+
+	        return this;
+	    },
+	    _renderCompiled: function _renderCompiled(el) {
+	        el && this._appendToEl(el);
+
+	        this._setupMetrics();
+	        this.pageTemplate.decompile();
+	        this.rendered = true;
+
+	        return this;
+	    },
+	    _appendToEl: function _appendToEl(el) {
+	        var thisEl = this.el;
+
+	        setTimeout(function () {
+	            (0, _dom2.default)(el).empty().append(thisEl);
+	        }, 0);
+	    },
+	    _setupMetrics: function _setupMetrics() {
+	        var metrics = this.$el.metrics();
+
+	        // If a format object exists, allow it to override width and height
+	        if (this.format && this.format instanceof _Format2.default) {
+	            metrics.height = this.format.get('height');
+	            metrics.width = this.format.get('width');
+	        }
+
+	        if (!metrics.height && this.metrics.height) {
+	            metrics.height = this.metrics.height;
+	            metrics.outerHeight = this.metrics.outerHeight;
+	        }
+
+	        this.metrics = metrics;
+	        this.pageTemplate.metrics = metrics;
+
+	        metrics.contentHeight = metrics.height - metrics.marginHeight - metrics.paddingTop - metrics.paddingBottom;
+	        metrics.contentWidth = metrics.width - metrics.marginWidth - metrics.paddingRight - metrics.paddingLeft;
+	    }
+	});
+
+	exports.default = Page;
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _BaseModel = __webpack_require__(37);
+
+	var _BaseModel2 = _interopRequireDefault(_BaseModel);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Format = _BaseModel2.default.extend({
+
+	    defaults: {
+	        title: '',
+	        name: '',
+	        width: 0,
+	        height: 0
+	    },
+
+	    initializeFromWindow: function initializeFromWindow() {
+	        this.set({
+	            width: window.innerWidth,
+	            height: window.innerHeight,
+	            name: 'window',
+	            title: 'Window'
+	        });
+
+	        return this;
+	    }
+	});
+
+	exports.default = Format;
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _backbone = __webpack_require__(9);
+
+	var _backbone2 = _interopRequireDefault(_backbone);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Base model
+	 *
+	 * All models extend this
+	 */
+	exports.default = _backbone2.default.Model.extend({});
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _Base = __webpack_require__(10);
+
+	var _Base2 = _interopRequireDefault(_Base);
+
+	var _PageTemplate = __webpack_require__(39);
+
+	var _PageTemplate2 = _interopRequireDefault(_PageTemplate);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _Container = __webpack_require__(50);
+
+	var _Container2 = _interopRequireDefault(_Container);
+
+	var _when = __webpack_require__(40);
+
+	var _when2 = _interopRequireDefault(_when);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var STRIP = {
+	    classNames: [_classnames2.default.IS_DRAGGABLE, _classnames2.default.IS_DRAGGABLE_X, _classnames2.default.IS_DRAGGABLE_Y, _classnames2.default.IS_EDITABLE, _classnames2.default.IS_OPTIONAL, _classnames2.default.IS_REMOVABLE, _classnames2.default.IS_RESIZABLE, _classnames2.default.MULTI_CHOICE],
+	    attributes: ['data-filter-format-name', 'data-filter-page-pos', 'data-map', 'data-media', 'data-name', 'data-score'],
+	    elements: ['.' + _classnames2.default.SIZE_DETECTOR]
+	};
+
+	var PageCompiler = _Base2.default.extend({
+	    initialize: function initialize(page) {
+	        _lodash2.default.bindAll(this, '_doDecompile');
+
+	        this.page = page;
+	        this.compiled = {
+	            v: 1, // compiler version
+	            elements: {},
+	            assets: {
+	                images: []
+	            }
+	        };
+	    },
+
+	    /**
+	     * Compile the Page into an optimized structure
+	     *
+	     * @return {Object} a plain object
+	     */
+	    compile: function compile() {
+	        this.page.lockSize();
+
+	        this.compiled.html = this._getCompiledHtml();
+
+	        this._compileImages();
+	        this._compileStylesheets();
+
+	        this.compiled.assets.revision = this.page.options.revision;
+
+	        return this.compiled;
+	    },
+
+	    /**
+	     * Decompile a compiled Page
+	     *
+	     * @param {mixed} objectOrString a plain object or a stringified plain object
+	     * @return {void}
+	     */
+	    decompile: function decompile(objectOrString, callback) {
+	        var el;
+
+	        callback = callback || function () {};
+
+	        this.page.decompiled = true;
+	        this.compiledObject = _lodash2.default.isObject(objectOrString) ? objectOrString : JSON.parse(objectOrString);
+
+	        if (this.compiledObject.assets.revision) {
+	            this.page.options.revision = this.compiledObject.assets.revision;
+	        }
+
+	        el = (0, _dom2.default)(this.compiledObject.html).get(0);
+	        this.page.pageTemplate = new _PageTemplate2.default({
+	            el: el.children[0],
+	            page: this.page
+	        });
+
+	        this.page.setElement(el);
+
+	        this.promises = this.loadStylesheets(this.compiledObject.assets.stylesheets);
+
+	        _when2.default.all(this.promises).then(this._doDecompile).then(callback);
+	    },
+
+	    /**
+	     * Strip an element of reserved fields used for layout
+	     *
+	     * @param  {DOMObject|HTMLELement} $el the element to strip
+	     * @return {void}
+	     */
+	    strip: function strip(el) {
+	        var $el = (0, _dom2.default)(el);
+	        var classNamesSelector;
+
+	        classNamesSelector = '.' + STRIP.classNames.join(', .');
+
+	        $el.find('.' + _classnames2.default.IS_DISABLED + ', .' + _classnames2.default.IS_REMOVED).remove();
+	        $el.find(classNamesSelector).removeClass(STRIP.classNames.join(' '));
+
+	        _lodash2.default.each(STRIP.attributes, function (attr) {
+	            $el.find('[' + attr + ']').removeAttr(attr);
+	        });
+
+	        _lodash2.default.each(STRIP.elements, function (selector) {
+	            $el.find(selector).remove();
+	        });
+	    },
+	    _doDecompile: function _doDecompile() {
+	        console.log('DO DECOMPILED!!!!!!');
+	        this.page.containers = this.page.pageTemplate.containers;
+	        this.page.regions = this.page.pageTemplate.regions;
+
+	        // Decompile ALL containers in one huge batch
+	        // TODO: should regions decompile their own containers?
+	        // TODO: does this belong here? It doesnt feel natural.
+	        // When rendering the article, the PageTemplate is responsible for setting the layer.
+	        // Why should the PageCompiler suddenly do it when decompiling?
+	        // Besides, now it'll be called twice, as its done by the PageTemplate in _prepareContainerForLoad
+
+	        _lodash2.default.each(this.page.pageTemplate._getAllContainers(), function (container) {
+	            this.page.layer && container.setLayer(this.page.layer);
+	            this._decompileContainer(container, this.compiledObject.elements[container.el.id]);
+	        }, this);
+	    },
+	    _decompileContainer: function _decompileContainer(container, compiledObject) {
+	        new _Container2.default(container).decompile(compiledObject);
+	    },
+
+	    /**
+	     * Get compiled HTML from the Page
+	     *
+	     * It operates on a copy of the original element to prevent
+	     * affecting the on screen page while compiling
+	     *
+	     * @return {string} raw HTML
+	     */
+	    _getCompiledHtml: function _getCompiledHtml() {
+	        var $el, compiled, containers, images;
+
+	        $el = (0, _dom2.default)(this.page.el.outerHTML);
+
+	        compiled = this.compiled;
+	        containers = this.page.pageTemplate._getAllContainers();
+
+	        _lodash2.default.each(containers, function (container) {
+	            var compiledContainer = new _Container2.default(container).compile();
+
+	            if (container.isDisabled || container.isRemoved) {
+	                return;
+	            }
+
+	            compiled.elements[container.id] = compiledContainer;
+
+	            if (container.fullscreenEl) {
+	                images = (0, _dom2.default)(container.fullscreenEl).find('img[data-src]');
+	                if (images.length > 0) {
+	                    compiled.assets.images = compiled.assets.images.concat(_lodash2.default.toArray(images));
+	                }
+	            }
+
+	            $el.find('#' + container.id).replaceWith(compiledContainer.html);
+
+	            delete compiledContainer.html;
+	        });
+
+	        this.strip($el);
+
+	        return $el[0].outerHTML;
+	    },
+	    _compileImages: function _compileImages() {
+	        var images;
+	        var compiled = this.compiled;
+
+	        images = this.page.$('img[data-src]');
+	        if (images.length > 0) {
+	            compiled.assets.images = compiled.assets.images.concat(_lodash2.default.toArray(images));
+	        }
+
+	        compiled.assets.images = _lodash2.default.map(compiled.assets.images, this._compileImageAsset, this);
+	    },
+
+	    /**
+	     * Compile image asset
+	     *
+	     * @param {HTMLElement} image
+	     * @return {Object}
+	     */
+	    _compileImageAsset: function _compileImageAsset(image) {
+	        var $image = (0, _dom2.default)(image);
+	        var urls = {};
+	        var src2x = $image.attr('data-src-2x');
+
+	        urls['1x'] = $image.attr('data-src');
+	        if (src2x) {
+	            urls['2x'] = src2x;
+	        }
+
+	        return {
+	            height: parseInt($image.attr('height'), 10),
+	            width: parseInt($image.attr('width'), 10),
+	            urls: urls
+	        };
+	    },
+	    _compileStylesheets: function _compileStylesheets() {
+	        this.compiled.assets.stylesheets = _lodash2.default.map((0, _dom2.default)('.' + _classnames2.default.ASSET_STYLESHEET), function (ss) {
+	            return ss.href;
+	        });
+	    },
+
+	    /**
+	     * Load the stylesheets the Page require
+	     *
+	     * Both the HTML and the CSS of a Page are frozen in time when its compiled
+	     * To make sure it displays correctly, we need to load the CSS from the time it was compiled.
+	     *
+	     * Each stylesheet loaded is added to the list of deferreds in the pageTemplate,
+	     * which will make sure the loadComplete event fires at the right time
+	     *
+	     * @param {array} stylesheetUrls list of URLs to load
+	     * @return {void}
+	     */
+	    loadStylesheets: function loadStylesheets(stylesheetUrls) {
+	        // prepend assetsBaseUrl unless it's a absolute URL
+	        stylesheetUrls = _lodash2.default.map(stylesheetUrls, function (url) {
+	            return url.indexOf('://') === -1 ? this.page.options.assetsBaseUrl + url : url;
+	        }, this);
+
+	        var loadedStylesheets = _lodash2.default.filter((0, _dom2.default)('.' + _classnames2.default.ASSET_STYLESHEET), function (ss) {
+	            return this.page.options.revision === ss.getAttribute('data-revision');
+	        }, this);
+
+	        var promises = [];
+	        var url;
+
+	        _lodash2.default.each(loadedStylesheets, function (element) {
+	            var $element = (0, _dom2.default)(element);
+	            var index = stylesheetUrls.indexOf($element.attr('href'));
+
+	            if (index !== -1) {
+	                // Stylesheet is still valid, remove the URL
+	                stylesheetUrls.splice(index, 1);
+	                return;
+	            }
+
+	            // The stylesheet is no longer valid
+	            if (stylesheetUrls.length) {
+	                url = stylesheetUrls.shift();
+
+	                $element.attr('href', url);
+	                this._trackStylesheetProgress(url);
+	            } else {
+	                $element.remove();
+	            }
+	        }, this);
+
+	        // Add link elements if there are any URLs left to load
+	        _lodash2.default.each(stylesheetUrls, function (url) {
+	            var link = (0, _dom2.default)('<link rel="stylesheet" type="text/css">');
+
+	            link.attr({
+	                class: _classnames2.default.ASSET_STYLESHEET,
+	                'data-revision': this.page.options.revision
+	            });
+
+	            (0, _dom2.default)('head').append(link.attr('href', url));
+
+	            promises.push(this._trackStylesheetProgress(url));
+	        }, this);
+
+	        return promises;
+	    },
+
+	    /**
+	     * Track progress of the stylesheet
+	     *
+	     * @param {string} url external URL to track progress of
+	     * @return {void}
+	     */
+	    _trackStylesheetProgress: function _trackStylesheetProgress(url) {
+	        var deferred, img;
+
+	        deferred = _when2.default.defer();
+	        img = document.createElement('img');
+
+	        this.page.pageTemplate.addDeferred(deferred);
+
+	        img.onerror = function () {
+	            deferred.resolve();
+	        };
+	        img.src = url;
+
+	        return deferred;
+	    }
+	});
+
+	exports.default = PageCompiler;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _when = __webpack_require__(40);
+
+	var _when2 = _interopRequireDefault(_when);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _LayoutElement = __webpack_require__(33);
+
+	var _LayoutElement2 = _interopRequireDefault(_LayoutElement);
+
+	var _Region = __webpack_require__(41);
+
+	var _Region2 = _interopRequireDefault(_Region);
+
+	var _Container = __webpack_require__(43);
+
+	var _Container2 = _interopRequireDefault(_Container);
+
+	var _FullscreenContainer = __webpack_require__(47);
+
+	var _FullscreenContainer2 = _interopRequireDefault(_FullscreenContainer);
+
+	var _SizeDetector = __webpack_require__(48);
+
+	var _SizeDetector2 = _interopRequireDefault(_SizeDetector);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _hub = __webpack_require__(8);
+
+	var _hub2 = _interopRequireDefault(_hub);
+
+	__webpack_require__(49);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * PageTemplate
+	 *
+	 * A non-reusable template meant to be used by a single page
+	 * Only meant to be used internally
+	 *
+	 * @author Peter Rudolfsen <peter@aptoma.com>
+	 * @module Layout
+	 * @protected
+	 */
+	var PageTemplate = _BaseView2.default.extend();
+
+	_lodash2.default.extend(PageTemplate.prototype, _LayoutElement2.default, {
+	    initialize: function initialize(options) {
+	        this.options = options;
+
+	        options.page && this.setPage(options.page);
+	        this.template = options.template || null;
+
+	        this.deferreds = [];
+	        this.fullscreenContainer = this._getFullscreenContainer();
+	    },
+	    tearDown: function tearDown() {
+	        this.stopListening();
+
+	        _lodash2.default.invoke(this.containers, 'tearDown');
+	        _lodash2.default.invoke(this.regions, 'tearDown');
+
+	        this.template = null;
+	        this.containers = null;
+	        this.regions = null;
+
+	        this.fullscreenContainer && this.fullscreenContainer.tearDown();
+	    },
+	    setElement: function setElement(el) {
+	        PageTemplate.__super__.setElement.call(this, el);
+
+	        this.isPositionedGrid = !!this.el.className.match(/cols\-([0-9])+/);
+
+	        // If this is a responsive template, no containers are locked to a specific width or height
+	        this.isResponsive = this.$el.hasClass(_classnames2.default.IS_RESPONSIVE);
+
+	        this.reload();
+	    },
+	    setPage: function setPage(page) {
+	        this.page = page;
+	        this.content = page.content;
+	    },
+
+	    /**
+	     * Prepare everything for rendering
+	     *
+	     * This is run BEFORE the Page actually exists in the DOM
+	     * We want to do as much as possible before injecting a Page
+	     *
+	     * @return {[type]} [description]
+	     */
+	    prepareToRender: function prepareToRender() {
+	        this._setupContainers();
+	        this._renderContainers();
+	    },
+
+	    /**
+	     * Render the page template
+	     *
+	     * @todo could setup and the different render functions be merged?
+	     *       right now it feels too complex
+	     *
+	     * @return {PageTemplate} self
+	     */
+	    render: function render() {
+	        this.loadContainers();
+
+	        this._fit();
+	        this._fillRegions();
+	        this.trackProgress();
+
+	        return this;
+	    },
+	    reload: function reload() {
+	        this._findContainers();
+	        this._findRegions();
+	    },
+	    prepareToReflow: function prepareToReflow() {
+	        _lodash2.default.invoke(this.regions, 'tearDown');
+	        this._findRegions();
+	    },
+	    reflow: function reflow() {
+	        this._fit();
+	        this._fillRegions();
+	    },
+	    revert: function revert() {
+	        this._sizeListener = false;
+	        this.stopListening();
+
+	        _lodash2.default.invoke(this.regions, 'revert');
+	        _lodash2.default.invoke(this.containers, 'revert');
+	    },
+	    decompile: function decompile() {
+	        this.decompiled = true;
+	        this.loadContainers(true, this._getAllContainers());
+	        this.trackProgress();
+	    },
+
+	    /**
+	     * Add a deferred to track progress
+	     *
+	     * @param {Deferred} deferred
+	     */
+	    addDeferred: function addDeferred(deferred) {
+	        this.deferreds.push(deferred);
+	    },
+	    didRetainElements: function didRetainElements() {
+	        return _lodash2.default.some(this.containers.concat(this.regions), function (retainer) {
+	            return retainer.didRetainElements();
+	        });
+	    },
+
+	    /**
+	     * Load all containers
+	     *
+	     * @todo fix the skipMetrics hack, there must be a better way
+	     * @param {boolean} skipMetrics will skip metrics calculations if true
+	     * @param containers
+	     * @return {PageTemplate} itself
+	     */
+	    loadContainers: function loadContainers(skipMetrics, containers) {
+	        var deferreds = this.deferreds;
+
+	        this._setupSizeDetector();
+
+	        containers = containers || this.containers;
+
+	        _lodash2.default.each(containers, function (container) {
+	            this._prepareContainerForLoad(container, skipMetrics);
+
+	            container.load();
+
+	            deferreds = deferreds.concat(container.deferreds);
+	        }, this);
+
+	        this.deferreds = deferreds;
+
+	        return this;
+	    },
+
+	    /**
+	     * Track progress of loading
+	     *
+	     * @return {void}
+	     */
+	    trackProgress: function trackProgress() {
+	        var page = this.page;
+	        var loadComplete = function loadComplete() {
+	            page.trigger('loadComplete', page);
+	            _hub2.default.trigger('loadComplete', page);
+	        };
+
+	        this.deferreds.length ? _when2.default.all(this.deferreds, loadComplete) : loadComplete();
+	    },
+	    _findContainers: function _findContainers() {
+	        var pageTemplate = this;
+	        var containers = this.containers;
+
+	        this.containers = _lodash2.default.map(this.$el.find('.' + _classnames2.default.CONTAINER), function (el) {
+	            var container;
+
+	            container = _lodash2.default.find(containers, function (container) {
+	                return container.el === el;
+	            });
+
+	            if (!container) {
+	                container = new _Container2.default({ el: el });
+	                container.isResponsive = pageTemplate.isResponsive;
+	            }
+
+	            return container;
+	        });
+	    },
+	    _findRegions: function _findRegions() {
+	        var regions = this.regions;
+	        var isPositionedGrid = this.isPositionedGrid;
+
+	        this.regions = _lodash2.default.map(this.$el.find('.' + _classnames2.default.REGION), function (el) {
+	            return _lodash2.default.find(regions, function (region) {
+	                return region.el === el;
+	            }) || new _Region2.default({
+	                el: el,
+	                isPositionedGrid: isPositionedGrid || (0, _dom2.default)(el).closest('.alf-grid', this.$el).length >= 1
+	            });
+	        }, this);
+	    },
+	    _getAllContainers: function _getAllContainers() {
+	        var containers = _lodash2.default.flatten(_lodash2.default.pluck(this.regions, 'containers'));
+
+	        return containers.concat(this.containers);
+	    },
+	    _setupSizeDetector: function _setupSizeDetector() {
+	        if (this.sizeDetector) {
+	            this.sizeDetector.start();
+	            return;
+	        }
+
+	        this.sizeDetector = new _SizeDetector2.default({
+	            target: this.el,
+	            watch: this.isResponsive
+	        }).render();
+	    },
+
+	    /**
+	     * Setup all containers from
+	     *
+	     * This is run only in render and not decompile
+	     *
+	     * @return {void}
+	     * @private
+	     */
+	    _setupContainers: function _setupContainers() {
+	        var figures = this.page.content.getFigures();
+
+	        // First pass to find figures for all elements with data-map
+	        _lodash2.default.each(this.containers, function (container) {
+	            if (container.fieldMap.length) {
+	                findContainers.call(this, container, fieldMapMatcher);
+	            }
+	        }, this);
+
+	        // Second pass to find figures for all elements with no data-map but with data-ref
+	        // These depend on figures having ref set during the first pass
+	        _lodash2.default.each(this.containers, function (container) {
+	            if (!container.fieldMap.length) {
+	                findContainers.call(this, container, refMatcher);
+	            }
+	        }, this);
+
+	        function findContainers(container, matcher) {
+	            if (container.isRemoved || container.isDisabled || container.rendered) {
+	                return;
+	            }
+
+	            var matchingFigures = _lodash2.default.filter(figures, function (figure) {
+	                return matcher.call(this, container, figure);
+	            });
+
+	            if (!matchingFigures.length) {
+	                container.isOptional && container.disable();
+
+	                return;
+	            }
+
+	            container.content = this.content;
+	            container.matchingFigureElements = _lodash2.default.flatten(_lodash2.default.pluck(matchingFigures, 'mappedElements'));
+	            container.useBestMatchingFigureEl();
+
+	            if (container.ref) {
+	                container.figure.ref = container.ref;
+	            }
+	        }
+
+	        function fieldMapMatcher(container, figure) {
+	            if (figure.retained) {
+	                return false;
+	            }
+
+	            var mappedElements = figure.getElementsMappedToField(container.fieldMap);
+
+	            if (mappedElements.length) {
+	                figure.mappedElements = mappedElements;
+	                return figure;
+	            }
+
+	            return false;
+	        }
+
+	        function refMatcher(container, figure) {
+	            if (container.ref && container.ref === figure.ref) {
+	                return figure;
+	            }
+
+	            return false;
+	        }
+	    },
+
+	    /**
+	     * Get the fullscreen container of the template (if any)
+	     *
+	     * @return {FullscreenContainer}
+	     */
+	    _getFullscreenContainer: function _getFullscreenContainer() {
+	        var el = this.$el.find('.' + _classnames2.default.CONTAINER_FULLSCREEN)[0];
+
+	        if (!el) {
+	            return false;
+	        }
+
+	        return new _FullscreenContainer2.default({
+	            el: el.cloneNode(true),
+	            page: this,
+	            layer: this.page ? this.page.fullscreenLayer : false,
+	            revision: this.page && this.page.options.revision
+	        });
+	    },
+
+	    /**
+	     * Fit the elements in the template
+	     *
+	     * Make sure all elements have the correct size and metrics
+	     * Supports basic templates, absolute-positioned-grids and regular grids
+	     *
+	     * @return {void}
+	     * @private
+	     */
+	    _fit: function _fit() {
+	        var metrics = this.page.metrics;
+	        var gridOpts = {
+	            lineHeight: metrics.lineHeight,
+	            prefix: 'alf-'
+	        };
+	        var inlineGrid = this.$el.find('.alf-grid');
+
+	        if (this.isPositionedGrid) {
+	            this.$el.grid(gridOpts);
+	        }
+
+	        _lodash2.default.each(inlineGrid, function (el) {
+	            (0, _dom2.default)(el).grid(gridOpts);
+	        });
+
+	        _lodash2.default.each(this.regions, function (region) {
+	            region.metrics = region.$el.metrics();
+	            region.metrics.contentHeight = 0;
+	            region.metrics.lineHeight = metrics.lineHeight;
+	        }, this);
+	    },
+
+	    /**
+	     * Render all containers
+	     *
+	     * this renders the content (raw HTML), so we can calculate all metrics,
+	     * but it doesn't cause any external requests (like images, iframes etc.)
+	     *
+	     * @return {[type]} [description]
+	     * @private
+	     */
+	    _renderContainers: function _renderContainers() {
+	        // Separating DOM operations and calculation of styles improves performance
+	        // Styles are calculated in a batch, after this
+	        _lodash2.default.invoke(this.containers, 'render');
+
+	        return this;
+	    },
+
+	    /**
+	     * Prepare a Container for loading
+	     *
+	     * This is run both in render and decompile
+	     *
+	     * @param {Container} container
+	     * @param {boolean} skipMetrics
+	     * @return {void}
+	     */
+	    _prepareContainerForLoad: function _prepareContainerForLoad(container, skipMetrics) {
+	        console.log('PREPARE FOR LOAD', container.el);
+	        var widgets, fsContainer;
+
+	        widgets = this.page.widgets;
+	        fsContainer = this.fullscreenContainer;
+
+	        container.page = this.page;
+	        container.setLayer(this.page.layer);
+	        container.matchingWidgets = widgets.getMatchesForContainer(container);
+	        console.log('container matching widgets', container.matchingWidgets);
+	        container.options.pixelRatio = this.page.options.pixelRatio;
+
+	        container.renderWidgets();
+	        container.unload();
+
+	        if (!skipMetrics) {
+	            container.metrics = container.$el.metrics();
+
+	            // Only normalize containers in non-responsive templates,
+	            // as this would lock the container to a specific width/height
+	            if (!this.isResponsive) {
+	                container.normalize();
+	            }
+	        }
+
+	        // Make sure the fullscreen container is aware of when the container goes into fullscreen
+	        fsContainer && fsContainer.subscribeToContainer(container);
+	    },
+
+	    /**
+	     * Fill all regions with blocks
+	     *
+	     * Iterate through all blocks and flow them
+	     * through all available regions
+	     *
+	     * Is it a good idea to add a Flow-object?
+	     * The CSS region spec has a `NamedFlow` definition
+	     * By doing this we could add support for multiple Flows
+	     * on the same page.
+	     * E.g. a sub-article flowing at the bottom of each page
+	     *
+	     * @see http://dev.w3.org/csswg/css3-regions/#the-namedflow-interface
+	     * @return {void}
+	     * @private
+	     */
+	    _fillRegions: function _fillRegions() {
+	        var content = this.page.content;
+	        var regionContainers = [];
+	        var regionIndex = 0;
+	        var region = this.regions[regionIndex];
+
+	        while (region) {
+	            region.setContent(content);
+	            if (region.containers.length) {
+	                regionContainers = regionContainers.concat(region.containers);
+	            }
+
+	            if (!content.hasBlocksLeft()) {
+	                break;
+	            }
+
+	            region = this.regions[++regionIndex] || false;
+	        }
+	        this.loadContainers(true, regionContainers);
+	    }
+	});
+
+	exports.default = PageTemplate;
+
+/***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	/** @license MIT License (c) copyright B Cavalier & J Hann */
+
+	/**
+	* A lightweight CommonJS Promises/A and when() implementation
+	* when is part of the cujo.js family of libraries (http://cujojs.com/)
+	*
+	* Licensed under the MIT License at:
+	* http://www.opensource.org/licenses/mit-license.php
+	*
+	* @version 1.7.1
+	*/
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var reduceArray, slice, undef;
+
+	//
+	// Public API
+	//
+
+	when.defer = defer; // Create a deferred
+	when.resolve = resolve; // Create a resolved promise
+	when.reject = reject; // Create a rejected promise
+
+	when.join = join; // Join 2 or more promises
+
+	when.all = all; // Resolve a list of promises
+	when.map = map; // Array.map() for promises
+	when.reduce = reduce; // Array.reduce() for promises
+
+	when.any = any; // One-winner race
+	when.some = some; // Multi-winner race
+
+	when.chain = chain; // Make a promise trigger another resolver
+
+	when.isPromise = isPromise; // Determine if a thing is a promise
+
+	/**
+	 * Register an observer for a promise or immediate value.
+	 *
+	 * @param {*} promiseOrValue
+	 * @param {function?} [onFulfilled] callback to be called when promiseOrValue is
+	 *   successfully fulfilled.  If promiseOrValue is an immediate value, callback
+	 *   will be invoked immediately.
+	 * @param {function?} [onRejected] callback to be called when promiseOrValue is
+	 *   rejected.
+	 * @param {function?} [onProgress] callback to be called when progress updates
+	 *   are issued for promiseOrValue.
+	 * @returns {Promise} a new {@link Promise} that will complete with the return
+	 *   value of callback or errback or the completion value of promiseOrValue if
+	 *   callback and/or errback is not supplied.
+	 */
+	function when(promiseOrValue, onFulfilled, onRejected, onProgress) {
+	    // Get a trusted promise for the input promiseOrValue, and then
+	    // register promise handlers
+	    return resolve(promiseOrValue).then(onFulfilled, onRejected, onProgress);
+	}
+
+	/**
+	 * Returns promiseOrValue if promiseOrValue is a {@link Promise}, a new Promise if
+	 * promiseOrValue is a foreign promise, or a new, already-fulfilled {@link Promise}
+	 * whose value is promiseOrValue if promiseOrValue is an immediate value.
+	 *
+	 * @param {*} promiseOrValue
+	 * @returns Guaranteed to return a trusted Promise.  If promiseOrValue is a when.js {@link Promise}
+	 *   returns promiseOrValue, otherwise, returns a new, already-resolved, when.js {@link Promise}
+	 *   whose resolution value is:
+	 *   * the resolution value of promiseOrValue if it's a foreign promise, or
+	 *   * promiseOrValue if it's a value
+	 */
+	function resolve(promiseOrValue) {
+	    var promise, deferred;
+
+	    if (promiseOrValue instanceof Promise) {
+	        // It's a when.js promise, so we trust it
+	        promise = promiseOrValue;
+	    } else {
+	        // It's not a when.js promise. See if it's a foreign promise or a value.
+	        if (isPromise(promiseOrValue)) {
+	            // It's a thenable, but we don't know where it came from, so don't trust
+	            // its implementation entirely.  Introduce a trusted middleman when.js promise
+	            deferred = defer();
+
+	            // IMPORTANT: This is the only place when.js should ever call .then() on an
+	            // untrusted promise. Don't expose the return value to the untrusted promise
+	            promiseOrValue.then(function (value) {
+	                deferred.resolve(value);
+	            }, function (reason) {
+	                deferred.reject(reason);
+	            }, function (update) {
+	                deferred.progress(update);
+	            });
+
+	            promise = deferred.promise;
+	        } else {
+	            // It's a value, not a promise.  Create a resolved promise for it.
+	            promise = fulfilled(promiseOrValue);
+	        }
+	    }
+
+	    return promise;
+	}
+
+	/**
+	 * Returns a rejected promise for the supplied promiseOrValue.  The returned
+	 * promise will be rejected with:
+	 * - promiseOrValue, if it is a value, or
+	 * - if promiseOrValue is a promise
+	 *   - promiseOrValue's value after it is fulfilled
+	 *   - promiseOrValue's reason after it is rejected
+	 * @param {*} promiseOrValue the rejected value of the returned {@link Promise}
+	 * @return {Promise} rejected {@link Promise}
+	 */
+	function reject(promiseOrValue) {
+	    return when(promiseOrValue, rejected);
+	}
+
+	/**
+	 * Trusted Promise constructor.  A Promise created from this constructor is
+	 * a trusted when.js promise.  Any other duck-typed promise is considered
+	 * untrusted.
+	 * @constructor
+	 * @name Promise
+	 */
+	function Promise(then) {
+	    this.then = then;
+	}
+
+	Promise.prototype = {
+	    /**
+	     * Register a callback that will be called when a promise is
+	     * fulfilled or rejected.  Optionally also register a progress handler.
+	     * Shortcut for .then(onFulfilledOrRejected, onFulfilledOrRejected, onProgress)
+	     * @param {function?} [onFulfilledOrRejected]
+	     * @param {function?} [onProgress]
+	     * @return {Promise}
+	     */
+	    always: function always(onFulfilledOrRejected, onProgress) {
+	        return this.then(onFulfilledOrRejected, onFulfilledOrRejected, onProgress);
+	    },
+
+	    /**
+	     * Register a rejection handler.  Shortcut for .then(undefined, onRejected)
+	     * @param {function?} onRejected
+	     * @return {Promise}
+	     */
+	    otherwise: function otherwise(onRejected) {
+	        return this.then(undef, onRejected);
+	    },
+
+	    /**
+	     * Shortcut for .then(function() { return value; })
+	     * @param  {*} value
+	     * @return {Promise} a promise that:
+	     *  - is fulfilled if value is not a promise, or
+	     *  - if value is a promise, will fulfill with its value, or reject
+	     *    with its reason.
+	     */
+	    yield: function _yield(value) {
+	        return this.then(function () {
+	            return value;
+	        });
+	    },
+
+	    /**
+	     * Assumes that this promise will fulfill with an array, and arranges
+	     * for the onFulfilled to be called with the array as its argument list
+	     * i.e. onFulfilled.spread(undefined, array).
+	     * @param {function} onFulfilled function to receive spread arguments
+	     * @return {Promise}
+	     */
+	    spread: function spread(onFulfilled) {
+	        return this.then(function (array) {
+	            // array may contain promises, so resolve its contents.
+	            return all(array, function (array) {
+	                return onFulfilled.apply(undef, array);
+	            });
+	        });
+	    }
+	};
+
+	/**
+	 * Create an already-resolved promise for the supplied value
+	 * @private
+	 *
+	 * @param {*} value
+	 * @return {Promise} fulfilled promise
+	 */
+	function fulfilled(value) {
+	    var p = new Promise(function (onFulfilled) {
+	        // TODO: Promises/A+ check typeof onFulfilled
+	        try {
+	            return resolve(onFulfilled ? onFulfilled(value) : value);
+	        } catch (e) {
+	            return rejected(e);
+	        }
+	    });
+
+	    return p;
+	}
+
+	/**
+	 * Create an already-rejected {@link Promise} with the supplied
+	 * rejection reason.
+	 * @private
+	 *
+	 * @param {*} reason
+	 * @return {Promise} rejected promise
+	 */
+	function rejected(reason) {
+	    var p = new Promise(function (_, onRejected) {
+	        // TODO: Promises/A+ check typeof onRejected
+	        try {
+	            return onRejected ? resolve(onRejected(reason)) : rejected(reason);
+	        } catch (e) {
+	            return rejected(e);
+	        }
+	    });
+
+	    return p;
+	}
+
+	/**
+	 * Creates a new, Deferred with fully isolated resolver and promise parts,
+	 * either or both of which may be given out safely to consumers.
+	 * The Deferred itself has the full API: resolve, reject, progress, and
+	 * then. The resolver has resolve, reject, and progress.  The promise
+	 * only has then.
+	 *
+	 * @return {Deferred}
+	 */
+	function defer() {
+	    var deferred, promise, handlers, progressHandlers, _then, _progress, _resolve2;
+
+	    /**
+	     * The promise for the new deferred
+	     * @type {Promise}
+	     */
+	    promise = new Promise(then);
+
+	    /**
+	     * The full Deferred object, with {@link Promise} and {@link Resolver} parts
+	     * @class Deferred
+	     * @name Deferred
+	     */
+	    deferred = {
+	        then: then, // DEPRECATED: use deferred.promise.then
+	        resolve: promiseResolve,
+	        reject: promiseReject,
+	        // TODO: Consider renaming progress() to notify()
+	        progress: promiseProgress,
+
+	        promise: promise,
+
+	        resolver: {
+	            resolve: promiseResolve,
+	            reject: promiseReject,
+	            progress: promiseProgress
+	        }
+	    };
+
+	    handlers = [];
+	    progressHandlers = [];
+
+	    /**
+	     * Pre-resolution then() that adds the supplied callback, errback, and progback
+	     * functions to the registered listeners
+	     * @private
+	     *
+	     * @param {function?} [onFulfilled] resolution handler
+	     * @param {function?} [onRejected] rejection handler
+	     * @param {function?} [onProgress] progress handler
+	     */
+	    _then = function _then(onFulfilled, onRejected, onProgress) {
+	        // TODO: Promises/A+ check typeof onFulfilled, onRejected, onProgress
+	        var deferred, progressHandler;
+
+	        deferred = defer();
+
+	        progressHandler = typeof onProgress === 'function' ? function (update) {
+	            try {
+	                // Allow progress handler to transform progress event
+	                deferred.progress(onProgress(update));
+	            } catch (e) {
+	                // Use caught value as progress
+	                deferred.progress(e);
+	            }
+	        } : function (update) {
+	            deferred.progress(update);
+	        };
+
+	        handlers.push(function (promise) {
+	            promise.then(onFulfilled, onRejected).then(deferred.resolve, deferred.reject, progressHandler);
+	        });
+
+	        progressHandlers.push(progressHandler);
+
+	        return deferred.promise;
+	    };
+
+	    /**
+	     * Issue a progress event, notifying all progress listeners
+	     * @private
+	     * @param {*} update progress event payload to pass to all listeners
+	     */
+	    _progress = function _progress(update) {
+	        processQueue(progressHandlers, update);
+	        return update;
+	    };
+
+	    /**
+	     * Transition from pre-resolution state to post-resolution state, notifying
+	     * all listeners of the resolution or rejection
+	     * @private
+	     * @param {*} value the value of this deferred
+	     */
+	    _resolve2 = function _resolve(value) {
+	        value = resolve(value);
+
+	        // Replace _then with one that directly notifies with the result.
+	        _then = value.then;
+	        // Replace _resolve so that this Deferred can only be resolved once
+	        _resolve2 = resolve;
+	        // Make _progress a noop, to disallow progress for the resolved promise.
+	        _progress = noop;
+
+	        // Notify handlers
+	        processQueue(handlers, value);
+
+	        // Free progressHandlers array since we'll never issue progress events
+	        progressHandlers = handlers = undef;
+
+	        return value;
+	    };
+
+	    return deferred;
+
+	    /**
+	     * Wrapper to allow _then to be replaced safely
+	     * @param {function?} [onFulfilled] resolution handler
+	     * @param {function?} [onRejected] rejection handler
+	     * @param {function?} [onProgress] progress handler
+	     * @return {Promise} new promise
+	     */
+	    function then(onFulfilled, onRejected, onProgress) {
+	        // TODO: Promises/A+ check typeof onFulfilled, onRejected, onProgress
+	        return _then(onFulfilled, onRejected, onProgress);
+	    }
+
+	    /**
+	     * Wrapper to allow _resolve to be replaced
+	     */
+	    function promiseResolve(val) {
+	        return _resolve2(val);
+	    }
+
+	    /**
+	     * Wrapper to allow _reject to be replaced
+	     */
+	    function promiseReject(err) {
+	        return _resolve2(rejected(err));
+	    }
+
+	    /**
+	     * Wrapper to allow _progress to be replaced
+	     */
+	    function promiseProgress(update) {
+	        return _progress(update);
+	    }
+	}
+
+	/**
+	 * Determines if promiseOrValue is a promise or not.  Uses the feature
+	 * test from http://wiki.commonjs.org/wiki/Promises/A to determine if
+	 * promiseOrValue is a promise.
+	 *
+	 * @param {*} promiseOrValue anything
+	 * @returns {boolean} true if promiseOrValue is a {@link Promise}
+	 */
+	function isPromise(promiseOrValue) {
+	    return promiseOrValue && typeof promiseOrValue.then === 'function';
+	}
+
+	/**
+	 * Initiates a competitive race, returning a promise that will resolve when
+	 * howMany of the supplied promisesOrValues have resolved, or will reject when
+	 * it becomes impossible for howMany to resolve, for example, when
+	 * (promisesOrValues.length - howMany) + 1 input promises reject.
+	 *
+	 * @param {Array} promisesOrValues array of anything, may contain a mix
+	 *      of promises and values
+	 * @param howMany {number} number of promisesOrValues to resolve
+	 * @param {function?} [onFulfilled] resolution handler
+	 * @param {function?} [onRejected] rejection handler
+	 * @param {function?} [onProgress] progress handler
+	 * @returns {Promise} promise that will resolve to an array of howMany values that
+	 * resolved first, or will reject with an array of (promisesOrValues.length - howMany) + 1
+	 * rejection reasons.
+	 */
+	function some(promisesOrValues, howMany, onFulfilled, onRejected, onProgress) {
+
+	    checkCallbacks(2, arguments);
+
+	    return when(promisesOrValues, function (promisesOrValues) {
+
+	        var toResolve, toReject, values, reasons, deferred, _fulfillOne, _rejectOne, progress, len, i;
+
+	        len = promisesOrValues.length >>> 0;
+
+	        toResolve = Math.max(0, Math.min(howMany, len));
+	        values = [];
+
+	        toReject = len - toResolve + 1;
+	        reasons = [];
+
+	        deferred = defer();
+
+	        // No items in the input, resolve immediately
+	        if (!toResolve) {
+	            deferred.resolve(values);
+	        } else {
+	            progress = deferred.progress;
+
+	            _rejectOne = function rejectOne(reason) {
+	                reasons.push(reason);
+	                if (! --toReject) {
+	                    _fulfillOne = _rejectOne = noop;
+	                    deferred.reject(reasons);
+	                }
+	            };
+
+	            _fulfillOne = function fulfillOne(val) {
+	                // This orders the values based on promise resolution order
+	                // Another strategy would be to use the original position of
+	                // the corresponding promise.
+	                values.push(val);
+
+	                if (! --toResolve) {
+	                    _fulfillOne = _rejectOne = noop;
+	                    deferred.resolve(values);
+	                }
+	            };
+
+	            for (i = 0; i < len; ++i) {
+	                if (i in promisesOrValues) {
+	                    when(promisesOrValues[i], fulfiller, rejecter, progress);
+	                }
+	            }
+	        }
+
+	        return deferred.then(onFulfilled, onRejected, onProgress);
+
+	        function rejecter(reason) {
+	            _rejectOne(reason);
+	        }
+
+	        function fulfiller(val) {
+	            _fulfillOne(val);
+	        }
+	    });
+	}
+
+	/**
+	 * Initiates a competitive race, returning a promise that will resolve when
+	 * any one of the supplied promisesOrValues has resolved or will reject when
+	 * *all* promisesOrValues have rejected.
+	 *
+	 * @param {Array|Promise} promisesOrValues array of anything, may contain a mix
+	 *      of {@link Promise}s and values
+	 * @param {function?} [onFulfilled] resolution handler
+	 * @param {function?} [onRejected] rejection handler
+	 * @param {function?} [onProgress] progress handler
+	 * @returns {Promise} promise that will resolve to the value that resolved first, or
+	 * will reject with an array of all rejected inputs.
+	 */
+	function any(promisesOrValues, onFulfilled, onRejected, onProgress) {
+
+	    function unwrapSingleResult(val) {
+	        return onFulfilled ? onFulfilled(val[0]) : val[0];
+	    }
+
+	    return some(promisesOrValues, 1, unwrapSingleResult, onRejected, onProgress);
+	}
+
+	/**
+	 * Return a promise that will resolve only once all the supplied promisesOrValues
+	 * have resolved. The resolution value of the returned promise will be an array
+	 * containing the resolution values of each of the promisesOrValues.
+	 * @memberOf when
+	 *
+	 * @param {Array|Promise} promisesOrValues array of anything, may contain a mix
+	 *      of {@link Promise}s and values
+	 * @param {function?} [onFulfilled] resolution handler
+	 * @param {function?} [onRejected] rejection handler
+	 * @param {function?} [onProgress] progress handler
+	 * @returns {Promise}
+	 */
+	function all(promisesOrValues, onFulfilled, onRejected, onProgress) {
+	    checkCallbacks(1, arguments);
+	    return map(promisesOrValues, identity).then(onFulfilled, onRejected, onProgress);
+	}
+
+	/**
+	 * Joins multiple promises into a single returned promise.
+	 * @return {Promise} a promise that will fulfill when *all* the input promises
+	 * have fulfilled, or will reject when *any one* of the input promises rejects.
+	 */
+	function join() /* ...promises */{
+	    return map(arguments, identity);
+	}
+
+	/**
+	 * Traditional map function, similar to `Array.prototype.map()`, but allows
+	 * input to contain {@link Promise}s and/or values, and mapFunc may return
+	 * either a value or a {@link Promise}
+	 *
+	 * @param {Array|Promise} promise array of anything, may contain a mix
+	 *      of {@link Promise}s and values
+	 * @param {function} mapFunc mapping function mapFunc(value) which may return
+	 *      either a {@link Promise} or value
+	 * @returns {Promise} a {@link Promise} that will resolve to an array containing
+	 *      the mapped output values.
+	 */
+	function map(promise, mapFunc) {
+	    return when(promise, function (array) {
+	        var results, len, toResolve, resolve, i, d;
+
+	        // Since we know the resulting length, we can preallocate the results
+	        // array to avoid array expansions.
+	        toResolve = len = array.length >>> 0;
+	        results = [];
+	        d = defer();
+
+	        if (!toResolve) {
+	            d.resolve(results);
+	        } else {
+
+	            resolve = function resolveOne(item, i) {
+	                when(item, mapFunc).then(function (mapped) {
+	                    results[i] = mapped;
+
+	                    if (! --toResolve) {
+	                        d.resolve(results);
+	                    }
+	                }, d.reject);
+	            };
+
+	            // Since mapFunc may be async, get all invocations of it into flight
+	            for (i = 0; i < len; i++) {
+	                if (i in array) {
+	                    resolve(array[i], i);
+	                } else {
+	                    --toResolve;
+	                }
+	            }
+	        }
+
+	        return d.promise;
+	    });
+	}
+
+	/**
+	 * Traditional reduce function, similar to `Array.prototype.reduce()`, but
+	 * input may contain promises and/or values, and reduceFunc
+	 * may return either a value or a promise, *and* initialValue may
+	 * be a promise for the starting value.
+	 *
+	 * @param {Array|Promise} promise array or promise for an array of anything,
+	 *      may contain a mix of promises and values.
+	 * @param {function} reduceFunc reduce function reduce(currentValue, nextValue, index, total),
+	 *      where total is the total number of items being reduced, and will be the same
+	 *      in each call to reduceFunc.
+	 * @returns {Promise} that will resolve to the final reduced value
+	 */
+	function reduce(promise, reduceFunc /*, initialValue */) {
+	    var args = slice.call(arguments, 1);
+
+	    return when(promise, function (array) {
+	        var total;
+
+	        total = array.length;
+
+	        // Wrap the supplied reduceFunc with one that handles promises and then
+	        // delegates to the supplied.
+	        args[0] = function (current, val, i) {
+	            return when(current, function (c) {
+	                return when(val, function (value) {
+	                    return reduceFunc(c, value, i, total);
+	                });
+	            });
+	        };
+
+	        return reduceArray.apply(array, args);
+	    });
+	}
+
+	/**
+	 * Ensure that resolution of promiseOrValue will trigger resolver with the
+	 * value or reason of promiseOrValue, or instead with resolveValue if it is provided.
+	 *
+	 * @param promiseOrValue
+	 * @param {Object} resolver
+	 * @param {function} resolver.resolve
+	 * @param {function} resolver.reject
+	 * @param {*} [resolveValue]
+	 * @returns {Promise}
+	 */
+	function chain(promiseOrValue, resolver, resolveValue) {
+	    var useResolveValue = arguments.length > 2;
+
+	    return when(promiseOrValue, function (val) {
+	        val = useResolveValue ? resolveValue : val;
+	        resolver.resolve(val);
+	        return val;
+	    }, function (reason) {
+	        resolver.reject(reason);
+	        return rejected(reason);
+	    }, resolver.progress);
+	}
+
+	//
+	// Utility functions
+	//
+
+	/**
+	 * Apply all functions in queue to value
+	 * @param {Array} queue array of functions to execute
+	 * @param {*} value argument passed to each function
+	 */
+	function processQueue(queue, value) {
+	    var handler,
+	        i = 0;
+
+	    while (handler = queue[i++]) {
+	        handler(value);
+	    }
+	}
+
+	/**
+	 * Helper that checks arrayOfCallbacks to ensure that each element is either
+	 * a function, or null or undefined.
+	 * @private
+	 * @param {number} start index at which to start checking items in arrayOfCallbacks
+	 * @param {Array} arrayOfCallbacks array to check
+	 * @throws {Error} if any element of arrayOfCallbacks is something other than
+	 * a functions, null, or undefined.
+	 */
+	function checkCallbacks(start, arrayOfCallbacks) {
+	    // TODO: Promises/A+ update type checking and docs
+	    var arg,
+	        i = arrayOfCallbacks.length;
+
+	    while (i > start) {
+	        arg = arrayOfCallbacks[--i];
+
+	        if (arg != null && typeof arg != 'function') {
+	            throw new Error('arg ' + i + ' must be a function');
+	        }
+	    }
+	}
+
+	/**
+	 * No-Op function used in method replacement
+	 * @private
+	 */
+	function noop() {}
+
+	slice = [].slice;
+
+	// ES5 reduce implementation if native not available
+	// See: http://es5.github.com/#x15.4.4.21 as there are many
+	// specifics and edge cases.
+	reduceArray = [].reduce || function (reduceFunc /*, initialValue */) {
+	    /*jshint maxcomplexity: 7*/
+
+	    // ES5 dictates that reduce.length === 1
+
+	    // This implementation deviates from ES5 spec in the following ways:
+	    // 1. It does not check if reduceFunc is a Callable
+
+	    var arr, args, reduced, len, i;
+
+	    i = 0;
+	    // This generates a jshint warning, despite being valid
+	    // "Missing 'new' prefix when invoking a constructor."
+	    // See https://github.com/jshint/jshint/issues/392
+	    arr = Object(this);
+	    len = arr.length >>> 0;
+	    args = arguments;
+
+	    // If no initialValue, use first item of array (we know length !== 0 here)
+	    // and adjust i to start at second item
+	    if (args.length <= 1) {
+	        // Skip to the first real element in the array
+	        for (;;) {
+	            if (i in arr) {
+	                reduced = arr[i++];
+	                break;
+	            }
+
+	            // If we reached the end of the array without finding any real
+	            // elements, it's a TypeError
+	            if (++i >= len) {
+	                throw new TypeError();
+	            }
+	        }
+	    } else {
+	        // If initialValue provided, use it
+	        reduced = args[1];
+	    }
+
+	    // Do the actual reduce
+	    for (; i < len; ++i) {
+	        // Skip holes
+	        if (i in arr) {
+	            reduced = reduceFunc(reduced, arr[i], i, arr);
+	        }
+	    }
+
+	    return reduced;
+	};
+
+	function identity(x) {
+	    return x;
+	}
+
+	exports.default = when;
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _LayoutElement = __webpack_require__(33);
+
+	var _LayoutElement2 = _interopRequireDefault(_LayoutElement);
+
+	var _ContentRetainer = __webpack_require__(42);
+
+	var _ContentRetainer2 = _interopRequireDefault(_ContentRetainer);
+
+	var _Container = __webpack_require__(43);
+
+	var _Container2 = _interopRequireDefault(_Container);
+
+	var _Figure = __webpack_require__(44);
+
+	var _Figure2 = _interopRequireDefault(_Figure);
+
+	var _Block = __webpack_require__(46);
+
+	var _Block2 = _interopRequireDefault(_Block);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Region = _BaseView2.default.extend();
+
+	_lodash2.default.extend(Region.prototype, _LayoutElement2.default, _ContentRetainer2.default, {
+	    className: _classnames2.default.REGION,
+
+	    initialize: function initialize(options) {
+	        this.options = options || {};
+
+	        this.defaultMetrics(this.options.metrics);
+	        this.metrics.contentHeight = 0;
+	        this.fragment = null;
+
+	        // Internal property, only used in the render phase
+	        this._contentContainers = [];
+
+	        this.options.elements && this.addElements(this.options.elements);
+	    },
+	    tearDown: function tearDown() {
+	        this.stopListening();
+	        this.fragment = null;
+	        this.revert();
+	        this.el = null;
+	        this.$el = null;
+	    },
+	    clone: function clone() {
+	        var region = new Region({
+	            el: this.el.cloneNode(true)
+	        });
+	        region.content = this.content;
+
+	        return region;
+	    },
+	    setElement: function setElement(el) {
+	        Region.__super__.setElement.call(this, el);
+
+	        this._originalHtml = this.$el.html();
+
+	        this.isFlexible = this.$el.hasClass(_classnames2.default.REGION_FLEXIBLE);
+	        this._originalContainers = this._getInlineContainers();
+	        this.containers = this._originalContainers.slice(0);
+	    },
+	    setContent: function setContent(content) {
+	        this.content = content;
+	        this.addElements(content.getElements());
+	    },
+
+	    /**
+	     * Add elements to this region
+	     *
+	     * Only elements that fit are added,
+	     * the rest are skipped
+	     *
+	     * @return {void}
+	     */
+	    addElements: function addElements(elements) {
+	        this.$el.empty();
+	        this.fragment = document.createDocumentFragment();
+	        _lodash2.default.forEach(elements, this._addElement, this);
+	        this.el.appendChild(this.fragment);
+
+	        this.containers = this._contentContainers;
+	        this._contentContainers = [];
+
+	        return this;
+	    },
+	    getOverflow: function getOverflow(metrics) {
+	        metrics = metrics || {};
+	        var extraHeight = metrics.outerHeight || 0;
+	        var collapsedMargin = 0;
+
+	        if (this.lastUsedElement) {
+	            collapsedMargin = Math.min(this.lastUsedElement.metrics.marginBottom, metrics.marginTop);
+	        }
+
+	        return this.metrics.contentHeight - this.metrics.height + extraHeight - collapsedMargin;
+	    },
+	    hasSpaceLeft: function hasSpaceLeft() {
+	        return this.getOverflow() < 0;
+	    },
+
+	    /**
+	     * Revert the region and all elements
+	     *
+	     * @param {string} html optional HTML to revert to
+	     * @return {void}
+	     */
+	    revert: function revert(html) {
+	        _lodash2.default.invoke(this.elements, 'revert');
+
+	        html = html ? html : this._originalHtml || '';
+
+	        this.metrics.contentHeight = 0;
+	        this.lastUsedElement = null;
+	        this.releaseAll();
+
+	        this.el.innerHTML = html;
+	        this._originalHtml = html;
+	    },
+
+	    /**
+	     * Iterator to add a element to the region
+	     *
+	     * @param {Block|Figure} element
+	     * @return {boolean} false exists the iteration, true continues to next element
+	     */
+	    _addElement: function _addElement(element) {
+	        var overflow;
+
+	        element = this._verifyElementIsUsable(element);
+
+	        if (!element || !this.isFlexible && this.metrics.height === 0) {
+	            return true;
+	        }
+
+	        if (this.metrics.contentHeight !== 0 && element.el && element.$el.hasClass(_classnames2.default.BREAK_BEFORE)) {
+	            return false;
+	        }
+
+	        this._verifyElementMetrics(element);
+
+	        overflow = this.getOverflow(element.metrics);
+
+	        // There will be room for at least 1 more line AFTER this element is added, so add it and continue
+	        if (this.isFlexible || overflow * -1 >= this.metrics.lineHeight) {
+	            this._useElement(element);
+
+	            return true;
+	        }
+
+	        // Not enough room left for another line, or just the margin overflowing? Perfect match! Add it and finish off
+	        if (overflow > -this.metrics.lineHeight && overflow <= element.metrics.marginBottom) {
+	            element.shouldStickToNext() || this._useElement(element);
+
+	            return false;
+	        }
+
+	        return this._overflowElementIfSupported(element);
+	    },
+
+	    /**
+	     * Use an element
+	     *
+	     * Mark an element as retained and do all required calculations
+	     *
+	     * @param {Block|Figure} element
+	     * @return {void}
+	     */
+	    _useElement: function _useElement(element) {
+	        var collapsedMargin = 0;
+
+	        if (this.lastUsedElement) {
+	            collapsedMargin = Math.min(this.lastUsedElement.metrics.marginBottom, element.metrics.marginTop);
+	        }
+
+	        var elementContentHeight = element.metrics.outerHeight - collapsedMargin;
+
+	        this.metrics.contentHeight += elementContentHeight;
+	        this.fragment.appendChild(element.render().el);
+	        this.retain(element.figure || element);
+	        this.lastUsedElement = element;
+
+	        if (element instanceof _Container2.default) {
+	            this._contentContainers.push(element);
+	        }
+	    },
+
+	    /**
+	     * Overflow the element if it supports it
+	     *
+	     * @param {Block|Container} element
+	     * @param {number} overflow how many pixels its currently overflowing
+	     * @return {boolean} true if overflowable, false if not
+	     */
+	    _overflowElementIfSupported: function _overflowElementIfSupported(element) {
+	        var maxHeight, overflowBlock;
+	        var isRearrangeable = element.isRearrangeable();
+
+	        if (!isRearrangeable && !element.isSplittable()) {
+	            // this elements could not be changed in any way,
+	            // just finish off so the next region can handle it
+	            return false;
+	        } else if (isRearrangeable) {
+	            this.anchoredBlock = element;
+
+	            return true;
+	        }
+
+	        maxHeight = this.metrics.height - this.metrics.contentHeight;
+
+	        this._useElement(element);
+
+	        overflowBlock = element.getOverflowBlock(maxHeight).render();
+	        this.content.addAfter(overflowBlock, this.anchoredBlock || this.lastUsedElement);
+
+	        this.anchoredBlock = null;
+
+	        return false;
+	    },
+
+	    /**
+	     * Verify that the element is in a usable state
+	     *
+	     * @param {Block|Figure} element
+	     * @return {mixed} false if not usable, otherwise a Block or Container
+	     */
+	    _verifyElementIsUsable: function _verifyElementIsUsable(element) {
+	        if (element instanceof _Block2.default) {
+	            return element;
+	        } else if (element instanceof _Figure2.default && !this._originalContainers) {
+	            return false;
+	        }
+
+	        var figureEl, inlineContainer;
+
+	        _lodash2.default.each(this._originalContainers, function (container) {
+	            figureEl = element.getElementMappedToField(container.fieldMap);
+	            if (figureEl) {
+	                inlineContainer = container;
+	                return false;
+	            }
+	        });
+
+	        if (!figureEl) {
+	            return false;
+	        }
+
+	        inlineContainer = inlineContainer.clone();
+	        inlineContainer.isInline = true;
+	        inlineContainer.content = this.content;
+	        inlineContainer.setFigure(element, figureEl);
+
+	        this.$el.append(inlineContainer.render().el);
+
+	        inlineContainer.calculateMetrics();
+	        inlineContainer.metrics.lineHeight = this.metrics.lineHeight;
+
+	        if (this.options.isPositionedGrid) {
+	            inlineContainer.normalize(this.metrics.lineHeight, this.lastUsedElement && this.lastUsedElement.metrics.marginBottom);
+	        }
+
+	        // It's not actually in use here, it's just made ready for it
+	        inlineContainer.releaseAll();
+
+	        inlineContainer.$el.remove();
+
+	        return inlineContainer;
+	    },
+	    _verifyElementMetrics: function _verifyElementMetrics(element) {
+	        if (element.metrics.lineHeight !== this.metrics.lineHeight) {
+	            _util2.default.console.warn('lineHeight mismatch between page and content.', 'lineHeight on ', this.el, ': ', this.metrics.lineHeight, 'lineHeight on ', element.el, ': ', element.metrics.lineHeight, 'The page might not look good!');
+	        }
+
+	        if (this.options.isPositionedGrid) {
+	            element.normalize(this.metrics.lineHeight, this.lastUsedElement && this.lastUsedElement.metrics.marginBottom);
+	        }
+	    },
+
+	    /**
+	     * Get inline containers inside this region
+	     *
+	     * @todo create InlineContainer objects?
+	     * @return {array}
+	     */
+	    _getInlineContainers: function _getInlineContainers() {
+	        return _lodash2.default.map(this.$el.find('.' + _classnames2.default.CONTAINER_INLINE), function (el) {
+	            return new _Container2.default({ el: el });
+	        });
+	    }
+	});
+
+	exports.default = Region;
+
+/***/ },
+/* 42 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+	    retain: function retain(element) {
+	        this.content.retain(element);
+	        this.retained = this.retained || [];
+	        this.retained.push(element);
+	    },
+	    releaseAll: function releaseAll() {
+	        if (!this.retained || !this.retained.length) {
+	            return;
+	        }
+
+	        this.content.release(this.retained);
+	        this.retained = [];
+	    },
+	    didRetainElements: function didRetainElements() {
+	        return !!this.retained && this.retained.length > 0;
+	    }
+	};
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _transition = __webpack_require__(14);
+
+	var _transition2 = _interopRequireDefault(_transition);
+
+	var _LayoutElement = __webpack_require__(33);
+
+	var _LayoutElement2 = _interopRequireDefault(_LayoutElement);
+
+	var _ContentRetainer = __webpack_require__(42);
+
+	var _ContentRetainer2 = _interopRequireDefault(_ContentRetainer);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _hub = __webpack_require__(8);
+
+	var _hub2 = _interopRequireDefault(_hub);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _when = __webpack_require__(40);
+
+	var _when2 = _interopRequireDefault(_when);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Container = _BaseView2.default.extend();
+
+	// Cache of already loaded assets
+	Container.loadedAssets = [];
+
+	_lodash2.default.extend(Container.prototype, _LayoutElement2.default, _ContentRetainer2.default, {
+
+	    fullscreenEvents: {
+	        touch: {
+	            'touchstart img, .alf-image': 'onTouchStart',
+	            'touchmove img, .alf-image': 'onTouchMove',
+	            'touchend img, .alf-image': 'onTouchEnd',
+	            'tap img, .alf-image': 'onTap'
+	            // 'gesturestart img': 'onGestureStart',
+	            // 'gesturechange img': 'onGestureChange',
+	            // 'gestureend img': 'onGestureEnd'
+	        },
+	        pointer: {
+	            'click img, .alf-image': 'onClick',
+	            'mousedown img, .alf-image': 'onMouseDown'
+	        }
+	    },
+
+	    className: _classnames2.default.CONTAINER,
+
+	    initialize: function initialize(options) {
+	        options = this.options = _lodash2.default.extend({}, options || {});
+
+	        _lodash2.default.bindAll(this, 'load', '_doLoad', '_loadComplete', '_loadReady', 'enterFullscreen');
+	        this.defaultMetrics();
+
+	        this.deferreds = [];
+	        this.loaded = null;
+	        this.isDirty = false;
+	        this.isResponsive = false;
+
+	        this.mouseDownX = 0;
+	        this.mouseDownY = 0;
+	        this.mouseDownTime = 0;
+
+	        this.matchingFigureElements = [];
+	        this._lastState = {};
+
+	        options.pixelRatio = parseInt(options.pixelRatio || window.devicePixelRatio || 1, 10);
+	    },
+	    tearDown: function tearDown() {
+	        this.releaseAll();
+	        this.stopListening();
+	        this.undelegateEvents();
+	        this.el = null;
+	        this.figureEl = null;
+	        this.fullscreenEl && (0, _dom2.default)(this.fullscreenEl).remove();
+	        this.fullscreenEl = null;
+	        this.$el.find('img').each(function () {
+	            this.style.removeProperty('max-width');
+	            this.style.removeProperty('max-height');
+	            this.style.removeProperty('width');
+	            this.style.removeProperty('height');
+	        });
+	    },
+	    remove: function remove() {
+	        this.$el.addClass(_classnames2.default.IS_REMOVED);
+	        this.isRemoved = true;
+	        this.releaseAll();
+	        this.figure = null;
+	        this.figureEl = null;
+
+	        this.$el.empty();
+	    },
+	    clone: function clone() {
+	        var container;
+
+	        container = new Container({
+	            el: this.el.cloneNode(true)
+	        });
+
+	        container._setUniqueId();
+
+	        return container;
+	    },
+	    setElement: function setElement(el) {
+	        Container.__super__.setElement.call(this, el);
+	        this.fieldMap = _util2.default.dom.getFieldMap(this.el);
+	        this.ref = this.el.dataset.ref;
+	        this.isOptional = this.$el.hasClass(_classnames2.default.IS_OPTIONAL);
+	        this.isRemoved = this.$el.hasClass(_classnames2.default.IS_REMOVED);
+	        this.type = this.$el.attr('data-type');
+	    },
+
+	    /**
+	     * Set figure
+	     *
+	     * Tell the container which figure to use
+	     *
+	     * @param {Figure} figure figure-object
+	     * @param {HTMLElement} figureEl
+	     */
+	    setFigure: function setFigure(figure, figureEl) {
+	        // revert is needed to make the container ready for the next render
+	        if (this.figureElSignature && this.figureElSignature !== figureEl.signature) {
+	            this.revert();
+	        }
+
+	        this.figure = figure;
+	        this.figureEl = figureEl;
+
+	        // This is kept as a reference in case the container is reverted.
+	        // When rendered again, it'll try to use the same figure element.
+	        this.figureElSignature = figureEl.signature;
+
+	        this.retain(figure);
+
+	        return this;
+	    },
+
+	    /**
+	     * Set figure element
+	     *
+	     * @param {FigureElement} figureEl
+	     */
+	    setFigureEl: function setFigureEl(figureEl) {
+	        this.setFigure(figureEl.figure, figureEl);
+	    },
+
+	    /**
+	     * Lock current figure element
+	     *
+	     * This will force the container to prefer a figure element over another
+	     *
+	     * @return {void}
+	     */
+	    lockFigureEl: function lockFigureEl() {
+	        this.preferFigureElSignature = this.figureElSignature;
+	    },
+
+	    /**
+	     * Use the "best" matching figure element
+	     *
+	     * This is mostly based on what the container previously used.
+	     *
+	     * @return {void} true on success, false on failure
+	     */
+	    useBestMatchingFigureEl: function useBestMatchingFigureEl() {
+	        var _this = this;
+
+	        if (!this.matchingFigureElements.length) {
+	            return false;
+	        }
+
+	        var figureEl;
+
+	        if (this.preferFigureElSignature) {
+	            // `matchesAnySignature` is used for backwards compatibility, as it was previously based on innerHTML instead of outerHTML
+	            figureEl = _lodash2.default.find(this.matchingFigureElements, function (el) {
+	                return el.matchesAnySignature(_this.preferFigureElSignature);
+	            });
+	        }
+
+	        this.setFigureEl(figureEl || this.matchingFigureElements[0]);
+
+	        return true;
+	    },
+
+	    /**
+	     * Use next available figure element
+	     *
+	     * Will switch the container to using the next figure element.
+	     * Only works if the container supports multiple elements.
+	     *
+	     * @return {Boolean}
+	     */
+	    useNextFigureEl: function useNextFigureEl() {
+	        var numElements = this.matchingFigureElements.length;
+
+	        if (!numElements) {
+	            return false;
+	        }
+
+	        var index = this.matchingFigureElements.indexOf(this.figureEl) + 1;
+
+	        this.setFigureEl(this.matchingFigureElements[index % numElements]);
+	        this.lockFigureEl();
+
+	        return true;
+	    },
+
+	    /**
+	     * Set layer
+	     *
+	     * Make the container aware of the layers available
+	     * Will try to setup fullscreen if possible (requires a fullscreenEl present)
+	     *
+	     * @param {Layer} layer
+	     */
+	    setLayer: function setLayer(layer) {
+	        this.layer = layer;
+	        this.fullscreenLayer || (this.fullscreenLayer = layer.above());
+	        this._setupFullscreen();
+	    },
+
+	    /**
+	     * Set fullscreen el
+	     *
+	     * Set the element to be used in fullscreen mode
+	     * Will try to setup fullscreen if possible (requires a fullscreen layer)
+	     *
+	     * @param {HTMLElement} el
+	     */
+	    setFullscreenEl: function setFullscreenEl(el) {
+	        this.fullscreenEl = el;
+	        this._setupFullscreen();
+	    },
+
+	    /**
+	     * Prevent the default fullscreen events
+	     *
+	     * @api
+	     * @return {void}
+	     */
+	    preventDefaultEvents: function preventDefaultEvents() {
+	        this.undelegateEvents(this.fullscreenEvents);
+	    },
+	    isSplittable: function isSplittable() {
+	        return false;
+	    },
+
+	    /**
+	     * Is this Container rearrangeable?
+	     *
+	     * This is only applicable for inline containers
+	     *
+	     * @return {boolean}
+	     */
+	    isRearrangeable: function isRearrangeable() {
+	        if (this.$el.hasClass(_classnames2.default.IS_REARRANGEABLE)) {
+	            return true;
+	        }
+
+	        return false;
+	    },
+
+	    /**
+	     * Render the content
+	     *
+	     * @return {Container} self
+	     */
+	    render: function render() {
+	        console.log('RENDER CONTAINER', this.el);
+
+	        if (!this.isReadyForRender()) {
+	            return this;
+	        }
+
+	        this.id = this.el.id || this._setUniqueId();
+	        this.rendered = true;
+
+	        if (this.isUsingSameFigureEl()) {
+	            this.$el.append(this._lastState.html);
+	            // Since we're using previously rendered content, we have to
+	            this.renderedWidgets = this._lastState.renderedWidgets || false;
+	        } else {
+	            this.renderProcessedContainerContent();
+	            this.renderBgImages();
+	            this._originalHtml = this.el.outerHTML;
+	        }
+
+	        if (this.matchingFigureElements && this.matchingFigureElements.length > 1) {
+	            this.$el.addClass(_classnames2.default.MULTI_CHOICE);
+	        }
+
+	        return this;
+	    },
+
+	    /**
+	     * Is the container ready for rendered?
+	     *
+	     * @return {Boolean}
+	     */
+	    isReadyForRender: function isReadyForRender() {
+	        return this.figureEl && !this.rendered && !this.isDisabled && !this.isRemoved;
+	    },
+	    renderProcessedContainerContent: function renderProcessedContainerContent() {
+	        var figureOuterHTML = this.figureEl.el.outerHTML;
+	        var select = this.el.dataset.select || this.el.dataset.selectInner;
+	        var selectNodes = select ? this.$el : (0, _dom2.default)(this.el).find('[data-select], [data-select-inner]');
+
+	        if (selectNodes.length === 0) {
+	            return this.$el.append(figureOuterHTML);
+	        }
+
+	        selectNodes.each(function (index, node) {
+	            var matchingNode;
+	            var selector = node.dataset.select;
+	            var inner = false;
+
+	            if (!selector) {
+	                selector = node.dataset.selectInner;
+	                inner = true;
+	            }
+	            try {
+	                matchingNode = (0, _dom2.default)(figureOuterHTML).find(selector)[0];
+	            } catch (error) {
+	                // Catch invalid selectors
+	            }
+	            if (matchingNode) {
+	                node.innerHTML = inner ? matchingNode.innerHTML : matchingNode.outerHTML;
+	            } else {
+	                node.parentNode.removeChild(node);
+	            }
+	        });
+	    },
+
+	    /**
+	     * Render/convert images to background images
+	     *
+	     * This will enable more control of the positioning and size of the image
+	     *
+	     * @return {void}
+	     */
+	    renderBgImages: function renderBgImages() {
+	        var _this2 = this;
+
+	        if (this.type !== 'image') {
+	            return;
+	        }
+
+	        var $images = this.$el.find('img');
+
+	        if (!$images.length) {
+	            return;
+	        }
+
+	        $images.each(function (i, el) {
+	            var src = el.getAttribute('data-src') || el.getAttribute('src');
+	            var src2x = el.getAttribute('data-src-2x');
+	            var width = parseInt(el.getAttribute('width'), 10);
+	            var height = parseInt(el.getAttribute('height'), 10);
+	            var ratio = height / width;
+
+	            var css = {
+	                'width': '100%',
+	                'padding-bottom': ratio * 100 + '%',
+	                'background-image': 'url(' + src + ')',
+	                'background-repeat': 'no-repeat',
+	                'background-size': 'cover',
+	                'background-position': '50% 50%'
+	            };
+
+	            var attributes = {
+	                'data-ratio': ratio,
+	                'data-width': width,
+	                'data-height': height,
+	                'data-src': el.getAttribute('data-src')
+	            };
+
+	            if (src2x) {
+	                attributes['data-src-2x'] = src2x;
+	            }
+
+	            var $bgImg = (0, _dom2.default)('<div>').attr(attributes).addClass(_classnames2.default.IMAGE).css(css);
+
+	            (0, _dom2.default)(el).replaceWith($bgImg);
+
+	            _this2._trackAssetProgress(src);
+	        });
+	    },
+
+	    /**
+	     * Discard container changes
+	     *
+	     * Will restore the original content in the container
+	     *
+	     * @return {void}
+	     */
+	    discard: function discard() {
+	        console.log('DISCARD CONTAINER');
+	        this.rendered = false;
+	        this._lastState = {};
+
+	        // SHould we replace instead? What if the container itself changed?
+	        this.$el.empty();
+	        // this.setElement(el);
+
+	        this.render();
+	        this.renderedWidgets = false;
+	        this.renderWidgets();
+	        this.unload();
+	        this.load();
+	    },
+	    revertToOriginal: function revertToOriginal() {
+	        this.$el.html(this._originalHtml);
+	    },
+	    revert: function revert() {
+	        if (this.rendered) {
+	            this.saveState();
+	        }
+
+	        this._originalHtml = false;
+	        this.rendered = false;
+	        this.renderedWidgets = false;
+	        this.figure = null;
+	        this.figureEl = null;
+	        this.fullscreenEl = null;
+	        this.fullscreenLoaded = false;
+
+	        this.releaseAll();
+
+	        this.$el.empty();
+	        this.enable();
+	    },
+
+	    /**
+	     * Is the Container still using the same figure el as before?
+	     *
+	     * This is to keep the "old" contents of the Container after a revert
+	     *
+	     * @return {Boolean}
+	     */
+	    isUsingSameFigureEl: function isUsingSameFigureEl() {
+	        // `matchesAnySignature` is for backwards compatibility (restoring old layouts),
+	        // as it was previously based on innerHTML instead of outerHTML
+
+	        var match = this.figureEl.matchesAnySignature(this._lastState.figureElSignature);
+
+	        return match || this.isUsingSimilarFigureEl();
+	    },
+
+	    /**
+	     * Check if the current state resembles the last state
+	     *
+	     * This is useful in cases where the signature doesn't match,
+	     * but it's "similar enough" for us to accept it as the same figure element.
+	     *
+	     * @return {Boolean}
+	     */
+	    isUsingSimilarFigureEl: function isUsingSimilarFigureEl() {
+	        if (!this._lastState.html || this.matchingFigureElements.length !== 1) {
+	            return false;
+	        }
+
+	        var $lastEl = (0, _dom2.default)(this._lastState.html);
+
+	        // We never try to restore images we are unsure about
+	        if ($lastEl.find('img').length) {
+	            return false;
+	        }
+
+	        if ($lastEl[0].tagName !== this.figureEl.el.tagName) {
+	            return false;
+	        }
+
+	        return true;
+	    },
+
+	    /**
+	     * Save the current state
+	     *
+	     * This is to enable the container to restore itself to a former state
+	     * Commonly done when a container is rendered, modified manually, reverted and then rendered again
+	     *
+	     * @param {[Array]} data optional data
+	     * @return {void}
+	     */
+	    saveState: function saveState(data) {
+	        this._lastState = _lodash2.default.extend({
+	            html: this.el.innerHTML,
+	            figureElSignature: this.figureElSignature,
+	            preferFigureElSignature: this.preferFigureElSignature,
+	            renderedWidgets: this.renderedWidgets
+	        }, data || {});
+	    },
+
+	    /**
+	     * Load the container
+	     *
+	     * Load any external assets and then show it
+	     *
+	     * @param {array} matchingWidgets
+	     * @return {Container} self
+	     */
+	    load: function load() {
+	        console.log('LOAD CONTAINER', this.el);
+	        _when2.default.all(this._runWidgets(), this._doLoad);
+	    },
+
+	    /**
+	     * Unload the container
+	     *
+	     * Hide it and unload any external assets
+	     *
+	     * @return {void}
+	     */
+	    unload: function unload() {
+	        if (this.loaded === false) {
+	            return;
+	        }
+
+	        this.loaded = false;
+	        this.unloadElement(this.el);
+	    },
+	    unloadElement: function unloadElement(el) {
+	        var $el = (0, _dom2.default)(el);
+
+	        $el.addClass(_classnames2.default.CONTAINER_IS_UNLOADED);
+	        $el.find('img[data-src]').each(function () {
+	            // Some browsers don't like images with no src tag, so we use the smallest possible image instead
+	            this.setAttribute('src', 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
+	        });
+	    },
+
+	    /**
+	     * Add a deferred to track progress
+	     *
+	     * @param {Deferred} deferred
+	     */
+	    addDeferred: function addDeferred(deferred) {
+	        this.deferreds.push(deferred);
+	    },
+
+	    /**
+	     * Should stick to next?
+	     *
+	     * This is only used for inline containers
+	     *
+	     * @return {boolean}
+	     */
+	    shouldStickToNext: function shouldStickToNext() {
+	        return false;
+	    },
+	    enterFullscreen: function enterFullscreen(targetEl) {
+	        if (!this._supportsFullscreen) {
+	            _util2.default.console.warn('This container does not support fullscreen');
+	            this.layer || _util2.default.console.warn('  Missing layer');
+	            this.fullscreenEl || _util2.default.console.warn('  Missing fullscreenEl');
+
+	            return;
+	        }
+
+	        var trans = this.transition;
+
+	        if (this.gestureStarted || trans.isRunning()) {
+	            return false;
+	        }
+
+	        // Tell the layer what transition is active, so it can be reversed
+	        this.layer.transition = trans;
+
+	        targetEl && targetEl instanceof HTMLElement && trans.setTargetEl(targetEl);
+
+	        trans.run();
+	    },
+
+	    /**
+	     * Setup fullscreen support
+	     *
+	     * Requires both layers and a fullscreen element present
+	     *
+	     * @return {void}
+	     */
+	    _setupFullscreen: function _setupFullscreen() {
+	        if (this._supportsFullscreen || !(this.fullscreenEl && this.layer && this.fullscreenLayer)) {
+	            return;
+	        }
+
+	        this.transition = this.transition || this.layer.transitionTo(this.fullscreenLayer, _transition2.default.Fade);
+
+	        this.$el.addClass(_classnames2.default.SUPPORTS_FULLSCREEN);
+
+	        // TODO: the way Container, FullscreenContainer and FullscreenLayer
+	        // work together is not optimal. The responsibilities are not clear enough.
+	        this.listenTo(this.transition, {
+	            'willAppear': this._fullscreenWillAppear,
+	            'didAppear': this._fullscreenDidAppear,
+	            'didDisappear': this._fullscreenDidDisappear
+	        });
+
+	        this.layer.transition = this.transition;
+
+	        this.delegateEvents(_util2.default.touchScreen ? this.fullscreenEvents.touch : this.fullscreenEvents.pointer);
+
+	        this._supportsFullscreen = true;
+	    },
+	    _setUniqueId: function _setUniqueId(id) {
+	        if (!id) {
+	            id = _lodash2.default.uniqueId('c');
+	        }
+
+	        this.id = id;
+	        this.el.id = id;
+
+	        return id;
+	    },
+	    renderWidgetMatch: function renderWidgetMatch(match) {
+	        match.widget.render.call(match, this, match.el);
+
+	        // The container is modified by a widget that doesn't want the result compiled
+	        if (!match.widget.compile) {
+	            this.isDirty = true;
+	        }
+	    },
+	    renderWidgets: function renderWidgets() {
+	        console.log('RENDER WIDGETS', this.decompiled);
+	        if (this.renderedWidgets) {
+	            return false;
+	        }
+
+	        _lodash2.default.each(this.matchingWidgets, function (match) {
+	            console.log('WIDGET MATCH', this.decompiled, this.el, match);
+	            // widget.render should only be called if we're not decompiling this page,
+	            // or if we're decompiling the page and the widget tells us to not compile the results
+	            if (!this.decompiled || this.decompiled && !match.widget.compile) {
+	                this.renderWidgetMatch(match);
+	            }
+	        }, this);
+
+	        this.renderedWidgets = true;
+	    },
+
+	    /**
+	     * Run all widgets
+	     *
+	     * @param {array} widgets
+	     * @return {void}
+	     */
+	    _runWidgets: function _runWidgets() {
+	        var deferred;
+	        var deferreds = [];
+
+	        _lodash2.default.each(this.matchingWidgets, function (match) {
+	            deferred = _when2.default.defer();
+
+	            // We have a widget, but its result should NOT be compiled
+	            // Since we don't actually know if the widget alters the DOM,
+	            // we'll have to flag the container as dirty to revert the content
+	            if (!match.widget.compile) {
+	                this.isDirty = true;
+	            }
+
+	            match.widget.run.call(match, deferred.resolve);
+	            deferreds.push(deferred);
+	        }, this);
+
+	        return deferreds;
+	    },
+	    _doLoad: function _doLoad() {
+	        var _this3 = this;
+
+	        var dpr = Math.min(this.options.pixelRatio, 2);
+	        var srcAttr;
+
+	        if (this.loaded) {
+	            return;
+	        }
+
+	        if (!this.$el.hasClass(_classnames2.default.ALLOW_OVERFLOW)) {
+	            // TODO: This may be a little early
+	            // What if this could run after the image has loaded and trigger a reflow?
+	            this._fitBoundaries();
+	        }
+
+	        // TODO: Should assets have its own object?
+	        this.$assets = this.$el.find('img[data-src]');
+	        srcAttr = 'data-src' + (dpr > 1 ? '-' + dpr + 'x' : '');
+	        _lodash2.default.each(this.$assets, function (asset) {
+	            var src = asset.getAttribute(srcAttr) || asset.getAttribute('data-src');
+
+	            _this3._trackAssetProgress(src || asset.getAttribute('src'), asset);
+
+	            if (src) {
+	                asset.src = src;
+	            }
+	        });
+
+	        _when2.default.any(this.deferreds, this._loadReady);
+	        _when2.default.all(this.deferreds, this._loadComplete);
+
+	        this.loaded = true;
+
+	        return this;
+	    },
+	    _fullscreenWillAppear: function _fullscreenWillAppear(transition, done) {
+	        this.trigger('fullscreenWillAppear', transition, done);
+	    },
+	    _fullscreenDidAppear: function _fullscreenDidAppear(transition) {
+	        this.trigger('fullscreenDidAppear', transition);
+	    },
+	    _fullscreenDidDisappear: function _fullscreenDidDisappear(transition) {
+	        this.trigger('fullscreenDidDisappear', this);
+	        _hub2.default.trigger('fullscreenDidDisappear', this);
+	    },
+
+	    /**
+	     * Container is ready to be loaded/shown
+	     *
+	     * @return {void}
+	     * @private
+	     */
+	    _loadReady: function _loadReady() {
+	        this.$el.removeClass(_classnames2.default.CONTAINER_IS_UNLOADED);
+	    },
+
+	    /**
+	     * Container is 100% loaded
+	     *
+	     * @return {void}
+	     * @private
+	     */
+	    _loadComplete: function _loadComplete() {
+	        this.trigger('loadComplete');
+	    },
+
+	    /**
+	     * Track progress of an asset
+	     *
+	     * @param {HTMLElement} el
+	     * @return {void}
+	     * @private
+	     */
+	    _trackAssetProgress: function _trackAssetProgress(url, el) {
+	        var _this4 = this;
+
+	        var deferred = _when2.default.defer();
+
+	        this.addDeferred(deferred);
+
+	        if (Container.loadedAssets.indexOf(url) !== -1) {
+	            deferred.resolve({}, el);
+	        } else {
+	            if (!el) {
+	                el = new Image();
+	                el.src = url;
+	            }
+
+	            el.addEventListener('load', function (event) {
+	                Container.loadedAssets.push(url);
+	                deferred.resolve(event, event.currentTarget);
+	            });
+
+	            el.addEventListener('error', function (event) {
+	                deferred.resolve(event, event.currentTarget);
+	                _hub2.default.trigger('assetLoadError', _this4, url);
+	            });
+	        }
+	    },
+
+	    /**
+	     * Fit boundaries
+	     *
+	     * Makes sure no elements exceed the boundaries of the container
+	     *
+	     * @return {void}
+	     * @private
+	     */
+	    _fitBoundaries: function _fitBoundaries() {
+	        var images = [];
+	        var that = this;
+
+	        // No need to check this if the Container was restored from a compiled object
+	        // Also skip if the container is responsive
+	        if (this.decompiled || this.isResponsive) {
+	            return;
+	        }
+
+	        // Separate fetching and applying of styles for performance
+
+	        this.$el.find('img').each(function () {
+	            var width = this.clientWidth;
+	            var height = this.clientHeight;
+	            var ratio;
+
+	            if (width > that.metrics.width) {
+	                ratio = that.metrics.width / width;
+	                images.push({
+	                    el: this,
+	                    css: {
+	                        height: height * ratio + 'px',
+	                        width: that.metrics.width + 'px'
+	                    }
+	                });
+	            }
+	        });
+
+	        // Batch
+	        _lodash2.default.each(images, function (image) {
+	            (0, _dom2.default)(image.el).css(image.css);
+	        });
+	    },
+
+	    // Events
+
+	    onTouchStart: function onTouchStart(event) {
+	        event = event.originalEvent || event;
+
+	        var point = event.touches[0];
+
+	        this._touchStartX = point.pageX;
+	        this._touchStartY = point.pageY;
+	        this._touchMoveX = point.pageX;
+	        this._touchMoveY = point.pageY;
+	    },
+	    onTouchMove: function onTouchMove(event) {
+	        event = event.originalEvent || event;
+
+	        var point = event.touches[0];
+
+	        this._touchMoveX = point.pageX;
+	        this._touchMoveY = point.pageY;
+	    },
+	    onTouchEnd: function onTouchEnd(event) {
+	        var xdelta, ydelta;
+
+	        xdelta = Math.abs(this._touchStartX - this._touchMoveX);
+	        ydelta = Math.abs(this._touchStartY - this._touchMoveY);
+
+	        // Don't prevent default event when the user moves his finger on the image.
+	        if (xdelta < 7 && ydelta < 7) {
+	            event.preventDefault();
+	        }
+	    },
+	    onMouseDown: function onMouseDown(event) {
+	        this.mouseDownX = event.pageX;
+	        this.mouseDownY = event.pageY;
+	        this.mouseDownTime = Date.now();
+	    },
+	    onTap: function onTap(event) {
+	        this.enterFullscreen(event.currentTarget);
+	    },
+	    onClick: function onClick(event) {
+	        // Don't trigger fullscreen if the user waits too long
+	        // or move the cursor while holding down the mouse
+
+	        var diffX = Math.abs(event.pageX - this.mouseDownX);
+	        var diffY = Math.abs(event.pageY - this.mouseDownY);
+	        var diffTime = Date.now() - this.mouseDownTime;
+
+	        if (diffX > 5 || diffY > 5 || diffTime > 1500) {
+	            return;
+	        }
+
+	        this.enterFullscreen(event.currentTarget);
+	    },
+	    onGestureStart: function onGestureStart(event) {
+	        var trans = this.transition;
+
+	        if (this.gestureStarted || trans.isRunning()) {
+	            return false;
+	        }
+
+	        this.gestureStarted = true;
+	        trans.setTargetEl(event.currentTarget);
+	        this.startTransform(event);
+	    },
+	    onGestureChange: function onGestureChange(event) {
+	        var trans = this.transition;
+
+	        if (trans.isRunning()) {
+	            return false;
+	        }
+
+	        this.transformEventTarget(event);
+	    },
+	    onGestureEnd: function onGestureEnd(event) {
+	        var trans = this.transition;
+
+	        if (trans.isRunning()) {
+	            return false;
+	        }
+
+	        trans.run();
+	        this.gestureStarted = false;
+	    }
+	});
+
+	exports.default = Container;
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _FigureElement = __webpack_require__(45);
+
+	var _FigureElement2 = _interopRequireDefault(_FigureElement);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var memoizedGetExpressionForField = _lodash2.default.memoize(getExpressionForField);
+	var memoizedFindFieldMapMatch = _lodash2.default.memoize(findFieldMapMatch, function (field, elementFields) {
+	    return [field, elementFields];
+	});
+
+	var Figure = _BaseView2.default.extend({
+	    initialize: function initialize() {
+	        var _this = this;
+
+	        this.elements = _lodash2.default.map(this.$el.children('[data-map]'), function (el, i) {
+	            var fe = new _FigureElement2.default({
+	                el: el,
+	                figure: _this
+	            });
+
+	            // This prevents the signature of the element from changing,
+	            // even though if the content in it changes
+	            fe.lockSignature();
+
+	            return fe;
+	        });
+	    },
+	    setElement: function setElement(el) {
+	        Figure.__super__.setElement.call(this, el);
+	        this.isOptional = this.$el.hasClass(_classnames2.default.IS_OPTIONAL);
+	    },
+
+	    /**
+	     * Get the element mapped to field(s)
+	     *
+	     * @param {array} fields array of fields
+	     * @return {HTMLElement} the matching element
+	     */
+	    getElementMappedToField: function getElementMappedToField(fields) {
+	        var element = false;
+	        var potentialElement = false;
+
+	        _lodash2.default.each(getExpressionsForFields(fields), function (field) {
+	            element = _lodash2.default.find(this.elements, function (element) {
+	                return memoizedFindFieldMapMatch(field, element.fieldMap);
+	            });
+
+	            if (!element) {
+	                return;
+	            }
+
+	            if (element.noScore) {
+	                // We have a match, but it's a no score element
+	                // Just store the reference and continue looking for a better match
+	                potentialElement = potentialElement || element;
+	                element = false;
+
+	                return;
+	            }
+
+	            // break out of _.each loop
+	            return false;
+	        }, this);
+
+	        return element || potentialElement;
+	    },
+
+	    /**
+	     * Get all elements matching the field map
+	     *
+	     * @param {array} fields array of fields
+	     * @return {Array} list of matching elements
+	     */
+	    getElementsMappedToField: function getElementsMappedToField(fields) {
+	        var _this2 = this;
+
+	        var fieldElements = _lodash2.default.map(getExpressionsForFields(fields), function (field) {
+	            return _lodash2.default.filter(_this2.elements, function (element) {
+	                return memoizedFindFieldMapMatch(field, element.fieldMap);
+	            });
+	        });
+
+	        var elements = _lodash2.default.flatten(fieldElements);
+
+	        elements = elements.sort(function (a, b) {
+	            if (a.noScore === b.noScore) {
+	                return 0;
+	            }
+
+	            return b.noScore ? -1 : 1;
+	        });
+
+	        return elements;
+	    }
+	});
+
+	function getExpressionsForFields(fields) {
+	    return _lodash2.default.map(fields, memoizedGetExpressionForField);
+	}
+
+	function getExpressionForField(field) {
+	    if (field.indexOf('*') === -1) {
+	        return new RegExp('^' + field + '$');
+	    }
+
+	    var expression = field.replace(/([\-\:])/g, '\\$1');
+
+	    expression = expression.replace(/(^|[^\\W\*])\*(\\|$)/g, '$1[^\\W]+$2');
+	    expression = expression.replace(/(^|[^\\W])\*\*(\\|$)/g, '$1(.*)?$2');
+
+	    return new RegExp('^' + expression + '$');
+	}
+
+	function findFieldMapMatch(field, elementFields) {
+	    return _lodash2.default.find(elementFields, function (elementField) {
+	        return elementField.match(field);
+	    });
+	}
+
+	exports.default = Figure;
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * FigureElement
+	 *
+	 * An element contained inside a Figure
+	 * This is put inside a matching Container
+	 *
+	 * @type {Object}
+	 */
+	var FigureElement = _BaseView2.default.extend({
+	    initialize: function initialize(options) {
+	        this.figure = options.figure;
+	    },
+	    setElement: function setElement(el) {
+	        FigureElement.__super__.setElement.call(this, el);
+	        this.noScore = this.$el.hasClass(_classnames2.default.NO_SCORE);
+	        this.fieldMap = _util2.default.dom.getFieldMap(this.el);
+	    }
+	});
+
+	exports.default = FigureElement;
+
+/***/ },
+/* 46 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _LayoutElement = __webpack_require__(33);
+
+	var _LayoutElement2 = _interopRequireDefault(_LayoutElement);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Block = _BaseView2.default.extend();
+
+	_lodash2.default.extend(Block.prototype, _LayoutElement2.default, {
+	    tagName: 'p',
+
+	    isInline: true,
+
+	    initialize: function initialize(data) {
+	        data = data || {};
+	        this.isOverflow = false;
+	        this.isDirty = false;
+	        this.originalMetrics = null;
+
+	        if (!data.metrics) {
+	            this.defaultMetrics();
+	        }
+	    },
+	    render: function render() {
+	        if (this.isRendered) {
+	            return this;
+	        }
+
+	        if (this.isFirst) {
+	            this.$el.addClass(_classnames2.default.IS_FIRST_BLOCK);
+	        }
+
+	        if (this.isLast) {
+	            this.$el.addClass(_classnames2.default.IS_LAST_BLOCK);
+	        }
+
+	        if (this.isOverflow) {
+	            var $el = (0, _dom2.default)('<div style="overflow:hidden;padding:0;"></div>');
+
+	            $el.css('margin-bottom', this.metrics.marginBottom + 'px').addClass(_classnames2.default.IS_SPLITTABLE).addClass(_classnames2.default.IS_NON_REARRANGEABLE).append(this.el);
+
+	            this.$el.css('margin-bottom', '0px');
+
+	            // Dangerous...
+	            this.setElement($el[0]);
+	            this.isDirty = true;
+	        }
+
+	        this.isRendered = true;
+
+	        return this;
+	    },
+
+	    /**
+	     * Clone the block
+	     *
+	     * Creates a new Block pointed to a clone of this.el
+	     *
+	     * @return {Block}
+	     */
+	    clone: function clone() {
+	        var block = new Block({
+	            el: this.el.cloneNode(true)
+	        });
+	        block.clonedFrom = this;
+	        block.metrics = _lodash2.default.extend({}, this.metrics);
+	        block.isLast = this.isLast;
+
+	        if (this.isDirty) {
+	            block.$el.removeAttr('style');
+	        }
+
+	        return block;
+	    },
+
+	    /**
+	     * Revert the block back to original state
+	     *
+	     * @return {void}
+	     */
+	    revert: function revert() {
+	        if (this.isDirty) {
+	            this.isOverflow || this.el.style.removeProperty('overflow');
+	            this.el.style.removeProperty('height');
+
+	            this.isDirty = false;
+	        }
+	    },
+
+	    /**
+	     * Is this block splittable?
+	     *
+	     * Can this block be split into pieces
+	     * and distributed across regions?
+	     *
+	     * @return {boolean}
+	     */
+	    isSplittable: function isSplittable() {
+	        if (this.$el.hasClass(_classnames2.default.IS_NON_SPLITTABLE)) {
+	            return false;
+	        }
+
+	        return this.$el.hasClass(_classnames2.default.IS_SPLITTABLE) || ['P', 'UL', 'OL'].indexOf(this.el.tagName) !== -1;
+	    },
+
+	    /**
+	     * Is this block rearrangeable?
+	     *
+	     * A factbox or a quote is typically not that context sensitive,
+	     * and can be moved a bit for layout purposes.
+	     *
+	     * A paragraph or a sub title is highly context sensitive,
+	     * and moving it would break the article.
+	     *
+	     * @return {boolean}
+	     */
+	    isRearrangeable: function isRearrangeable() {
+	        if (this.$el.hasClass(_classnames2.default.IS_NON_REARRANGEABLE)) {
+	            return false;
+	        }
+
+	        return this.$el.hasClass(_classnames2.default.IS_REARRANGEABLE) || ['DIV'].indexOf(this.el.tagName) !== -1;
+	    },
+	    shouldStickToNext: function shouldStickToNext() {
+	        return this.$el.hasClass(_classnames2.default.STICK_TO_NEXT) || ['H1', 'H2', 'H3'].indexOf(this.el.tagName) !== -1;
+	    },
+
+	    /**
+	     * Get a new block that corresponds to the overflow
+	     *
+	     * @param {number} maxHeight max height the original block can be
+	     * @return {Block} an offset copy of this
+	     */
+	    getOverflowBlock: function getOverflowBlock(maxHeight) {
+	        var newHeight = 0;
+	        var snapLineHeight, overflowBlock;
+
+	        overflowBlock = this.clone();
+
+	        // This is to prevent the block to wrap another wrapper
+	        if (this.isOverflow) {
+	            overflowBlock.setElement(overflowBlock.$el.children().first());
+	        }
+
+	        overflowBlock._isNormalized = false;
+	        overflowBlock.isOverflow = true;
+	        overflowBlock.overflowMarginTop = this.isOverflow ? this.metrics.overflowMarginTop : 0;
+
+	        snapLineHeight = maxHeight % this.metrics.lineHeight;
+	        newHeight = maxHeight - snapLineHeight;
+
+	        this.$el.css({
+	            'overflow': 'hidden',
+	            'height': newHeight + 'px'
+	        });
+	        this.isDirty = true;
+
+	        var overflowMarginTop = overflowBlock.overflowMarginTop;
+
+	        overflowBlock.$el.css('margin-top', overflowMarginTop - newHeight + 'px');
+	        overflowBlock.metrics.height -= newHeight;
+	        overflowBlock.metrics.outerHeight -= newHeight;
+	        overflowBlock.metrics.overflowMarginTop = overflowMarginTop - newHeight;
+
+	        return overflowBlock;
+	    }
+	});
+
+	exports.default = Block;
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _LayoutElement = __webpack_require__(33);
+
+	var _LayoutElement2 = _interopRequireDefault(_LayoutElement);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _hub = __webpack_require__(8);
+
+	var _hub2 = _interopRequireDefault(_hub);
+
+	var _when = __webpack_require__(40);
+
+	var _when2 = _interopRequireDefault(_when);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var FullscreenContainer = _BaseView2.default.extend(); /**
+	                                                        * Fullscreen Container
+	                                                        *
+	                                                        * This is used to show figure elements in fullscreen
+	                                                        */
+
+	_lodash2.default.extend(FullscreenContainer.prototype, _LayoutElement2.default, {
+	    initialize: function initialize(options) {
+	        options = this.options = _lodash2.default.extend({}, options || {});
+	        this.layer = this.options.layer || null;
+	    },
+	    tearDown: function tearDown() {
+	        this.stopListening();
+	        this.$el.remove();
+	    },
+	    subscribeToContainer: function subscribeToContainer(container) {
+	        var fullscreenEl;
+
+	        if (!container.fullscreenEl && container.figure) {
+	            fullscreenEl = this.getFullscreenElement(container.figure);
+	            fullscreenEl && container.setFullscreenEl(fullscreenEl);
+	        }
+
+	        // TODO: Does this make it impossible for GC to remove the container?
+	        this.listenTo(container, {
+	            'fullscreenWillAppear': function fullscreenWillAppear(transition, done) {
+	                this._loadMathchingWidgetsForContainer(container, done);
+	            }
+	        });
+	    },
+	    getFullscreenElement: function getFullscreenElement(figure) {
+	        var fsMap = _util2.default.dom.getFieldMap(this.el);
+	        var fullscreenEl = figure.getElementMappedToField(fsMap);
+
+	        if (!fullscreenEl) {
+	            return null;
+	        }
+
+	        return fullscreenEl.el.cloneNode(true);
+	    },
+
+	    /**
+	     * Load container into fullscreen mode
+	     *
+	     * @param {Function} done call this to trigger complete
+	     * @return {void}
+	     * @private
+	     */
+	    loadContainer: function loadContainer(container, done) {
+	        if (!this.layer) {
+	            _util2.default.console.warn('No fullscreen layer found');
+
+	            return;
+	        }
+
+	        var $images;
+	        var allDone = function allDone() {
+	            container.fullscreenLoaded = true;
+	            done();
+	        };
+
+	        this.$el.empty().addClass(_classnames2.default.IS_VISIBLE).append(container.fullscreenEl);
+
+	        this.layer.renderFullscreenContainer(this);
+
+	        if (container.fullscreenLoaded) {
+	            return allDone();
+	        }
+
+	        // TODO: this needs improvements
+	        // Maybe this should be moved to another function?
+	        // First render the container, then call the widget function, and then load all images?
+	        $images = this.layer.$el.find('img[data-src]');
+	        $images.length || allDone();
+
+	        $images.each(function () {
+	            this.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+	            this.addEventListener('load', allDone);
+	            this.src = this.getAttribute('data-src');
+	        });
+	    },
+	    exitFullscreen: function exitFullscreen() {
+	        this.layer.exitFullscreen();
+	    },
+	    _loadMathchingWidgetsForContainer: function _loadMathchingWidgetsForContainer(container, done) {
+	        var deferreds = [];
+	        var allDone;
+
+	        allDone = function allDone() {
+	            _hub2.default.trigger('fullscreenWillAppear', container);
+	            done();
+	        };
+
+	        if (!container.matchingWidgets || !container.matchingWidgets.length) {
+	            return this.loadContainer(container, allDone);
+	        }
+
+	        deferreds.push(_when2.default.defer());
+	        this.loadContainer(container, deferreds[0].resolve);
+
+	        _lodash2.default.each(container.matchingWidgets, function (match) {
+	            var deferred = _when2.default.defer();
+
+	            deferreds.push(deferred);
+	            match.widget.fullscreen.call(match, this, deferred.resolve);
+	        }, this);
+
+	        _when2.default.all(deferreds, allDone);
+	    }
+	});
+
+	exports.default = FullscreenContainer;
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _when = __webpack_require__(40);
+
+	var _when2 = _interopRequireDefault(_when);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var getOptionsIfExists = _lodash2.default.memoize(function (optionsString) {
+	    // data-respond="start: 100px; end: 900px; interval: 50px; watch: true;"
+
+	    if (!optionsString) {
+	        return {};
+	    }
+
+	    var optionProps = optionsString.replace(/\s+/g, '').split(';');
+	    var options = {};
+
+	    _lodash2.default.each(optionProps, function (option) {
+	        var property = option.split(':');
+	        var key = property[0];
+	        var value = parseInt(property[1], 10);
+
+	        if (isNaN(value)) {
+	            value = property[1] !== 'false';
+	        }
+
+	        options[key] = value;
+	    });
+
+	    return options;
+	});
+
+	var SizeDetector = _BaseView2.default.extend();
+
+	_lodash2.default.extend(SizeDetector.prototype, {
+
+	    tagName: 'object',
+
+	    className: _classnames2.default.SIZE_DETECTOR,
+
+	    initialize: function initialize(options) {
+	        options = this.options = _lodash2.default.extend({
+	            start: 300,
+	            end: 1200,
+	            interval: 50,
+	            refreshRate: 50,
+	            watch: true,
+	            target: null
+	        }, options || {});
+
+	        this.$target = (0, _dom2.default)(this.options.target);
+
+	        _lodash2.default.extend(this.options, getOptionsIfExists(this.$target.attr('data-respond')));
+
+	        _lodash2.default.bindAll(this, '_onResize', '_setupListenerForView');
+
+	        this._onResize = _lodash2.default.throttle(this._onResize, options.refreshRate);
+
+	        this._deferred = _when2.default.defer();
+	        this.isReady = this._deferred.promise;
+	    },
+	    start: function start() {
+	        this._setupListenerForView();
+	    },
+	    tearDown: function tearDown() {
+	        var doc = this.el.contentDocument;
+
+	        if (doc && doc.defaultView) {
+	            doc.defaultView.removeEventListener('resize', this._onResize);
+	        }
+
+	        this.$el.remove();
+	    },
+	    render: function render() {
+	        if (!this.options.watch) {
+	            this._applyClassNamesForWidth(this.$target.width());
+	            this._deferred.resolve();
+	            return this;
+	        }
+
+	        var $el = this.$target.find('.' + _classnames2.default.SIZE_DETECTOR);
+
+	        if ($el.length) {
+	            this.setElement($el);
+	            this.start();
+
+	            return this;
+	        }
+
+	        this.$el.css({
+	            display: 'block',
+	            position: 'absolute',
+	            top: 0,
+	            right: 0,
+	            bottom: 0,
+	            left: 0,
+	            // visibility: 'hidden',
+	            width: '100%',
+	            'pointer-events': 'none',
+	            'z-index': -2147483648
+	        });
+
+	        this.el.type = 'text/html';
+	        this.el.data = 'about:blank';
+
+	        this.start();
+
+	        this.$target.append(this.$el);
+
+	        return this;
+	    },
+	    getClassNamesForWidth: function getClassNamesForWidth(width) {
+	        var options = this.options;
+	        var start = options.start;
+	        var end = options.end;
+	        var interval = options.interval;
+	        var classes = [];
+
+	        for (var i = start; i <= end; i += interval) {
+	            if (i < width) {
+	                classes.push('alf-gt' + i);
+	            } else {
+	                classes.push('alf-lt' + i);
+	            }
+	        }
+
+	        return classes;
+	    },
+	    _onResize: function _onResize(event) {
+	        var width = event.target.innerWidth;
+
+	        this._applyClassNamesForWidth(width);
+	    },
+	    _setupListenerForViewOnLoad: function _setupListenerForViewOnLoad() {
+	        this.$el.on('load', _lodash2.default.bind(function () {
+	            setTimeout(this._setupListenerForView, 0);
+	            this.$el.off('load');
+	        }, this));
+	    },
+	    _setupListenerForView: function _setupListenerForView() {
+	        if (!this.el.contentDocument) {
+	            this._setupListenerForViewOnLoad();
+	            return;
+	        }
+
+	        var view = this.el.contentDocument.defaultView;
+
+	        view.addEventListener('resize', this._onResize);
+
+	        this._applyClassNamesForWidth(view.innerWidth);
+	        this._deferred.resolve();
+	    },
+	    _applyClassNamesForWidth: function _applyClassNamesForWidth(width) {
+	        var classNames = this.getClassNamesForWidth(width);
+
+	        if (this.options.target) {
+	            var target = (0, _dom2.default)(this.options.target).get(0);
+	            var targetClassNames = target.className;
+
+	            targetClassNames = _dom2.default.trim(targetClassNames.replace(/alf\-(g|l)t(\d+)\s?/g, ''));
+	            targetClassNames += ' ' + classNames.join(' ');
+
+	            target.className = targetClassNames;
+	        }
+
+	        this.trigger('resize', width);
+	    }
+	});
+
+	exports.default = SizeDetector;
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _jquery = __webpack_require__(5);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Grid
+	 *
+	 * Absolute positions columns and cells based on class names
+	 *
+	 * Usage:
+	 *   Class names for the wrapper (this.el)
+	 *     cols-x: total number of columns in the grid
+	 *
+	 *   Class names for cells:
+	 *     col-x: start at column x
+	 *     colspan-x: span across x columns
+	 *
+	 * @author Peter Rudolfsen <peter@aptoma.com>
+	 */
+	var Grid = function Grid(options) {
+	    var styles;
+
+	    this.options = _jquery2.default.extend({
+	        prefix: ''
+	    }, options);
+
+	    this.el = options.el;
+
+	    // The total height each column has available
+	    this.height = options.height || (0, _jquery2.default)(this.el).height();
+
+	    // Define lineHeight if you want to align columns to a "vertical grid"
+	    this.lineHeight = options.lineHeight || 0;
+
+	    // Make sure to respect the padding
+	    styles = window.getComputedStyle(this.el, null);
+	    this.paddingTop = parseInt(styles.getPropertyValue('padding-top'), 10);
+	    this.paddingBottom = parseInt(styles.getPropertyValue('padding-bottom'), 10);
+	    this.height -= this.paddingTop + this.paddingBottom;
+
+	    this._position();
+	};
+
+	/**
+	 * Position all elements in the grid based on the class names
+	 *
+	 * Currently does not support multiple flexing elements in a single column
+	 * (flex = automatically adjust the height to the available space)
+	 *
+	 * @return {void}
+	 * @private
+	 */
+	Grid.prototype._position = function () {
+	    var that = this;
+	    var columns = [];
+	    var numCols = this.el.className.match(/cols\-([0-9]+)/);
+
+	    if (!numCols) {
+	        throw new Error('Failed to find number of columns');
+	    }
+
+	    // Initialize each column
+	    numCols = parseInt(numCols[1], 10);
+	    for (var i = 0; i < numCols; i++) {
+	        columns[i] = {
+	            remainingHeight: this.height,
+	            cells: []
+	        };
+	    }
+
+	    (0, _jquery2.default)(this.el).find('[class*="col-"]').each(function () {
+	        var col = parseInt(this.className.match(/col\-([0-9]+)/)[1], 10) - 1;
+	        var span = this.className.match(/colspan\-([0-9]+)/);
+	        var cell = that._createCellFromEl(this);
+
+	        span = span ? parseInt(span[1], 10) : 1;
+
+	        if ((0, _jquery2.default)(this).css('display') === 'none') {
+	            return;
+	        }
+
+	        // Cells that span across multiple columns are added to
+	        // the array for each column it spans across
+	        for (var i = col; i < col + span; i++) {
+	            columns[i].cells.push(cell);
+	        }
+	    });
+
+	    this._calcMetrics(columns);
+
+	    _jquery2.default.each(columns, function (index, column) {
+	        that._positionColumn(index, column);
+	    });
+	};
+
+	/**
+	 * Create a cell object from an HTML element
+	 *
+	 * Contains all required properties to calculate the grid
+	 *
+	 * @param {HTMLElement} el
+	 * @return {Object}
+	 */
+	Grid.prototype._createCellFromEl = function (el) {
+	    var flex = (0, _jquery2.default)(el).hasClass(this._class('flex'));
+
+	    return {
+	        el: el,
+	        flex: flex,
+	        height: 0,
+	        innerHeight: 0,
+	        top: 0
+	    };
+	};
+
+	// jshint maxcomplexity:false
+	// jshint maxstatements:32
+	Grid.prototype._calcMetrics = function (columns) {
+	    var colTop, colBottom, numColumns, numCells, cell, $cell, i, j, styles, marginBottom;
+
+	    colTop = this._class('col-top');
+	    colBottom = this._class('col-bottom');
+
+	    numColumns = columns.length;
+
+	    for (i = 0; i < numColumns; i++) {
+	        numCells = columns[i].cells.length;
+
+	        for (j = 0; j < numCells; j++) {
+	            cell = columns[i].cells[j];
+	            $cell = (0, _jquery2.default)(cell.el);
+	            $cell.removeClass(colTop + ' ' + colBottom);
+
+	            if (j === 0) {
+	                cell.isTop = true;
+	                $cell.addClass(colTop);
+	            }
+
+	            if (j === numCells - 1) {
+	                cell.isBottom = true;
+	                $cell.addClass(colBottom);
+	            }
+	        }
+	    }
+
+	    // Batch calculatation for DOM performance
+	    for (i = 0; i < numColumns; i++) {
+	        numCells = columns[i].cells.length;
+
+	        for (j = 0; j < numCells; j++) {
+	            cell = columns[i].cells[j];
+	            $cell = (0, _jquery2.default)(cell.el);
+
+	            cell.height = cell.flex ? 0 : $cell.outerHeight();
+
+	            // If marginTop on the top element does not align to the vertical grid,
+	            // it'll mess up the relationship between the different columns.
+	            // This is required to make sure that columns with different number of rows still align properly
+	            if (cell.isTop) {
+	                styles = window.getComputedStyle(cell.el, null);
+	                columns[i].marginTop = parseInt(styles.getPropertyValue('margin-top'), 10);
+	                columns[i].marginTopOffset = columns[i].marginTop % this.lineHeight;
+
+	                if (!cell.flex) {
+	                    cell.innerHeight = $cell.height();
+	                    if (cell.innerHeight === 0) {
+	                        marginBottom = parseInt(styles.getPropertyValue('margin-bottom'), 10);
+	                        cell.height -= marginBottom;
+	                    }
+	                }
+	            }
+
+	            columns[i].remainingHeight -= cell.height;
+	        }
+	    }
+	};
+
+	/**
+	 * Position a single column
+	 *
+	 * Helper method for _position
+	 *
+	 * @param {number} index
+	 * @param {HTMLElement} column
+	 * @return {void}
+	 * @private
+	 */
+	Grid.prototype._positionColumn = function (index, column) {
+	    var that = this;
+	    var top = this.paddingTop;
+
+	    _jquery2.default.each(column.cells, function (index, cell) {
+	        var $cell = (0, _jquery2.default)(cell.el);
+	        var css = {};
+	        var rest = 0;
+
+	        // only snap to the vertical grid if it's not the top cell
+	        // AND if it's a flexing cell
+	        if (that.lineHeight && !cell.isTop && !(cell.isBottom && !cell.flex)) {
+	            rest = (top - column.marginTopOffset - that.paddingTop) % that.lineHeight;
+
+	            if (rest !== 0) {
+	                rest = that.lineHeight - rest;
+	                column.remainingHeight -= rest;
+	                top += rest;
+	            }
+	        }
+
+	        // Push it down to the lowest position so it doesn't overlap with any of the cells above it
+	        if (!cell.isTop || cell.top < top) {
+	            cell.top = top;
+	        }
+
+	        css.top = cell.top + 'px';
+
+	        if (cell.flex) {
+	            var margin = parseInt($cell.css('margin-bottom'), 10) + parseInt($cell.css('margin-top'), 10);
+
+	            cell.height = column.remainingHeight;
+	            css.height = (cell.height > margin ? cell.height - margin : 0) + 'px';
+	        }
+
+	        $cell.css(css);
+	        top += cell.height;
+	    });
+	};
+
+	/**
+	 * Prefix a class name
+	 *
+	 * @param {string} string
+	 * @return {string} prefixed string
+	 */
+	Grid.prototype._class = function (string) {
+	    return this.options.prefix + string;
+	};
+
+	if (typeof window !== 'undefined') {
+	    _jquery2.default.fn.grid = function (options) {
+	        options = options || {};
+
+	        options.el = this[0];
+	        return new Grid(options);
+	    };
+	}
+
+	exports.default = Grid;
+
+/***/ },
+/* 50 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _Base = __webpack_require__(10);
+
+	var _Base2 = _interopRequireDefault(_Base);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ContainerCompiler = _Base2.default.extend({
+	    initialize: function initialize(container) {
+	        this.container = container;
+	        this.compiled = {};
+	    },
+
+	    compile: function compile() {
+	        var container = this.container;
+
+	        // Isn't this too early to fetch the HTML?
+	        // If widgets set compile to false the result of the widget wont be reverted
+	        var $el = (0, _dom2.default)(container.el.outerHTML);
+
+	        if (container.isDirty) {
+	            container.revertToOriginal();
+	        }
+
+	        container.unloadElement($el);
+
+	        this.compiled = {
+	            loaded: false,
+	            metrics: container.metrics,
+	            html: $el[0].outerHTML
+	        };
+
+	        container.fullscreenEl && (this.compiled.fullscreenEl = container.fullscreenEl.outerHTML);
+
+	        return this.compiled;
+	    },
+
+	    /**
+	     * Decompile the container
+	     *
+	     * @param {Object} object
+	     * @return {void}
+	     */
+	    decompile: function decompile(object) {
+	        var container = this.container;
+
+	        container.decompiled = true;
+	        _lodash2.default.extend(container, object);
+	        container.fullscreenEl && container.setFullscreenEl((0, _dom2.default)(container.fullscreenEl).get(0));
+	    }
+	});
+
+	exports.default = ContainerCompiler;
+
+/***/ },
+/* 51 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _Template = __webpack_require__(52);
+
+	var _Template2 = _interopRequireDefault(_Template);
+
+	var _article = __webpack_require__(53);
+
+	var _article2 = _interopRequireDefault(_article);
+
+	var _page = __webpack_require__(54);
+
+	var _page2 = _interopRequireDefault(_page);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _PageTemplate = __webpack_require__(39);
+
+	var _PageTemplate2 = _interopRequireDefault(_PageTemplate);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function getFilter(callback, name) {
+	    return { callback: callback, name: name };
+	}
+
+	var TemplateManager = {
+	    /**
+	     * Template filters for articles and pages
+	     */
+	    filters: {
+	        article: _lodash2.default.map(_article2.default, getFilter),
+	        page: _lodash2.default.map(_page2.default, getFilter)
+	    },
+
+	    /**
+	     * Add an article filter
+	     *
+	     * Article filters are run on the article, and takes a more general
+	     * approach to filter than Page filters.
+	     * Filtering based on media-queries, article types, categories, etc
+	     * are examples of typical article filters
+	     *
+	     * These are run only once
+	     *
+	     * @param {Function} callback
+	     */
+	    addArticleFilter: function addArticleFilter(callback, name) {
+	        this.filters.article.push({
+	            callback: callback,
+	            name: name || 'articlefilter'
+	        });
+	    },
+
+	    /**
+	     * Add a Page filter
+	     *
+	     * Page filters are run on each page in an article.
+	     * Filters based on pagenum, or (FILL IN GOOD EXAMPLE HERE)
+	     *
+	     * @param {Function} callback
+	     */
+	    addPageFilter: function addPageFilter(callback, name) {
+	        this.filters.page.push({
+	            callback: callback,
+	            name: name || 'pagefilter'
+	        });
+	    },
+
+	    /**
+	     * Get the best template for the page
+	     *
+	     * Ideas:
+	     * The page should filter templates based on the actual content it is given.
+	     * A template with matching containers should score higher than one without.
+	     * If there are no figures on the page, only templates with no containers should match and so on
+	     * It could also do a rough comparison on the height of the content (the blocks)
+	     * and the total height of the regions in the template
+	     * The important thing here is to do NO DOM MANIPULATION! Otherwise it'll kill performance.
+	     *
+	     * NB! Incomplete
+	     *
+	     * @param {Page} page
+	     * @param {array} templates eligible templates
+	     * @return {Template} the best matching Template for the Page
+	     */
+	    getBestTemplateForPage: function getBestTemplateForPage(page, templates) {
+	        var map, score;
+	        var best = {
+	            score: -Infinity,
+	            template: null,
+	            containerMap: null
+	        };
+
+	        // console.info('$$$$ NEW PAGE ', page, '$$$$$');
+	        // console.log('FIGURES', page.figures.map(function (fig) { return fig.el; }));
+	        _lodash2.default.each(templates, function (template) {
+	            map = template.getContainerMap(page.content);
+	            score = template.score(page, map);
+
+	            if (score > best.score || score === best.score && Math.random() > 0.5) {
+	                best.score = score;
+	                best.template = template;
+	                best.containerMap = map;
+	            }
+	        });
+
+	        // console.info('$$$$ DONE WITH PAGE $$$$$');
+
+	        return best;
+	    },
+
+	    /**
+	     * Get eligible templates for an article
+	     *
+	     * Ideas:
+	     * The article could filter out templates based on the media query (if one exists) on the template.
+	     * Maybe the article has some sort of parent template (category of some sorts) that
+	     * limit the templates that can be used. E.g. an article with a gallery/slideshow have different templates
+	     * than a regular newsstory or editorial comment. ++
+	     *
+	     * @param {Article} article
+	     * @param {array} templates
+	     * @return {array}
+	     */
+	    getEligibleTemplatesForArticle: function getEligibleTemplatesForArticle(article, templates) {
+	        return this._filterTemplates('article', article, templates);
+	    },
+	    getEligibleTemplatesForPage: function getEligibleTemplatesForPage(page, templates) {
+	        return this._filterTemplates('page', page, templates);
+	    },
+	    getScoredTemplatesForPage: function getScoredTemplatesForPage(page, templates) {
+	        return _lodash2.default.map(this.getEligibleTemplatesForPage(page, templates), function (template) {
+	            return {
+	                template: template,
+	                score: template.score(page)
+	            };
+	        });
+	    },
+
+	    /**
+	     * Get an actual usable and modifiable Template,
+	     * that's meant to be used with a single Page
+	     *
+	     * @return {Template}
+	     */
+	    getPageTemplateFromTemplate: function getPageTemplateFromTemplate(template, data) {
+	        return new _PageTemplate2.default(_lodash2.default.extend(data || {}, {
+	            el: template.el.cloneNode(true)
+	        }));
+	    },
+	    getTemplateFromPageTemplate: function getTemplateFromPageTemplate(pageTemplate, data) {
+	        var template = new _Template2.default(_lodash2.default.extend(data || {}, {
+	            el: pageTemplate.el.cloneNode(true)
+	        }));
+
+	        // Revert all regions and containers to the proper state
+	        // so they don't contain any content
+
+	        _lodash2.default.each(template.regions, function (region, i) {
+	            region.revert(pageTemplate.regions[i]._originalHtml);
+	        });
+
+	        _lodash2.default.invoke(template.containers, 'revert');
+
+	        return template;
+	    },
+
+	    /**
+	     * Filter templates for an object
+	     *
+	     * @param {string} type
+	     * @param {Article|Page} object
+	     * @param {Array} templates array of template objects
+	     * @return {Array}
+	     */
+	    _filterTemplates: function _filterTemplates(type, object, templates) {
+	        if (object.pages) {
+	            _util2.default.console.groupCollapsed('** Filtering templates for article');
+	        } else {
+	            _util2.default.console.groupCollapsed('** Filtering templates for page', object.pageNum + 1);
+	        }
+
+	        _lodash2.default.each(this.filters[type], function (filter) {
+	            var before = templates.slice(0);
+
+	            templates = filter.callback.call(this, object, templates);
+	            _util2.default.console.groupCollapsed('Filter `' + filter.name + '` on', before.length, 'templates (removed', before.length - templates.length, 'templates)');
+
+	            if (before.length - templates.length) {
+	                _lodash2.default.each(before, function (tmpl) {
+	                    if (templates.indexOf(tmpl) === -1) {
+	                        _util2.default.console.debug('-', tmpl.name);
+	                    }
+	                });
+	            }
+
+	            _util2.default.console.groupEnd();
+	        }, this);
+
+	        _util2.default.console.debug('Remaining templates:', templates.length);
+	        _util2.default.console.groupEnd();
+
+	        return templates;
+	    }
+	};
+
+	exports.default = TemplateManager;
+
+/***/ },
+/* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _BaseView = __webpack_require__(11);
+
+	var _BaseView2 = _interopRequireDefault(_BaseView);
+
+	var _Region = __webpack_require__(41);
+
+	var _Region2 = _interopRequireDefault(_Region);
+
+	var _Container = __webpack_require__(43);
+
+	var _Container2 = _interopRequireDefault(_Container);
+
+	var _Figure = __webpack_require__(44);
+
+	var _Figure2 = _interopRequireDefault(_Figure);
+
+	var _classnames = __webpack_require__(12);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var EMPTY_CONTAINER = -500;
+	var MATCHING_CONTAINER = 100;
+	var NON_MATCHING_OPTIONAL_CONTAINER = 0;
+	var EMPTY_REGIONS = -500;
+	var MATCHING_REGION = 100;
+	var FIGURE_DISTANCE_FACTOR = 5;
+
+	/**
+	 * Template
+	 *
+	 * This is not meant to be used as an actual template,
+	 * but be reusable and instead serve as a map to the template for calculation purposes
+	 *
+	 * @author Peter Rudolfsen <peter@aptoma.com>
+	 * @module Layout
+	 */
+	var Template = _BaseView2.default.extend();
+
+	_lodash2.default.extend(Template.prototype, {
+	    setElement: function setElement(el) {
+	        Template.__super__.setElement.call(this, el);
+
+	        this.name = this.$el.attr('data-name');
+
+	        // Reset the signature when a new element is set,
+	        // before Containers and Region get the chance to tamper with the element
+	        this.signature = undefined;
+	        this.lockSignature();
+
+	        this.containers = this.$el.find('.' + _classnames2.default.CONTAINER).map(function () {
+	            return new _Container2.default({
+	                el: this
+	            });
+	        });
+
+	        this.regions = this.$el.find('.' + _classnames2.default.REGION).map(function () {
+	            return new _Region2.default({
+	                el: this
+	            });
+	        });
+
+	        this.baseScore = parseInt(this.$el.attr('data-score') || 0, 10);
+	    },
+
+	    /**
+	     * Calculate the score for the template
+	     *
+	     * Idea:
+	     * Should we create a map of ALL the content and not just the containers?
+	     *
+	     * It could calculate approximately how much whitespace each region
+	     * would contain and how much reordering of the content it would do
+	     * This would be more accurate if the container or figure came with a
+	     * min-height and max-height property
+	     *
+	     * @param {Page} page the page to score against
+	     * @param {Object} containerMap optional precalculated containerMap
+	     * @return {number} the score
+	     */
+	    score: function score(page, containerMap) {
+	        var score = this.baseScore;
+	        var blocks = page.content.getBlocks();
+
+	        // util.console.info('  **********************************');
+	        // util.console.info('  ***** NOW SCORING ', name, '*****');
+
+	        // Create a list of scoring filters
+	        // and put them in it's own object?
+
+	        containerMap = containerMap || this.getContainerMap(page.content);
+	        score += containerMap.score || 0;
+
+	        _lodash2.default.each(containerMap.positions, function (pos) {
+	            if (pos.match) {
+	                score += pos.noScore ? 0 : MATCHING_CONTAINER;
+	            } else {
+	                score += pos.isOptional ? NON_MATCHING_OPTIONAL_CONTAINER : EMPTY_CONTAINER;
+	            }
+	        });
+
+	        if (this.regions.length) {
+	            score += blocks.length ? MATCHING_REGION : EMPTY_REGIONS;
+	        }
+
+	        this.lastScore = score;
+
+	        // util.console.info('  ***** FINISHED SCORE ', name, score, '*****');
+	        // util.console.info('  **********************************');
+
+	        return score;
+	    },
+
+	    /**
+	     * Map containers and figures
+	     *
+	     * This container map is reused by Page to calculate
+	     * scoring and fill them with content
+	     *
+	     * @param {array} figures list of figure objects
+	     * @return {array} the map
+	     */
+	    getContainerMap: function getContainerMap(content) {
+	        var elements, figures, numElements;
+
+	        var matchedFigures = [];
+	        var map = {
+	            matches: 0,
+	            positions: {},
+	            score: 0,
+	            template: this
+	        };
+
+	        elements = content.getElements();
+	        figures = content.getFigures();
+	        numElements = elements.length;
+
+	        _lodash2.default.each(this.containers, function (container, x) {
+	            var i, mappedElement, pos;
+
+	            pos = map.positions[x] = {
+	                match: false,
+	                fieldMap: container.fieldMap,
+	                isOptional: container.isOptional || !container.fieldMap.length && container.ref
+	            };
+
+	            for (i = 0; i < numElements; i++) {
+	                if (!(elements[i] instanceof _Figure2.default) || matchedFigures.indexOf(elements[i]) !== -1) {
+	                    continue;
+	                }
+
+	                mappedElement = elements[i].getElementMappedToField(container.fieldMap);
+	                if (mappedElement) {
+	                    // The further away a Figure is from the first available content element,
+	                    // the less score the Template will get by using it. It might even get a penalty for it.
+	                    // This will make it respect the content order a lot more.
+	                    map.score -= i * FIGURE_DISTANCE_FACTOR;
+	                    map.matches += 1;
+	                    matchedFigures.push(elements[i]);
+
+	                    pos.match = true;
+	                    pos.index = figures.indexOf(elements[i]);
+	                    pos.noScore = mappedElement.noScore;
+
+	                    return;
+	                }
+	            }
+	        });
+
+	        return map;
+	    }
+	});
+
+	exports.default = Template;
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var supportsMatchMedia = !!_util2.default.matchMedia;
+
+	/**
+	 * Builtin article filters
+	 * All filters listed here will automatically be applied
+	 */
+	exports.default = {
+	    /**
+	     * Filter by media query
+	     *
+	     * Remove articles that do not match the media query of the article
+	     *
+	     * @param {Article} article
+	     * @param {array} templates all available templates
+	     * @return {array} eligible templates
+	     */
+
+	    mediaQuery: function mediaQuery(article, templates) {
+	        if (!supportsMatchMedia) {
+	            return templates;
+	        }
+
+	        return _lodash2.default.filter(templates, function (template) {
+	            var media = _util2.default.dom.getMediaQuery(template.el);
+
+	            return media ? _util2.default.matchMedia(media).matches : true;
+	        });
+	    },
+
+	    /**
+	     * Filter by field mapping (data-map) on the article
+	     *
+	     * @param {Article} article
+	     * @param {array} templates all available templates
+	     * @return {array} eligible templates
+	     */
+	    fieldMap: function fieldMap(article, templates) {
+	        var articleFieldMap = article.content.fieldMap;
+	        var templateFieldMap;
+
+	        if (!articleFieldMap || !articleFieldMap.length) {
+	            return templates;
+	        }
+
+	        return _lodash2.default.filter(templates, function (template) {
+	            templateFieldMap = _util2.default.dom.getFieldMap(template.el);
+
+	            if (!templateFieldMap.length) {
+	                return false;
+	            }
+
+	            return _lodash2.default.intersection(articleFieldMap, templateFieldMap).length > 0;
+	        });
+	    },
+
+	    /**
+	     * Filter by empty containers
+	     *
+	     * Remove templates that have containers that do not match any content in the article
+	     *
+	     * @param {Article} article
+	     * @param {array} templates all available templates
+	     * @return {array} eligible templates
+	     */
+	    emptyContainers: function emptyContainers(article, templates) {
+	        var isUsable;
+
+	        isUsable = function isUsable(pos) {
+	            return pos.match === true || pos.match === false && pos.isOptional;
+	        };
+
+	        return _lodash2.default.filter(templates, function (template) {
+	            var containerMap = template.getContainerMap(article.content);
+
+	            return _lodash2.default.every(containerMap.positions, isUsable);
+	        });
+	    },
+	    formatName: function formatName(article, templates) {
+	        var articleFormatName;
+
+	        if (!article.format || !(articleFormatName = article.format.get('name'))) {
+	            return templates;
+	        }
+
+	        return _lodash2.default.filter(templates, function (template) {
+	            var formatName = template.$el.attr('data-filter-format-name');
+
+	            if (!formatName) {
+	                return true;
+	            }
+
+	            return formatName.split(' ').indexOf(articleFormatName) !== -1;
+	        });
+	    }
+	};
+
+/***/ },
+/* 54 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Builtin page filters
+	 * All filters listed here will automatically be applied
+	 */
+	exports.default = {
+	    /**
+	     * Filter by the page content
+	     *
+	     * e.g. remove templates with regions, if no blocks are left
+	     *
+	     * @param {Page} page
+	     * @param {Array} templates
+	     * @return {Array} remaining allowed templates
+	     */
+
+	    emptyBlocks: function emptyBlocks(page, templates) {
+	        var blocks = page.content.getBlocks();
+	        var figures = page.content.getFigures();
+
+	        if (blocks.length) {
+	            return templates;
+	        }
+
+	        return _lodash2.default.filter(templates, function (template) {
+	            var regions = template.regions;
+
+	            if (!regions.length) {
+	                return template;
+	            }
+
+	            // We now know that there are NO blocks left
+	            //
+	            // We're looking for a `region` that has a `container` that matches any of the `figures` left
+	            return _lodash2.default.any(regions, function (region) {
+	                // This region has no containers, so this region will be empty and useless
+	                if (!region.containers.length) {
+	                    return false;
+	                }
+
+	                return _lodash2.default.any(region.containers, function (container) {
+	                    return _lodash2.default.any(figures, function (figure) {
+	                        return figure.getElementMappedToField(container.fieldMap);
+	                    });
+	                });
+	            });
+	        });
+	    },
+
+	    /**
+	     * Filter by the page content
+	     *
+	     * e.g. remove templates with containers, if no figures are left
+	     *
+	     * @param {Page} page
+	     * @param {Array} templates
+	     * @return {Array} remaining allowed templates
+	     */
+	    emptyContainers: function emptyContainers(page, templates) {
+	        var isUsable;
+
+	        isUsable = function isUsable(pos) {
+	            return pos.match === true || pos.match === false && pos.isOptional;
+	        };
+
+	        return _lodash2.default.filter(templates, function (template) {
+	            var containerMap = template.getContainerMap(page.content);
+
+	            return _lodash2.default.every(containerMap.positions, isUsable);
+	        });
+	    },
+
+	    /**
+	     * Filter by the page position
+	     *
+	     * Example:
+	     * data-filter-page-pos="1" # only allow on page 1
+	     * data-filter-page-pos="!1" # allow on all pages except 1
+	     * data-filter-page-pos="1 2 3" # allow on pages 1 2 and 3
+	     *
+	     * @param {Page} page
+	     * @param {Array} templates
+	     * @return {Array} remaining allowed templates
+	     */
+	    pagePosition: function pagePosition(page, templates) {
+	        return _lodash2.default.filter(templates, function (template) {
+	            var positions = template.$el.attr('data-filter-page-pos');
+	            var pageNum = page.pageNum + 1;
+	            var allow = false;
+
+	            if (!positions) {
+	                return true;
+	            }
+
+	            positions = positions.split(' ');
+
+	            _lodash2.default.each(positions, function (pos) {
+	                var exclude = false;
+	                var posNum = parseInt(pos, 10);
+
+	                if (pos[0] === '!') {
+	                    exclude = true;
+	                    posNum = parseInt(pos.substr(1), 10);
+	                }
+
+	                if (exclude && posNum !== pageNum || !exclude && posNum === pageNum) {
+	                    allow = true;
+
+	                    return false;
+	                }
+	            });
+
+	            return allow;
+	        });
+	    }
+	};
+
+/***/ },
+/* 55 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _util = __webpack_require__(25);
+
+	var _util2 = _interopRequireDefault(_util);
+
+	var _BaseModel = __webpack_require__(37);
+
+	var _BaseModel2 = _interopRequireDefault(_BaseModel);
+
+	var _Block = __webpack_require__(46);
+
+	var _Block2 = _interopRequireDefault(_Block);
+
+	var _Figure = __webpack_require__(44);
+
+	var _Figure2 = _interopRequireDefault(_Figure);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Content model
+	 *
+	 * Holds generic elements like Figures and Blocks
+	 *
+	 * This is somewhere in between a View and a Model
+	 * It's a model, but it holds both model data and HTMLElements
+	 */
+	var Content = _BaseModel2.default.extend({
+	    defaults: {
+	        'contents': {},
+	        'meta': {}
+	    },
+
+	    initialize: function initialize(data) {
+	        data && data.contents && this._changeContents();
+	        this.on('change:contents', this._changeContents);
+
+	        this.__defineGetter__('elementsLeft', this._getElementsLeft);
+	    },
+
+	    /**
+	     * Set content elements
+	     *
+	     * Creates blocks and figures dependending on the element type
+	     *
+	     * @param {array} elements array or array-like list of HTML elements
+	     */
+	    setElements: function setElements(elements) {
+	        // Filter tags with just empty space
+	        elements = _lodash2.default.filter(elements, function (element) {
+	            if (element.tagName === 'P' && element.innerHTML.length < 15) {
+	                if (!element.innerHTML.replace(/(\s+)?(<br(\s+)?\/?>)?(&nbsp;)?/gmi, '')) {
+	                    return false;
+	                }
+	            }
+
+	            return element;
+	        });
+
+	        this.elements = _lodash2.default.map(elements, function (element) {
+	            var params = { el: element };
+
+	            if (element.tagName === 'FIGURE') {
+	                var figure = new _Figure2.default(params);
+	                if (figure.elements.length) {
+	                    return figure;
+	                }
+	            }
+
+	            return new _Block2.default(params);
+	        });
+
+	        var blocks = this.getBlocks();
+
+	        if (blocks.length) {
+	            blocks[0].isFirst = true;
+	            blocks[blocks.length - 1].isLast = true;
+	        }
+	    },
+
+	    /**
+	     * Add an element after another element
+	     *
+	     * @param {Block|Figure} element
+	     * @param {Block|Figure} afterElement
+	     */
+	    addAfter: function addAfter(element, afterElement) {
+	        var els = this.elements;
+
+	        els.splice(els.indexOf(afterElement) + 1, 0, element);
+	    },
+
+	    /**
+	     * Iterator helper for elements
+	     *
+	     * @param {Function} callback called on each element
+	     * @param {object} context optional context object
+	     */
+	    each: function each(callback, context) {
+	        _lodash2.default.each(this.elements, callback, context || this);
+	    },
+
+	    /**
+	     * Release an element or array of elements
+	     *
+	     * This makes the element reusable by other objects
+	     *
+	     * @param {Object|array} objectOrArray
+	     * @return {void}
+	     */
+	    release: function release(objectOrArray) {
+	        objectOrArray = _lodash2.default.isArray(objectOrArray) ? objectOrArray : [objectOrArray];
+
+	        _lodash2.default.each(objectOrArray, function (object, i) {
+	            object.retained = false;
+
+	            if (object.clonedFrom && !object.clonedFrom.retained) {
+	                // The block it was cloned from is released, so the clone must be removed
+	                this.elements.splice(this.elements.indexOf(object), 1);
+	            } else {
+	                object.revert && object.revert();
+	            }
+	        }, this);
+	    },
+
+	    /**
+	     * Release all elements
+	     *
+	     * @return {void}
+	     */
+	    releaseAll: function releaseAll() {
+	        this.release(this.elements);
+	    },
+
+	    /**
+	     * Retain element(s)
+	     *
+	     * Mark an element as retained by someone else
+	     *
+	     * @param {Block|Figure|array} objectOrArray an object or an array of objects
+	     * @return {void}
+	     */
+	    retain: function retain(objectOrArray) {
+	        var objects = _lodash2.default.isArray(objectOrArray) ? objectOrArray : [objectOrArray];
+
+	        _lodash2.default.each(objects, function (object) {
+	            object.retained = true;
+	        });
+	    },
+	    retainAll: function retainAll() {
+	        _lodash2.default.each(this.elements, function (element) {
+	            element.retained = true;
+	        });
+	    },
+	    getElements: function getElements() {
+	        return _lodash2.default.filter(this.elements, function (element) {
+	            return !element.retained;
+	        });
+	    },
+	    getBlocks: function getBlocks() {
+	        return _lodash2.default.filter(this.elements, function (element) {
+	            return !element.retained && element instanceof _Block2.default;
+	        });
+	    },
+	    getFigures: function getFigures() {
+	        return _lodash2.default.filter(this.elements, function (element, i) {
+	            return !element.retained && element instanceof _Figure2.default;
+	        });
+	    },
+	    hasBlocksLeft: function hasBlocksLeft() {
+	        return this.getBlocks().length > 0;
+	    },
+	    isEmpty: function isEmpty() {
+	        return this.elementsLeft === 0;
+	    },
+	    _changeContents: function _changeContents() {
+	        var $source, elements;
+
+	        $source = (0, _dom2.default)(this.get('contents').source);
+	        elements = $source.children();
+
+	        this.className = $source.attr('class');
+	        this.fieldMap = _util2.default.dom.getFieldMap($source[0]);
+
+	        this.setElements(elements);
+	    },
+
+	    /**
+	     * Get elements left
+	     *
+	     * getter function for this.elementsLeft
+	     *
+	     * @todo this will need optimization or caching of some kind
+	     * @return {number} number of elements left
+	     */
+	    _getElementsLeft: function _getElementsLeft() {
+	        return _lodash2.default.reduce(this.elements, function (memo, element) {
+	            return element.retained ? memo : memo + 1;
+	        }, 0);
+	    }
+	});
+
+	exports.default = Content;
+
+/***/ },
+/* 56 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _Article = __webpack_require__(57);
+
+	var _Article2 = _interopRequireDefault(_Article);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    Article: _Article2.default
+	};
+
+/***/ },
+/* 57 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _Base = __webpack_require__(10);
+
+	var _Base2 = _interopRequireDefault(_Base);
+
+	var _Page = __webpack_require__(58);
+
+	var _Page2 = _interopRequireDefault(_Page);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ArticleSerializer = _Base2.default.extend({
+	    initialize: function initialize(article) {
+	        this.article = article;
+	    },
+	    serialize: function serialize() {
+	        return {
+	            pages: _lodash2.default.map(this.article.pages, this._serializePage, this)
+	        };
+	    },
+	    unserialize: function unserialize(serializedContent) {
+	        var pages = [];
+	        var serializer = new _Page2.default(null, this.article);
+
+	        serializedContent = typeof serializedContent === 'string' ? JSON.parse(serializedContent) : serializedContent;
+
+	        _lodash2.default.each(serializedContent.pages, function (serializedPage, pageNum) {
+	            if (!serializedPage) {
+	                return;
+	            }
+
+	            serializedPage.pageNum = pageNum;
+	            pages.push(serializer.unserialize(serializedPage));
+	        });
+
+	        _lodash2.default.each(pages, function (page) {
+	            this.article.pages[page.pageNum] = page;
+	            this.article.setTemplateForPageNum(page.template, page.pageNum);
+	        }, this);
+
+	        // This will make sure that all pages are empty of Content,
+	        // but keeping any required references to other objects so they can be rendered again
+	        this.article.revert();
+
+	        return this.article;
+	    },
+	    _serializePage: function _serializePage(page) {
+	        var serializer = new _Page2.default(page, this.article);
+
+	        return serializer.serialize();
+	    }
+	});
+
+	exports.default = ArticleSerializer;
+
+/***/ },
+/* 58 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _lodash = __webpack_require__(1);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _dom = __webpack_require__(2);
+
+	var _dom2 = _interopRequireDefault(_dom);
+
+	var _Base = __webpack_require__(10);
+
+	var _Base2 = _interopRequireDefault(_Base);
+
+	var _Template = __webpack_require__(52);
+
+	var _Template2 = _interopRequireDefault(_Template);
+
+	var _TemplateManager = __webpack_require__(51);
+
+	var _TemplateManager2 = _interopRequireDefault(_TemplateManager);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var PageSerializer = _Base2.default.extend({
+	    initialize: function initialize(page, article) {
+	        this.page = page;
+	        this.article = article;
+	    },
+	    serialize: function serialize() {
+	        var containers = [];
+	        var page = this.page;
+
+	        if (!this.article.overrideTemplates[page.pageNum]) {
+	            return false;
+	        }
+
+	        containers = _lodash2.default.map(page.pageTemplate.containers, function (container) {
+	            if (!container.figureEl) {
+	                return null;
+	            }
+
+	            return {
+	                figureElementSignature: container.figureEl.signature,
+	                preferFigureElSignature: container.preferFigureElSignature,
+	                html: container.el.innerHTML
+	            };
+	        });
+
+	        return {
+	            template: {
+	                signature: page.template.signature,
+	                html: _TemplateManager2.default.getTemplateFromPageTemplate(page.pageTemplate).el.outerHTML
+	            },
+	            containers: containers
+	        };
+	    },
+
+	    /**
+	     * Unserialize
+	     *
+	     * Restore template and content to the Page
+	     *
+	     * @param  {Object} serializedPage
+	     * @return {Alf.layout.Page}
+	     */
+	    unserialize: function unserialize(serializedPage) {
+	        var templateSignature = serializedPage.template.signature;
+	        var templateHtml = serializedPage.template.html;
+
+	        // Create a forked template since the original template might be gone
+	        var forkedTemplate = new _Template2.default({ el: (0, _dom2.default)(templateHtml) });
+
+	        var template = this._findOriginalTemplate(templateSignature);
+
+	        this.page = this.article.createPage(serializedPage.pageNum);
+	        this.page.setTemplate(template || forkedTemplate);
+
+	        var pageTemplate = _TemplateManager2.default.getPageTemplateFromTemplate(forkedTemplate, {
+	            page: this.page
+	        });
+	        this.page.setPageTemplate(pageTemplate);
+
+	        this._restoreContainers(serializedPage);
+
+	        return this.page;
+	    },
+	    _findOriginalTemplate: function _findOriginalTemplate(templateSignature) {
+	        return _lodash2.default.find(this.article.templates, function (template) {
+	            return template.matchesAnySignature(templateSignature);
+	        });
+	    },
+
+	    /**
+	     * Restore containers
+	     *
+	     * Restore containers back to their previous state
+	     *
+	     * @param  {Object} serializedPage
+	     * @return {void}
+	     */
+	    _restoreContainers: function _restoreContainers(serializedPage) {
+	        _lodash2.default.each(this.page.pageTemplate.containers, function (container, i) {
+	            var serializedContainer = serializedPage.containers[i];
+	            var signature = serializedContainer && serializedContainer.figureElementSignature;
+
+	            if (!signature) {
+	                return;
+	            }
+
+	            container.figureElSignature = signature;
+	            container.preferFigureElSignature = serializedContainer.preferFigureElSignature;
+
+	            container.saveState({
+	                html: serializedContainer.html,
+	                renderedWidgets: true
+	            });
+	        });
+	    }
+	});
+
+	exports.default = PageSerializer;
+
+/***/ },
+/* 59 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _Article = __webpack_require__(34);
+
+	var _Article2 = _interopRequireDefault(_Article);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    Article: _Article2.default
+	};
+
+/***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _ScrollView = __webpack_require__(31);
+
+	var _ScrollView2 = _interopRequireDefault(_ScrollView);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = {
+	    ScrollView: _ScrollView2.default
+	};
+
+/***/ }
+/******/ ])
+});
+;
