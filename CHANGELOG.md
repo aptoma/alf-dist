@@ -1,3 +1,9 @@
+### 2.4.2/2.4.3 - 2016-06-28
+* FIXED: Issue with fullscreen when decompiling a layout
+
+### 2.4.0 - 2016-05-12
+* NEW: Support setting a prefered figure element on a container
+
 ### 2.3.2 - 2016-04-05
 * FIXED: Issue with unloading a container multiple times (for compile)
 
