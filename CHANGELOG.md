@@ -1,3 +1,9 @@
+### 2.5 - 2016-06-30
+* IMPROVED: Legacy browser support (IE9+)
+* CHANGED: Sets overflow hidden on body when entering fullscreen to prevent scrollbars from interfering
+* CHANGED: No longer requires an image to fully load before entering fullscreen
+* NEW: Support using HTML from an element instead of an object when decompiling a layout
+
 ### 2.4.2/2.4.3 - 2016-06-28
 * FIXED: Issue with fullscreen when decompiling a layout
 
