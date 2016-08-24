@@ -1,3 +1,6 @@
+### 2.6 - 2016-08-24
+* NEW: Support `data-match` to require a figure to contain specific content
+
 ### 2.5 - 2016-06-30
 * IMPROVED: Legacy browser support (IE9+)
 * CHANGED: Sets overflow hidden on body when entering fullscreen to prevent scrollbars from interfering
