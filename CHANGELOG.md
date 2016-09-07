@@ -1,3 +1,6 @@
+### 2.6.1 - 2016-09-07
+* FIXED: Issue with old version of lodash
+
 ### 2.6 - 2016-08-24
 * NEW: Support `data-match` to require a figure to contain specific content
 
