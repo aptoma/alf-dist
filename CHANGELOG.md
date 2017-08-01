@@ -1,3 +1,6 @@
+### 2.7.0 - 2017-08-01
+* NEW: Make tables splittable
+
 ### 2.6.1 - 2016-09-07
 * FIXED: Issue with old version of lodash
 
