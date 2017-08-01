@@ -1,3 +1,6 @@
+### 2.7.1 - 2017-08-01
+* FIXED: Isse with distribution version
+
 ### 2.7.0 - 2017-08-01
 * NEW: Make tables splittable
 
